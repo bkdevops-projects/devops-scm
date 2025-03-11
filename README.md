@@ -36,22 +36,22 @@ devops-scm提供了一套统一的源代码接口，使得开发者能够方便�
     
 #### 2. 初始化提供者配置
   ```java
-  private GitScmProviderProperties initProviderProperties() {
-      HttpClientProperties httpClientProperties = HttpClientProperties.builder()
-              .apiUrl("https://api.github.com")
-              .build();
-      return GitScmProviderProperties.builder()
-              .providerCode(ScmProviderCodes.GITHUB.name())
-              .httpClientProperties(httpClientProperties)
-              .build();
-  }
+  private ScmProviderProperties initProviderProperties() {
+        HttpClientProperties httpClientProperties = HttpClientProperties.builder()
+                .apiUrl("https://api.github.com")
+                .build();
+        return ScmProviderProperties.builder()
+                .providerCode(ScmProviderCodes.GITHUB.name())
+                .httpClientProperties(httpClientProperties)
+                .build();
+    }
   ```
    
 #### 3. 初始化代码库
   ```java
    private GitScmProviderRepository initProviderRepository() {
       IScmAuth auth = new PersonalAccessTokenScmAuth("YOUR_PERSONAL_ACCESS_TOKEN");
-  
+    
       return new GitScmProviderRepository()
               .withAuth(auth)
               .withUrl("https://github.com/bkdevops-projects/devops-scm.git");
@@ -62,7 +62,7 @@ devops-scm提供了一套统一的源代码接口，使得开发者能够方便�
 - 获取代码库信息
     ```java
     public void getRepository() {
-        GitScmProviderProperties providerProperties = initProviderProperties();
+        ScmProviderProperties providerProperties = initProviderProperties();
         GitScmProviderRepository providerRepository = initProviderRepository();
         scmProviderManager.repositories(providerProperties).find(providerRepository);
     }
@@ -70,7 +70,7 @@ devops-scm提供了一套统一的源代码接口，使得开发者能够方便�
 - 获取分支信息
     ```java
     public void getBranch() {
-        GitScmProviderProperties providerProperties = initProviderProperties();
+        ScmProviderProperties providerProperties = initProviderProperties();
         GitScmProviderRepository providerRepository = initProviderRepository();
         scmProviderManager.refs(providerProperties).findBranch(providerRepository, "master");
     }
@@ -78,7 +78,7 @@ devops-scm提供了一套统一的源代码接口，使得开发者能够方便�
 - 获取tag信息
     ```java
     public void getTag() {
-        GitScmProviderProperties providerProperties = initProviderProperties();
+        ScmProviderProperties providerProperties = initProviderProperties();
         GitScmProviderRepository providerRepository = initProviderRepository();
         scmProviderManager.refs(providerProperties).findTag(providerRepository, "v1.0.0");
     }
@@ -86,7 +86,7 @@ devops-scm提供了一套统一的源代码接口，使得开发者能够方便�
 - 获取issue信息
     ```java
     public void getIssue() {
-        GitScmProviderProperties providerProperties = initProviderProperties();
+        ScmProviderProperties providerProperties = initProviderProperties();
         GitScmProviderRepository providerRepository = initProviderRepository();
         scmProviderManager.issues(providerProperties).find(providerRepository, 1);
     }
@@ -94,7 +94,7 @@ devops-scm提供了一套统一的源代码接口，使得开发者能够方便�
 - 获取pr信息
     ```java
      public void getPullRequest() {
-        GitScmProviderProperties providerProperties = initProviderProperties();
+        ScmProviderProperties providerProperties = initProviderProperties();
         GitScmProviderRepository providerRepository = initProviderRepository();
         scmProviderManager.pullRequests(providerProperties).find(providerRepository, 1);
     }
@@ -102,8 +102,9 @@ devops-scm提供了一套统一的源代码接口，使得开发者能够方便�
 - 获取用户信息
     ```java
     public void getUser() {
-        GitScmProviderProperties providerProperties = initProviderProperties();
-        scmProviderManager.users(providerProperties).find();
+        ScmProviderProperties providerProperties = initProviderProperties();
+        IScmAuth auth = new PersonalAccessTokenScmAuth("YOUR_PERSONAL_ACCESS_TOKEN");
+        scmProviderManager.users(providerProperties).find(auth);
     }
     ```
 
@@ -115,6 +116,6 @@ devops-scm提供了一套统一的源代码接口，使得开发者能够方便�
 - [腾讯开源激励计划](https://opensource.tencent.com/contribution) 鼓励开发者的参与和贡献，期待你的加入
 
 ## License
-devops-scm 是基于 MIT 协议， 详细请参考 [LICENSE](LICENSE.txt)
+devops-scm 是基于 MIT 协议， 详细请参考 [LICENSE](LICENSE)
 
 我们承诺未来不会更改适用于交付给任何人的当前项目版本的开源许可证（MIT 协议）。

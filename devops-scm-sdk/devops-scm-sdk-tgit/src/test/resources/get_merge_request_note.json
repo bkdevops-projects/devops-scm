@@ -1,0 +1,19 @@
+{
+  "id": 5258375,
+  "parent_id": null,
+  "body": "mr note api create",
+  "attachment": null,
+  "author": {
+    "id": 132102,
+    "username": "mingshewhe",
+    "web_url": "https://git.code.tencent.com/u/mingshewhe",
+    "name": "小明",
+    "state": "active",
+    "avatar_url": "https://git.code.tencent.com/uploads/user/avatar/132102/1909b65ef6c944ceb15613ec4bba652d."
+  },
+  "created_at": "2025-01-06T12:54:57+0000",
+  "system": false,
+  "line_code": null,
+  "file_path": null,
+  "comments": []
+}

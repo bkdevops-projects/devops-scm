@@ -1,0 +1,31 @@
+{
+  "id": 132102,
+  "email": "wx_a56dc86ef0f74feda385d4818e7c5cda@git.code.tencent.com",
+  "name": "小明",
+  "username": "mingshewhe",
+  "web_url": "https://git.code.tencent.com/u/mingshewhe",
+  "current_sign_in_at": "2025-01-07T02:49:38+0000",
+  "is_admin": false,
+  "projects_limit": 9999,
+  "skype": null,
+  "linkedin": null,
+  "twitter": null,
+  "theme_id": 1,
+  "bio": null,
+  "state": "active",
+  "color_scheme_id": 1,
+  "website_url": null,
+  "created_at": "2020-08-20T03:42:05+0000",
+  "identities": [
+    {
+      "extern_uid": "o2tOe0dpsFSaLStoC1TBKQo-pv0k",
+      "provider": "wechat_open_wx308f65d74dca84e2"
+    },
+    {
+      "extern_uid": "o2tOe0dpsFSaLStoC1TBKQo-pv0k",
+      "provider": "wechat_mp_wxae833cca19422851"
+    }
+  ],
+  "can_create_project": true,
+  "avatar_url": "https://git.code.tencent.com/uploads/user/avatar/132102/1909b65ef6c944ceb15613ec4bba652d."
+}

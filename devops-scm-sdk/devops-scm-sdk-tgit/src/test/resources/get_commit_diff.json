@@ -1,0 +1,30 @@
+[
+  {
+    "old_path": "webhook.txt",
+    "new_path": "webhook.txt",
+    "a_mode": 33188,
+    "b_mode": 33188,
+    "diff": "@@ -6,4 +6,5 @@\n webhook 6\n webhook 7\n webhook 8\n-webhook 9\n\\ No newline at end of file\n+webhook 9\n+webhook 10\n\\ No newline at end of file\n",
+    "new_file": false,
+    "renamed_file": false,
+    "deleted_file": false,
+    "is_too_large": false,
+    "is_collapse": false,
+    "additions": 2,
+    "deletions": 1
+  },
+  {
+    "old_path": "/dev/null",
+    "new_path": "README.md",
+    "a_mode": 0,
+    "b_mode": 33188,
+    "diff": "@@ -0,0 +1 @@\n+webhook 1\n\\ No newline at end of file\n",
+    "new_file": true,
+    "renamed_file": false,
+    "deleted_file": false,
+    "is_too_large": false,
+    "is_collapse": false,
+    "additions": 1,
+    "deletions": 0
+  }
+]

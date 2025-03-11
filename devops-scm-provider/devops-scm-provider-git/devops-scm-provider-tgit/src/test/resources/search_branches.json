@@ -1,0 +1,30 @@
+[
+  {
+    "protected": false,
+    "developers_can_push": false,
+    "developers_can_merge": false,
+    "name": "mr_test",
+    "commit": {
+      "id": "9c9f8cc062060fdad67137e5e102689be765b4d4",
+      "message": "mr 19",
+      "parent_ids": [
+        "26fe14c395aa79ee82b37b37600503c1e6fc91b1"
+      ],
+      "authored_date": "2021-06-09T07:56:28+0000",
+      "author_name": "mingshewhe",
+      "author_email": "wx_a56dc86ef0f74feda385d4818e7c5cda@git.code.tencent.com",
+      "committed_date": "2021-06-09T07:56:28+0000",
+      "committer_name": "mingshewhe",
+      "committer_email": "wx_a56dc86ef0f74feda385d4818e7c5cda@git.code.tencent.com",
+      "title": "mr 19",
+      "scroll_object_id": null,
+      "created_at": "2021-06-09T07:56:28+0000",
+      "short_id": "9c9f8cc0"
+    },
+    "description": "",
+    "branch_type": {
+      "name": "Others",
+      "color": "#7F8C8D"
+    }
+  }
+]

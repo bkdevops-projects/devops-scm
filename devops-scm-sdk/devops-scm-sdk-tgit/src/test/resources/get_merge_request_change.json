@@ -1,0 +1,70 @@
+{
+  "labels": [
+    "service/process",
+    "service/repository"
+  ],
+  "id": 290966,
+  "title": "mr_test",
+  "target_project_id": 130762,
+  "target_branch": "master",
+  "source_project_id": 130762,
+  "source_branch": "mr_test",
+  "state": "opened",
+  "merge_status": "can_be_merged",
+  "iid": 9,
+  "description": "",
+  "created_at": "2021-06-10T12:54:05+0000",
+  "updated_at": "2025-01-03T02:03:56+0000",
+  "resolved_at": null,
+  "merge_type": null,
+  "assignee": {
+    "id": 132102,
+    "username": "mingshewhe",
+    "web_url": "https://git.code.tencent.com/u/mingshewhe",
+    "name": "小明",
+    "state": "active",
+    "avatar_url": "https://git.code.tencent.com/uploads/user/avatar/132102/1909b65ef6c944ceb15613ec4bba652d."
+  },
+  "author": {
+    "id": 132102,
+    "username": "mingshewhe",
+    "web_url": "https://git.code.tencent.com/u/mingshewhe",
+    "name": "小明",
+    "state": "active",
+    "avatar_url": "https://git.code.tencent.com/uploads/user/avatar/132102/1909b65ef6c944ceb15613ec4bba652d."
+  },
+  "merge_commit_sha": null,
+  "milestone": {
+    "id": 2155,
+    "project_id": 130762,
+    "title": "v1.0",
+    "state": "active",
+    "iid": 1,
+    "due_date": "2025-01-03",
+    "created_at": "2025-01-03T02:03:46+0000",
+    "updated_at": "2025-01-03T02:03:46+0000",
+    "description": "开源"
+  },
+  "necessary_reviewers": null,
+  "suggestion_reviewers": null,
+  "files": [
+    {
+      "old_path": "mr.txt",
+      "new_path": "mr.txt",
+      "a_mode": 33188,
+      "b_mode": 33188,
+      "diff": "@@ -3,4 +3,18 @@\n mr 3\n mr 4\n mr 5\n-mr 6\n\\ No newline at end of file\n+mr 6\n+mr 7\n+mr 8\n+mr 9\n+mr 10\n+mr 10\n+mr 11\n+mr 12\n+mr 13\n+mr 14\n+mr 15\n+mr 16\n+mr 17\n+mr 18\n+mr 19\n\\ No newline at end of file\n",
+      "new_file": false,
+      "renamed_file": false,
+      "deleted_file": false,
+      "is_too_large": false,
+      "is_collapse": false,
+      "additions": 15,
+      "deletions": 1
+    }
+  ],
+  "upvotes": 0,
+  "downvotes": 0,
+  "project_id": 130762,
+  "work_in_progress": false
+}

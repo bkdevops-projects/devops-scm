@@ -1,0 +1,22 @@
+{
+  "name": "v1.0.1",
+  "message": null,
+  "commit": {
+    "id": "87acd380f4a91ba1eb200a082ad60f394f3062a5",
+    "message": "Merge branch 'mr_test' into 'master' (merge request !6)",
+    "parent_ids": [
+      "e81cd217638c3655821522e3e26250c875abdd2d",
+      "6b5485509c502d34b0eaa773423156585b411eb8"
+    ],
+    "authored_date": "2020-10-09T12:22:52+0000",
+    "author_name": "mingshewhe",
+    "author_email": "wx_a56dc86ef0f74feda385d4818e7c5cda@git.code.tencent.com",
+    "committed_date": "2020-10-09T12:22:52+0000",
+    "committer_name": "mingshewhe",
+    "committer_email": "wx_a56dc86ef0f74feda385d4818e7c5cda@git.code.tencent.com",
+    "title": "Merge branch 'mr_test' into 'master' (merge request !6)",
+    "scroll_object_id": null,
+    "created_at": "2020-10-09T12:22:52+0000",
+    "short_id": "87acd380"
+  }
+}

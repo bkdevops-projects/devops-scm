@@ -1,0 +1,57 @@
+{
+  "labels": [],
+  "title": "git commit review title",
+  "description": "git commit review desc",
+  "target_commit": "11111",
+  "target_branch": "feat_100",
+  "target_project_id": 1064025,
+  "source_commit": "22222",
+  "base_commit": "00000",
+  "source_branch": "feat_100",
+  "source_project_id": 1064025,
+  "commits": [
+    {
+      "id": "22222",
+      "commit_date": "2025-02-10T11:43:23+0000",
+      "author_name": "hejieehe",
+      "committer_name": "hejieehe",
+      "message": "test review commit"
+    }
+  ],
+  "author": {
+    "id": 286464,
+    "username": "hejieehe",
+    "web_url": "http://xxx.yyy.zzz/u/hejieehe",
+    "name": "hejieehe",
+    "state": "active",
+    "avatar_url": "https://xxx.yyy.zzz/common/images/avatar/default_user_avatar.png"
+  },
+  "reviewers": [
+    {
+      "type": "suggestion",
+      "review_state": "change_denied",
+      "review_duration": 4,
+      "created_at": "2025-02-11T01:46:26+0000",
+      "updated_at": "2025-02-11T01:47:01+0000",
+      "id": 281798,
+      "username": "zhangsan",
+      "web_url": "http://xxx.yyy.zzz/u/zhangsan",
+      "name": "zhangsan",
+      "state": "active",
+      "avatar_url": "https://xxx.yyy.zzz/common/images/avatar/default_user_avatar.png"
+    }
+  ],
+  "id": 108578305,
+  "project_id": 1064025,
+  "reviewable_id": 100512792,
+  "reviewable_type": "comparison",
+  "iid": 195,
+  "state": "change_denied",
+  "approver_rule": 2,
+  "necessary_approver_rule": 0,
+  "push_reset_enabled": true,
+  "push_reset_rule": 0,
+  "created_at": "2025-02-10T11:43:29+0000",
+  "updated_at": "2025-02-11T01:47:01+0000",
+  "owners": []
+}

@@ -8,7 +8,7 @@ import com.tencent.devops.scm.sdk.common.connector.ScmConnectorRequest;
 import com.tencent.devops.scm.sdk.common.connector.ScmConnectorResponse;
 import com.tencent.devops.scm.sdk.common.connector.ScmConnectorResponseErrorHandler;
 import com.tencent.devops.scm.sdk.common.exception.ScmHttpRetryException;
-import com.tencent.devops.scm.sdk.common.util.ScmJsonFactory;
+import com.tencent.devops.scm.sdk.common.util.ScmSdkJsonFactory;
 import com.tencent.devops.scm.sdk.tgit.util.TGitJsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +46,7 @@ public class TGitApiClient extends ScmApiClient {
     }
 
     @Override
-    public ScmJsonFactory getJsonFactory() {
+    public ScmSdkJsonFactory getJsonFactory() {
         return TGitJsonUtil.getJsonFactory();
     }
 

@@ -12,11 +12,11 @@ import lombok.Getter;
 import java.lang.reflect.Type;
 
 @Getter
-public class ScmJsonFactory {
+public class ScmSdkJsonFactory {
 
     private final ObjectMapper objectMapper;
 
-    public ScmJsonFactory() {
+    public ScmSdkJsonFactory() {
         this.objectMapper = new ObjectMapper();
 
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);

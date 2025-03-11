@@ -4,7 +4,7 @@ import com.tencent.devops.scm.sdk.common.connector.ScmConnector;
 import com.tencent.devops.scm.sdk.common.connector.ScmConnectorRequest;
 import com.tencent.devops.scm.sdk.common.connector.ScmConnectorResponse;
 import com.tencent.devops.scm.sdk.common.function.FunctionThrows;
-import com.tencent.devops.scm.sdk.common.util.ScmJsonFactory;
+import com.tencent.devops.scm.sdk.common.util.ScmSdkJsonFactory;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -78,7 +78,7 @@ public abstract class ScmApiClient {
      * 不同代码库平台返回的json格式可能不同,所以由代码库平台自行实现json
      *
      */
-    public abstract ScmJsonFactory getJsonFactory();
+    public abstract ScmSdkJsonFactory getJsonFactory();
 
     public void logRequest(ScmConnectorRequest request) {
         logger.info("Scm API request|method:{}|url:{}", request.method(), request.url().toString());

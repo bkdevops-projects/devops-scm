@@ -2,19 +2,19 @@ package com.tencent.devops.scm.sdk.tgit.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.tencent.devops.scm.sdk.common.util.ScmJsonFactory;
+import com.tencent.devops.scm.sdk.common.util.ScmSdkJsonFactory;
 import com.tencent.devops.scm.sdk.tgit.TGitApiException;
 
 public class TGitJsonUtil {
 
-    private static final ScmJsonFactory JSON_FACTORY;
+    private static final ScmSdkJsonFactory JSON_FACTORY;
 
     static {
-        JSON_FACTORY = new ScmJsonFactory();
+        JSON_FACTORY = new ScmSdkJsonFactory();
         JSON_FACTORY.getObjectMapper().setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
     }
 
-    public static ScmJsonFactory getJsonFactory() {
+    public static ScmSdkJsonFactory getJsonFactory() {
         return JSON_FACTORY;
     }
 

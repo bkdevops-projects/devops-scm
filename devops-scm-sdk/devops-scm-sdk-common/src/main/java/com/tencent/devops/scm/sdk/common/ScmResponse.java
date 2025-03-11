@@ -3,7 +3,7 @@ package com.tencent.devops.scm.sdk.common;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.tencent.devops.scm.sdk.common.connector.ScmConnectorResponse;
-import com.tencent.devops.scm.sdk.common.util.ScmJsonFactory;
+import com.tencent.devops.scm.sdk.common.util.ScmSdkJsonFactory;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +62,7 @@ public class ScmResponse<T> {
         return body;
     }
 
-    public static <T> T parseBody(ScmConnectorResponse connectorResponse, Class<T> clazz, ScmJsonFactory jsonFactory)
+    public static <T> T parseBody(ScmConnectorResponse connectorResponse, Class<T> clazz, ScmSdkJsonFactory jsonFactory)
             throws IOException {
         String data = getBodyAsString(connectorResponse);
         try {

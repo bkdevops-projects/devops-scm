@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum ScmProviderType {
     GIT("git"),
     SVN("svn"),
+    P4("p4")
     ;
     public final String value;
 

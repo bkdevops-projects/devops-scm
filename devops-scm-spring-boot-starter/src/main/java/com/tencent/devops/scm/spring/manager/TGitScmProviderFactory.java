@@ -19,7 +19,7 @@ public class TGitScmProviderFactory implements ScmProviderFactory {
 
     @Override
     public Boolean support(ScmProviderProperties properties) {
-        return ScmProviderCodes.TGIT.equals(properties.getProviderCode());
+        return ScmProviderCodes.TGIT.name().equals(properties.getProviderCode());
     }
 
     @Override

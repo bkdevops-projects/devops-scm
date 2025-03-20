@@ -419,9 +419,8 @@ public class TGitWebhookParser implements WebhookParser {
                         .extras(extra)
                         .build();
         if ("merge_request".equals(src.getReviewableType())) {
-            PullRequest pullRequest = PullRequest.builder()
-                    .id(src.getReviewableId())
-                    .build();
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.setId(src.getReviewableId());
             webhook.setPullRequest(pullRequest);
         }
 

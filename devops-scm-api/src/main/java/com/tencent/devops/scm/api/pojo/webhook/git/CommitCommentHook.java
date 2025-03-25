@@ -29,6 +29,9 @@ public class CommitCommentHook extends AbstractCommentHook {
     @Override
     public Map<String, Object> outputs() {
         Map<String, Object> outputs = super.outputs();
+        if (getExtras() != null) {
+            outputs.putAll(getExtras());
+        }
         if (commit != null) {
             outputs.put(
                     PIPELINE_GIT_COMMIT_AUTHOR,

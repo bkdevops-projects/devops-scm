@@ -12,14 +12,15 @@ import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_REVIEWERS;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_TAG_CREATE_FROM;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_TAG_OPERATION;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_ACTION;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_BEFORE_SHA;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_BEFORE_SHA_SHORT;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_COMMIT_AUTHOR;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_COMMIT_MESSAGE;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_ACTION;
-import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_URL;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_TAG_FROM;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_TAG_MESSAGE;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_START_WEBHOOK_USER_ID;
 import static com.tencent.devops.scm.sdk.tgit.enums.TGitPushOperationKind.UPDATE_NONFASTFORWORD;
 
 import com.tencent.devops.scm.api.WebhookParser;
@@ -54,7 +55,6 @@ import com.tencent.devops.scm.sdk.tgit.enums.TGitPushOperationKind;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitUser;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventCommit;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventDiffFile;
-import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventMergeRequest;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventProject;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventRepository;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventReviewer;
@@ -75,8 +75,12 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TGitWebhookParser implements WebhookParser {
+    private static final Logger logger = LoggerFactory.getLogger(TGitWebhookParser.class);
+
     @Override
     public Webhook parse(HookRequest request) {
         Webhook hook = null;
@@ -276,6 +280,7 @@ public class TGitWebhookParser implements WebhookParser {
 
         Map<String, Object> extra = new HashMap<>();
         extra.put(BK_REPO_GIT_WEBHOOK_ISSUE_STATE, src.getObjectAttributes().getState());
+        extra.put(BK_REPO_GIT_MANUAL_UNLOCK, false);
 
         return IssueHook.builder()
                 .repo(repo)
@@ -374,16 +379,29 @@ public class TGitWebhookParser implements WebhookParser {
         GitScmServerRepository repo = TGitObjectConverter.convertRepository(src.getProjectId(), src.getRepository());
 
         TGitEventReviewer eventReviewer = src.getReviewer();
-        TGitUser reviewer = eventReviewer.getReviewer();
-        User sender = User.builder()
-                .id(reviewer.getId())
-                .name(reviewer.getName())
-                .avatar(reviewer.getAvatarUrl())
-                .build();
+        User sender = null;
+        String sourceState = null;
+        if (eventReviewer != null) {
+            TGitUser reviewer = eventReviewer.getReviewer();
+            sender = User.builder()
+                    .id(reviewer.getId())
+                    .name(reviewer.getName())
+                    .avatar(reviewer.getAvatarUrl())
+                    .build();
+            sourceState = reviewer.getState();
+        } else {
+            TGitUser author = src.getAuthor();
+            sender = User.builder()
+                    .id(author.getId())
+                    .name(author.getName())
+                    .avatar(author.getAvatarUrl())
+                    .build();
+            sourceState = src.getState();
+        }
 
         ReviewState state;
         boolean closed = false;
-        switch (eventReviewer.getState()) {
+        switch (sourceState) {
             case "approving":
                 state = ReviewState.APPROVING;
                 break;
@@ -478,7 +496,7 @@ public class TGitWebhookParser implements WebhookParser {
         Map<String, Object> extras = new HashMap<>();
         extras.put(BK_REPO_GIT_WEBHOOK_PUSH_ACTION_KIND, actionKind);
         extras.put(BK_REPO_GIT_WEBHOOK_PUSH_OPERATION_KIND, operationKind);
-
+        extras.put(BK_REPO_GIT_MANUAL_UNLOCK, false);
         GitScmServerRepository repository = TGitObjectConverter.convertRepository(
                 src.getProjectId(),
                 src.getRepository()
@@ -507,6 +525,7 @@ public class TGitWebhookParser implements WebhookParser {
                 .totalCommitsCount(src.getTotalCommitsCount())
                 .extras(extras)
                 .outputCommitIndexVar(true)
+                .skip(skipPushHook(src))
                 .build();
     }
 
@@ -514,6 +533,7 @@ public class TGitWebhookParser implements WebhookParser {
         Map<String, Object> extras = new HashMap<>();
         extras.put(BK_REPO_GIT_WEBHOOK_TAG_OPERATION, src.getOperationKind());
         extras.put(BK_REPO_GIT_WEBHOOK_PUSH_TOTAL_COMMIT, src.getTotalCommitsCount());
+        extras.put(BK_REPO_GIT_MANUAL_UNLOCK, false);
         if (src.getCreateFrom() != null) {
             extras.put(BK_REPO_GIT_WEBHOOK_TAG_CREATE_FROM, src.getCreateFrom());
             extras.put(PIPELINE_GIT_TAG_FROM, src.getCreateFrom());
@@ -536,6 +556,8 @@ public class TGitWebhookParser implements WebhookParser {
         Map<String, Object> extra = new HashMap<>();
         extra.put(BK_REPO_GIT_WEBHOOK_REVIEW_REVIEWABLE_ID, src.getReviewableId());
         extra.put(BK_REPO_GIT_WEBHOOK_REVIEW_REVIEWABLE_TYPE, src.getReviewableType());
+        extra.put(BK_REPO_GIT_MANUAL_UNLOCK, false);
+        extra.put(PIPELINE_GIT_ACTION, src.getEvent());
         List<String> reviewers = new ArrayList<>(8);
         List<String> approvingReviewers = new ArrayList<>(8);
         List<String> approvedReviewers = new ArrayList<>(8);
@@ -554,23 +576,40 @@ public class TGitWebhookParser implements WebhookParser {
         extra.put(BK_REPO_GIT_WEBHOOK_REVIEW_REVIEWERS, StringUtils.join(reviewers, ","));
         extra.put(BK_REPO_GIT_WEBHOOK_REVIEW_APPROVING_REVIEWERS, StringUtils.join(approvingReviewers, ","));
         extra.put(BK_REPO_GIT_WEBHOOK_REVIEW_APPROVED_REVIEWERS, StringUtils.join(approvedReviewers, ","));
+        extra.put(
+                PIPELINE_START_WEBHOOK_USER_ID,
+                Optional.ofNullable(src.getAuthor())
+                        .map(TGitUser::getUsername)
+                        .orElse("")
+        );
         return extra;
     }
 
     private static Map<String, Object> fillNoteExtra(TGitNoteEvent src) {
         Map<String, Object> extra = new HashMap<>();
+        extra.put(BK_REPO_GIT_MANUAL_UNLOCK, false);
         extra.put(PIPELINE_GIT_BEFORE_SHA, "----------");
         extra.put(PIPELINE_GIT_BEFORE_SHA_SHORT, "----------");
         extra.put(PIPELINE_GIT_MR_ACTION, src.getObjectAttributes().getAction());
-        String homePage = Optional.ofNullable(src.getRepository())
-                .map(TGitEventRepository::getHomepage)
-                .orElse("");
-        Integer mrIid = Optional.ofNullable(src.getMergeRequest())
-                .map(TGitEventMergeRequest::getIid)
-                .orElse(null);
-        if (StringUtils.isNotBlank(homePage) && mrIid != null) {
-            extra.put(PIPELINE_GIT_MR_URL, String.format("%s/merge_requests/%s", homePage, mrIid));
-        }
         return extra;
+    }
+
+    private static boolean skipPushHook(TGitPushEvent pushEvent) {
+        boolean isMatch;
+        if (pushEvent.getTotalCommitsCount() <= 0) {
+            String operationKind = pushEvent.getOperationKind();
+            logger.info(
+                    "Git web hook no commit {} |operationKind= {}",
+                    pushEvent.getTotalCommitsCount(),
+                    operationKind
+            );
+            isMatch = UPDATE_NONFASTFORWORD.value.equals(operationKind);
+        } else if (pushEvent.getRef().startsWith("refs/for/")) {
+            logger.info("Git web hook is pre-push event|branchName={}", pushEvent.getRef());
+            isMatch = false;
+        } else {
+            isMatch = true;
+        }
+        return isMatch;
     }
 }

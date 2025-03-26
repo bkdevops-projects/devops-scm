@@ -17,6 +17,7 @@ import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_COMMIT_AUTHOR;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_COMMIT_MESSAGE;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_ACTION;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_URL;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_TAG_FROM;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_TAG_MESSAGE;
 import static com.tencent.devops.scm.sdk.tgit.enums.TGitPushOperationKind.UPDATE_NONFASTFORWORD;
@@ -53,6 +54,7 @@ import com.tencent.devops.scm.sdk.tgit.enums.TGitPushOperationKind;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitUser;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventCommit;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventDiffFile;
+import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventMergeRequest;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventProject;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventRepository;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventReviewer;
@@ -68,6 +70,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -358,6 +361,9 @@ public class TGitWebhookParser implements WebhookParser {
             webhook.setAction(EventAction.CREATE);
             webhook.setRepo(repo);
             webhook.setSender(user);
+            // 基础参数
+            Map<String, Object> extra = fillNoteExtra(src);
+            webhook.setExtras(extra);
         }
         return webhook;
     }
@@ -419,9 +425,8 @@ public class TGitWebhookParser implements WebhookParser {
                         .extras(extra)
                         .build();
         if ("merge_request".equals(src.getReviewableType())) {
-            PullRequest pullRequest = PullRequest.builder()
-                    .id(src.getReviewableId())
-                    .build();
+            PullRequest pullRequest = new PullRequest();
+            pullRequest.setId(src.getReviewableId());
             webhook.setPullRequest(pullRequest);
         }
 
@@ -549,6 +554,23 @@ public class TGitWebhookParser implements WebhookParser {
         extra.put(BK_REPO_GIT_WEBHOOK_REVIEW_REVIEWERS, StringUtils.join(reviewers, ","));
         extra.put(BK_REPO_GIT_WEBHOOK_REVIEW_APPROVING_REVIEWERS, StringUtils.join(approvingReviewers, ","));
         extra.put(BK_REPO_GIT_WEBHOOK_REVIEW_APPROVED_REVIEWERS, StringUtils.join(approvedReviewers, ","));
+        return extra;
+    }
+
+    private static Map<String, Object> fillNoteExtra(TGitNoteEvent src) {
+        Map<String, Object> extra = new HashMap<>();
+        extra.put(PIPELINE_GIT_BEFORE_SHA, "----------");
+        extra.put(PIPELINE_GIT_BEFORE_SHA_SHORT, "----------");
+        extra.put(PIPELINE_GIT_MR_ACTION, src.getObjectAttributes().getAction());
+        String homePage = Optional.ofNullable(src.getRepository())
+                .map(TGitEventRepository::getHomepage)
+                .orElse("");
+        Integer mrIid = Optional.ofNullable(src.getMergeRequest())
+                .map(TGitEventMergeRequest::getIid)
+                .orElse(null);
+        if (StringUtils.isNotBlank(homePage) && mrIid != null) {
+            extra.put(PIPELINE_GIT_MR_URL, String.format("%s/merge_requests/%s", homePage, mrIid));
+        }
         return extra;
     }
 }

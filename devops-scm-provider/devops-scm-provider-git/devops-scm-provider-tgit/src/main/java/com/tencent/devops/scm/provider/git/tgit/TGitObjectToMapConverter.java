@@ -33,6 +33,7 @@ import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_IID;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_PROPOSER;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_TITLE;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_URL;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_SOURCE_BRANCH;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_SOURCE_PROJECT_ID;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_TARGET_BRANCH;
@@ -40,6 +41,7 @@ import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEB
 import static com.tencent.devops.scm.api.constant.WebhookOutputConstants.PR_DESC_MAX_LENGTH;
 
 import com.tencent.devops.scm.api.constant.DateFormatConstants;
+import com.tencent.devops.scm.api.pojo.repository.git.GitScmServerRepository;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitAssignee;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitAuthor;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitMergeRequest;
@@ -51,6 +53,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 import org.apache.commons.collections4.SetUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -64,9 +67,14 @@ public class TGitObjectToMapConverter {
     /**
      * 获取merge request 相关触发参数
      */
-    public static Map<String, Object> convertPullRequest(TGitMergeRequest mergeRequest) {
+    public static Map<String, Object> convertPullRequest(
+            TGitMergeRequest mergeRequest,
+            GitScmServerRepository scmServerRepository
+    ) {
         Map<String, Object> params = new HashMap<>();
         if (mergeRequest != null) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateFormatConstants.ISO_8601);
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             // 基本MR信息
             putMultipleKeys(
                     params,
@@ -144,15 +152,13 @@ public class TGitObjectToMapConverter {
             // 时间
             params.put(
                     BK_REPO_GIT_WEBHOOK_MR_CREATE_TIME,
-                    new SimpleDateFormat(DateFormatConstants.ISO_8601)
-                            .format(mergeRequest.getCreatedAt())
+                    simpleDateFormat.format(mergeRequest.getCreatedAt())
             );
             params.put(BK_REPO_GIT_WEBHOOK_MR_CREATE_TIMESTAMP, mergeRequest.getCreatedAt().getTime());
 
             params.put(
                     BK_REPO_GIT_WEBHOOK_MR_UPDATE_TIME,
-                    new SimpleDateFormat(DateFormatConstants.ISO_8601)
-                            .format(mergeRequest.getUpdatedAt().getTime())
+                    simpleDateFormat.format(mergeRequest.getUpdatedAt().getTime())
             );
             params.put(BK_REPO_GIT_WEBHOOK_MR_UPDATE_TIMESTAMP, mergeRequest.getUpdatedAt().getTime());
             params.put(
@@ -202,6 +208,13 @@ public class TGitObjectToMapConverter {
                     BK_REPO_GIT_WEBHOOK_MR_SOURCE_COMMIT,
                     StringUtils.defaultString(mergeRequest.getSourceCommit(), "")
             );
+            // MR 链接
+            if (StringUtils.isNotBlank(scmServerRepository.getWebUrl()) && mergeRequest.getIid() != null) {
+                params.put(
+                        PIPELINE_GIT_MR_URL,
+                        scmServerRepository.getWebUrl() + "/merge_requests/" + mergeRequest.getIid()
+                );
+            }
         }
         return params;
     }

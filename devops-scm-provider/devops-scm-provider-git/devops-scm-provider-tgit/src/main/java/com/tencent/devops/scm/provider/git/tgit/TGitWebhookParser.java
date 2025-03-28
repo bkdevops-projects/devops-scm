@@ -610,6 +610,7 @@ public class TGitWebhookParser implements WebhookParser {
         } else {
             isMatch = true;
         }
-        return isMatch;
+        // 匹配不成功则跳过
+        return !isMatch;
     }
 }

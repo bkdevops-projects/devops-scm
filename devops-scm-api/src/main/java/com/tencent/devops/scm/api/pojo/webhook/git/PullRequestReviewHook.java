@@ -89,8 +89,6 @@ public class PullRequestReviewHook implements Webhook {
         }
         outputParams.put(BK_REPO_GIT_WEBHOOK_REVIEW_ID, review.getId().toString());
         outputParams.put(BK_REPO_GIT_WEBHOOK_REVIEW_IID, review.getIid().toString());
-        outputParams.put(BK_REPO_GIT_WEBHOOK_REVIEW_STATE, review.getState().value);
-
         outputParams.put(PIPELINE_GIT_EVENT_URL, review.getLink());
         outputParams.put(PIPELINE_GIT_REPO_URL, repo.getHttpUrl());
         outputParams.put(PIPELINE_GIT_EVENT, "review");

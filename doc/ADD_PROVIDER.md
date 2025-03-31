@@ -119,12 +119,12 @@ public interface GiteeConstants {
 ````
 
 ### 2.3 增加授权提供者
-调用代码库服务端接口需要进行授权认证，现对Gitee增加授权提供者，目前 gitee(社区版) 支持两种授权方式：
+为保障系统安全性，调用Gitee服务端API接口需进行身份认证。现针对Gitee社区版平台开发了授权提供者模块，当前版本支持以下两种授权机制：
 - Oauth Access Token
 - Personal Access Token
 
-在 devops-scm-sdk-gitee 模块下新建 GiteeTokenAuthProvider 类并实现 HttpAuthProvider 接口
-补充授权实现类实现类
+在 devops-scm-sdk-gitee 模块下新建 GiteeTokenAuthProvider 类，用于实现 HTTP 授权认证接口
+
 ````java
 package com.tencent.devops.scm.sdk.gitee.auth;
 
@@ -343,15 +343,15 @@ public class GiteeApi {
 }
 ````
 ### 2.5 核心接口实现
-补充api接口具体业务，在此以 [仓库分支] 为例实现相应的功能接口
+本节以 [仓库分支管理] 为例，演示如何实现Gitee平台API对接，主要包含以下步骤：
 
-- step1. 确认接口数据结构
+- step1. 接口数据结构分析
 
-  使用postman或者其他http工具调用接口，获取接口数据结构（此处调用的接口为：[获取所有分支](https://gitee.com/api/v5/swagger#/getV5ReposOwnerRepoBranches)）
+  使用Postman等工具调用 [获取所有分支](https://gitee.com/api/v5/swagger#/getV5ReposOwnerRepoBranches) 接口
 
   ![gitee_get_all_branch](./img/gitee_get_all_branch.png)
 
-  根据以上返回的数据结构提取成对应的java实体类，部分api接口的实体类字段较多，无需全部提取，按需即可
+  根据以上返回的数据结构提取成对应的java实体类（非必要字段可忽略）
   ````java
     @Data
     public class GiteeBranch {
@@ -384,7 +384,7 @@ public class GiteeApi {
     }
   ````
 
-- step2. 新增GiteeBranchesApi类并继承AbstractGiteeApi类，实现[获取所有分支](https://gitee.com/api/v5/swagger#/getV5ReposOwnerRepoBranches)接口
+- step2. 创建 GiteeBranchesApi 类继承 AbstractGiteeApi 基类，实现 [获取分支列表](https://gitee.com/api/v5/swagger#/getV5ReposOwnerRepoBranches) 接口功能
   ````java
   package com.tencent.devops.scm.sdk.gitee;
 
@@ -504,6 +504,7 @@ public class GiteeApi {
 ### 2.6 接口验证测试
 接口实现后，增加测试类，对 GiteeBranchesApi 进行测试，此处没有核心业务，直接使用即可
 - step1. [devops-scm-sdk-gitee/src] 文件夹下增加 test 文件夹
+
   ![add_gitee_test_dir](./img/add_gitee_test_dir.png)  
 
 - step2. 补充测试类
@@ -611,11 +612,146 @@ public class GiteeApi {
   ![gitee_add_all_branch_test](./img/gitee_get_all_branch_test.png)
 
 ## 3. 平台适配模块开发
+此模块主要用于将对 [ devops-scm-sdk-{scmCode}] 模块与 [devops-scm-api] 模块以及第三方服务进行平滑对接，主要包含以下功能：
+- [devops-scm-sdk] 模块的原始请求数据转化为 [devops-scm-api] 模块所定义的数据类型，
+- 同时用于解析 webhook元数据 ，组装webhook触发参数以及关联的要素信息
+- 将蓝盾平台的凭证转化为sdk支持的授权提供者
+
 ### 3.1 新建module
-### 3.2 增加实体类转化工具类
-### 3.3 业务服务实现
-### 3.4 服务功能验证
-### 3.5 Webhook支持
+增加 devops-scm-provider-gitee 模块，基于[devops-scm-provider/devops-scm-provider-git]目录右键 'New' -> 'Module'
+
+参考: [增加 devops-scm-sdk-gitee 模块](#211-增加-devops-scm-sdk-gitee-模块)
+
+### 3.2 增加授权适配器（非必须）
+蓝盾关联代码库时凭证类型不固定，需要将凭证信息转化为 GiteeTokenAuthProvider ，针对git类型主要有三种：
+- oauthToken
+- username+password+token
+- sshPrivateKey+token
+````java
+package com.tencent.devops.scm.provider.git.tgit.auth;
+
+import com.tencent.devops.scm.api.pojo.auth.AccessTokenScmAuth;
+import com.tencent.devops.scm.api.pojo.auth.IScmAuth;
+import com.tencent.devops.scm.api.pojo.auth.PersonalAccessTokenScmAuth;
+import com.tencent.devops.scm.api.pojo.auth.TokenSshPrivateKeyScmAuth;
+import com.tencent.devops.scm.api.pojo.auth.TokenUserPassScmAuth;
+import com.tencent.devops.scm.sdk.gitee.auth.GiteeTokenAuthProvider;
+
+public class GiteeTokenAuthProviderAdapter {
+
+    public boolean support(IScmAuth auth) {
+        return auth instanceof AccessTokenScmAuth
+                || auth instanceof PersonalAccessTokenScmAuth
+                || auth instanceof TokenUserPassScmAuth
+                || auth instanceof TokenSshPrivateKeyScmAuth;
+    }
+
+    public GiteeTokenAuthProvider get(IScmAuth auth) {
+        if (auth instanceof AccessTokenScmAuth) {
+            return GiteeTokenAuthProvider.fromOauthToken(((AccessTokenScmAuth) auth).getAccessToken());
+        }
+        if (auth instanceof PersonalAccessTokenScmAuth) {
+            return GiteeTokenAuthProvider.fromPersonalAccessToken(
+                    ((PersonalAccessTokenScmAuth) auth).getPersonalAccessToken());
+        }
+        if (auth instanceof TokenUserPassScmAuth) {
+            return GiteeTokenAuthProvider.fromPersonalAccessToken(((TokenUserPassScmAuth) auth).getToken());
+        }
+        if (auth instanceof TokenSshPrivateKeyScmAuth) {
+            return GiteeTokenAuthProvider.fromPersonalAccessToken(((TokenSshPrivateKeyScmAuth) auth).getToken());
+        }
+        throw new UnsupportedOperationException(String.format("gitAuth(%s) is not support", auth));
+    }
+}
+````
+
+### 3.3 增加实体类转化工具类
+
+目前 provider 模块有两种转化类：
+- objectCovert: 将 [devops-scm-sdk-{scmCode}] 模块的原始数据对象转换为系统内部统一的数据模型对象
+  
+  参考：com.tencent.devops.scm.provider.git.tgit.TGitObjectConverter
+- ObjectToMapConverter: 将 [devops-scm-sdk-{scmCode}] 模块的原始数据对象转换为Map<String, String>， 主要用于组装webhook触发变量
+
+  参考：com.tencent.devops.scm.provider.git.tgit.TGitObjectToMapConverter
+
+````java
+package com.tencent.devops.scm.provider.git.gitee;
+
+import com.tencent.devops.scm.api.pojo.Reference;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBranch;
+
+public class GiteeObjectConverter {
+
+    /*========================================ref====================================================*/
+    public static Reference convertBranches(GiteeBranch branch) {
+        return Reference.builder()
+                .name(branch.getName())
+                .sha(branch.getCommit().getSha())
+                .build();
+    }
+}
+````
+### 3.4 业务服务实现
+在 [devops-scm-provider-gitee] 模块下新建功能服务类实现 [devops-scm-api] 下的服务接口, 此处继续以 [仓库分支] 为例，实现RefService接口
+````java
+package com.tencent.devops.scm.provider.git.gitee;
+
+import com.tencent.devops.scm.api.RefService;
+import com.tencent.devops.scm.api.pojo.BranchListOptions;
+import com.tencent.devops.scm.api.pojo.Change;
+import com.tencent.devops.scm.api.pojo.Commit;
+import com.tencent.devops.scm.api.pojo.CommitListOptions;
+import com.tencent.devops.scm.api.pojo.ListOptions;
+import com.tencent.devops.scm.api.pojo.Reference;
+import com.tencent.devops.scm.api.pojo.ReferenceInput;
+import com.tencent.devops.scm.api.pojo.TagListOptions;
+import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository;
+import com.tencent.devops.scm.api.pojo.repository.git.GitScmProviderRepository;
+import com.tencent.devops.scm.provider.git.gitee.auth.GiteeTokenAuthProviderAdapter;
+import com.tencent.devops.scm.sdk.common.connector.okhttp3.OkHttpScmConnector;
+import com.tencent.devops.scm.sdk.gitee.GiteeApi;
+import com.tencent.devops.scm.sdk.gitee.GiteeBranchesApi;
+import com.tencent.devops.scm.sdk.gitee.auth.GiteeTokenAuthProvider;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBranch;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import okhttp3.OkHttpClient;
+import okhttp3.OkHttpClient.Builder;
+
+public class GiteeBranchService implements RefService {
+    
+  @Override
+  public List<Reference> listBranches(ScmProviderRepository repository, BranchListOptions opts) {
+    GitScmProviderRepository gitScmProviderRepository = (GitScmProviderRepository) repository;
+    // 校验授权类型
+    if (!GiteeTokenAuthProviderAdapter.support(gitScmProviderRepository.getAuth())) {
+      return new ArrayList<>();
+    }
+    // 获取授权提供者
+    GiteeTokenAuthProvider giteeTokenAuthProvider = GiteeTokenAuthProviderAdapter.get(
+            gitScmProviderRepository.getAuth()
+    );
+    // 组装请求连接器, 可根据情况自行调整连接器相关配置
+    OkHttpClient client = new Builder().build();
+    OkHttpScmConnector okHttpScmConnector = new OkHttpScmConnector(client);
+    // 构建请求接口类
+    GiteeBranchesApi branchesApi = new GiteeApi(
+            "https://gitee.com/api/v5",
+            okHttpScmConnector,
+            giteeTokenAuthProvider
+    ).getBranchesApi();
+    List<GiteeBranch> branches = branchesApi.getBranches(gitScmProviderRepository.getProjectIdOrPath());
+    // 结果转化
+    return branches.stream().map(GiteeObjectConverter::convertBranches).collect(Collectors.toList());
+  }
+}
+````
+
+### 3.5 服务功能验证
+
+### 3.6 Webhook支持
 
 ## 4. spring-boot自动装配
 

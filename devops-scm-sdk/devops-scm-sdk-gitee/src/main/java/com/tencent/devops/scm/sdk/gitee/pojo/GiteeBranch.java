@@ -13,13 +13,6 @@ public class GiteeBranch {
     private Boolean protectedBranch;
     @JsonProperty("protection_url")
     private String protectionUrl;
-
-    @Data
-    class GiteeBranchCommit {
-        private String url;
-        private String sha;
-        private GiteeCommit commit;
-    }
 }
 
 

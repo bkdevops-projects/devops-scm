@@ -113,6 +113,11 @@ devops-scm提供了一套统一的源代码接口，使得开发者能够方便�
 ## 版本日志
 
 ## 新增源码管理平台
+- [从零开始接入源码管理平台](./doc/ADD_PROVIDER.md)
+
+
+- [已有sdk,补充适配模块](./doc/ADD_PROVIDER_SIMPLIFICATION.md)
+
 
 ## Contributing
 - [腾讯开源激励计划](https://opensource.tencent.com/contribution) 鼓励开发者的参与和贡献，期待你的加入

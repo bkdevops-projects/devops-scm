@@ -1,5 +1,6 @@
 dependencies {
     api(project(":devops-scm-api"))
+    api(project(":devops-scm-provider:devops-scm-provider-git:devops-scm-provider-git-common"))
     api(project(":devops-scm-sdk:devops-scm-sdk-gitee"))
 
     api("org.projectlombok:lombok")

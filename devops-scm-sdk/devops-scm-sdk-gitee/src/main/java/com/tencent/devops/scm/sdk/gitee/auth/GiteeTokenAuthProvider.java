@@ -3,12 +3,13 @@ package com.tencent.devops.scm.sdk.gitee.auth;
 import static com.tencent.devops.scm.sdk.gitee.GiteeConstants.OAUTH_TOKEN_HEADER;
 
 import com.tencent.devops.scm.sdk.common.ScmRequest;
+import com.tencent.devops.scm.sdk.common.auth.HttpAuthProvider;
 import com.tencent.devops.scm.sdk.gitee.GiteeConstants;
 
 /**
  * token授权,token包含oauth2_token、personal_access_token
  */
-public class GiteeTokenAuthProvider implements GiteeAuthProvider {
+public class GiteeTokenAuthProvider implements HttpAuthProvider {
 
     private final String authHeader;
     private final String authToken;
@@ -18,15 +19,15 @@ public class GiteeTokenAuthProvider implements GiteeAuthProvider {
         this.authToken = authToken;
     }
 
-    public static GiteeAuthProvider fromOauthToken(String oauthAccessToken) {
+    public static GiteeTokenAuthProvider fromOauthToken(String oauthAccessToken) {
         return new GiteeTokenAuthProvider(OAUTH_TOKEN_HEADER, oauthAccessToken);
     }
 
-    public static GiteeAuthProvider fromPersonalAccessToken(String privateToken) {
+    public static GiteeTokenAuthProvider fromPersonalAccessToken(String privateToken) {
         return new GiteeTokenAuthProvider(OAUTH_TOKEN_HEADER, privateToken);
     }
 
-    public static GiteeAuthProvider fromTokenType(GiteeConstants.TokenType tokenType, String authToken) {
+    public static GiteeTokenAuthProvider fromTokenType(GiteeConstants.TokenType tokenType, String authToken) {
         String authHeaderValue = "token " + authToken;
         switch (tokenType) {
             case PERSONAL_ACCESS:

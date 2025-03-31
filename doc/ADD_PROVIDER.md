@@ -123,14 +123,7 @@ public interface GiteeConstants {
 - Oauth Access Token
 - Personal Access Token
 
-在 devops-scm-sdk-gitee 模块下新建 GiteeAuthProvider 接口并继承 HttpAuthProvider
-````java
-package com.tencent.devops.scm.sdk.gitee.auth;
-
-import com.tencent.devops.scm.sdk.common.auth.HttpAuthProvider;
-
-public interface GiteeAuthProvider extends HttpAuthProvider { }
-````
+在 devops-scm-sdk-gitee 模块下新建 GiteeTokenAuthProvider 类并实现 HttpAuthProvider 接口
 补充授权实现类实现类
 ````java
 package com.tencent.devops.scm.sdk.gitee.auth;
@@ -138,49 +131,47 @@ package com.tencent.devops.scm.sdk.gitee.auth;
 import static com.tencent.devops.scm.sdk.gitee.GiteeConstants.OAUTH_TOKEN_HEADER;
 
 import com.tencent.devops.scm.sdk.common.ScmRequest;
+import com.tencent.devops.scm.sdk.common.auth.HttpAuthProvider;
 import com.tencent.devops.scm.sdk.gitee.GiteeConstants;
 
 /**
  * token授权,token包含oauth2_token、personal_access_token
  */
-public class GiteeTokenAuthProvider implements GiteeAuthProvider {
+public class GiteeTokenAuthProvider implements HttpAuthProvider {
 
-    private final String authHeader;
-    private final String authToken;
+  private final String authHeader;
+  private final String authToken;
 
-    public GiteeTokenAuthProvider(String authHeader, String authToken) {
-        this.authHeader = authHeader;
-        this.authToken = authToken;
+  public GiteeTokenAuthProvider(String authHeader, String authToken) {
+    this.authHeader = authHeader;
+    this.authToken = authToken;
+  }
+
+  public static GiteeTokenAuthProvider fromOauthToken(String oauthAccessToken) {
+    return new GiteeTokenAuthProvider(OAUTH_TOKEN_HEADER, oauthAccessToken);
+  }
+
+  public static GiteeTokenAuthProvider fromPersonalAccessToken(String privateToken) {
+    return new GiteeTokenAuthProvider(OAUTH_TOKEN_HEADER, privateToken);
+  }
+
+  public static GiteeTokenAuthProvider fromTokenType(GiteeConstants.TokenType tokenType, String authToken) {
+    String authHeaderValue = "token " + authToken;
+    switch (tokenType) {
+      case PERSONAL_ACCESS:
+        return fromPersonalAccessToken(authHeaderValue);
+      case OAUTH2_ACCESS:
+        return fromOauthToken(authHeaderValue);
+      default:
+        throw new UnsupportedOperationException(String.format("tokenType(%s) is not support", tokenType));
     }
+  }
 
-    public static GiteeAuthProvider fromOauthToken(String oauthAccessToken) {
-        return new GiteeTokenAuthProvider(OAUTH_TOKEN_HEADER, oauthAccessToken);
-    }
-
-    public static GiteeAuthProvider fromPersonalAccessToken(String privateToken) {
-        return new GiteeTokenAuthProvider(OAUTH_TOKEN_HEADER, privateToken);
-    }
-
-    public static GiteeAuthProvider fromTokenType(GiteeConstants.TokenType tokenType, String authToken) {
-        // OAUTH 和 PersonnelAccessToken 的鉴权header一致
-        String authHeaderValue = "token " + authToken;
-        switch (tokenType) {
-            case PERSONAL_ACCESS:
-                return fromPersonalAccessToken(authHeaderValue);
-            case OAUTH2_ACCESS:
-                return fromOauthToken(authHeaderValue);
-            default:
-                throw new UnsupportedOperationException(String.format("tokenType(%s) is not support", tokenType));
-        }
-    }
-
-    @Override
-    public void authorization(ScmRequest.Builder<?> builder) {
-        builder.setHeader(authHeader, authToken);
-    }
+  @Override
+  public void authorization(ScmRequest.Builder<?> builder) {
+    builder.setHeader(authHeader, authToken);
+  }
 }
-
-
 ````
 
 ### 2.4 增加通讯客户端
@@ -356,7 +347,7 @@ public class GiteeApi {
 
 - step1. 确认接口数据结构
 
-  使用postman或者其他http工具，调用目标结果获取接口数据结构（此处调用接口为：[获取所有分支](https://gitee.com/api/v5/swagger#/getV5ReposOwnerRepoBranches)）
+  使用postman或者其他http工具调用接口，获取接口数据结构（此处调用的接口为：[获取所有分支](https://gitee.com/api/v5/swagger#/getV5ReposOwnerRepoBranches)）
 
   ![gitee_get_all_branch](./img/gitee_get_all_branch.png)
 

@@ -622,11 +622,17 @@ public class GiteeApi {
 
 参考: [增加 devops-scm-sdk-gitee 模块](#211-增加-devops-scm-sdk-gitee-模块)
 
-### 3.2 增加授权适配器（非必须）
-蓝盾关联代码库时凭证类型不固定，需要将凭证信息转化为 GiteeTokenAuthProvider ，针对git类型主要有三种：
-- oauthToken
-- username+password+token
-- sshPrivateKey+token
+### 3.2 增加授权适配器
+蓝盾关联代码库时凭证类型不固定，需要将对应的凭证实体类转化为 GiteeTokenAuthProvider ，针对gitee授权主要有三种：
+
+| 授权类型  | 凭证类型                        | 凭证实体类                                            |
+|-------|-----------------------------|----------------------------------------------------------------|
+| OAUTH | oauth token                 | com.tencent.devops.scm.api.pojo.auth.AccessTokenScmAuth        |
+| HTTP  | username + password + token | com.tencent.devops.scm.api.pojo.auth.TokenUserPassScmAuth      |
+| SSH   | ssh private key + token     | com.tencent.devops.scm.api.pojo.auth.TokenSshPrivateKeyScmAuth |
+
+蓝盾凭证实体类参考： com.tencent.devops.scm.api.pojo.auth.IScmAuth
+
 ````java
 package com.tencent.devops.scm.provider.git.tgit.auth;
 

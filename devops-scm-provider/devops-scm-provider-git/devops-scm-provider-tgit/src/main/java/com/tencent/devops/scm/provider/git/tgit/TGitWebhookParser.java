@@ -525,7 +525,7 @@ public class TGitWebhookParser implements WebhookParser {
                 .totalCommitsCount(src.getTotalCommitsCount())
                 .extras(extras)
                 .outputCommitIndexVar(true)
-                .skip(skipPushHook(src))
+                .skipCi(skipPushHook(src))
                 .build();
     }
 

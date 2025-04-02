@@ -29,12 +29,9 @@ import com.tencent.devops.scm.api.pojo.User;
 import com.tencent.devops.scm.api.pojo.repository.git.GitScmServerRepository;
 import com.tencent.devops.scm.api.pojo.webhook.Webhook;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.tencent.devops.scm.api.util.GitUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -60,8 +57,6 @@ public class GitTagHook implements Webhook {
     private String createFrom;
     // 扩展属性,提供者额外补充需要输出的变量
     private Map<String, Object> extras;
-    // 是否输出commit index变量,如BK_REPO_GIT_WEBHOOK_PUSH_COMMIT_,兼容历史数据,后续接入的都不应该输出
-    private Boolean outputCommitIndexVar;
 
     @Override
     public GitScmServerRepository repository() {
@@ -125,9 +120,6 @@ public class GitTagHook implements Webhook {
         }
         outputParams.put(PIPELINE_GIT_EVENT_URL, ref.getLinkUrl());
         outputParams.put(PIPELINE_GIT_ACTION, action.value);
-        if (Boolean.TRUE.equals(outputCommitIndexVar)) {
-            outputParams.putAll(GitUtils.getOutputCommitIndexVar(Collections.singletonList(commit)));
-        }
         return outputParams;
     }
 }

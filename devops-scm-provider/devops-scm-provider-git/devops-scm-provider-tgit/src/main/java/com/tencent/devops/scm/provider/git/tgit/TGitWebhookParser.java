@@ -72,7 +72,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -176,7 +175,6 @@ public class TGitWebhookParser implements WebhookParser {
                 .commit(commit)
                 .extras(extras)
                 .createFrom(createFrom)
-                .outputCommitIndexVar(true)
                 .build();
     }
 
@@ -548,6 +546,11 @@ public class TGitWebhookParser implements WebhookParser {
                 extras.put(PIPELINE_GIT_COMMIT_AUTHOR, lastCommit.getAuthor().getName());
                 extras.put(PIPELINE_GIT_COMMIT_MESSAGE, lastCommit.getMessage());
             }
+            GitUtils.getOutputCommitIndexVar(
+                    src.getCommits().stream()
+                            .map(TGitObjectConverter::convertCommit)
+                            .collect(Collectors.toList())
+            );
         }
         return extras;
     }

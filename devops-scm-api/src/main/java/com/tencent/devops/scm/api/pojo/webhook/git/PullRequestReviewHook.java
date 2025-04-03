@@ -9,6 +9,7 @@ import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_IID;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_EVENT;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_EVENT_URL;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_GROUP;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_ID;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_NAME;
@@ -109,6 +110,7 @@ public class PullRequestReviewHook implements Webhook {
         outputParams.put(PIPELINE_WEBHOOK_REVISION, "");
         outputParams.put(PIPELINE_GIT_REPO_ID, repo.getId());
         outputParams.put(PIPELINE_REPO_NAME, repo.getFullName());
+        outputParams.put(PIPELINE_GIT_REPO, repo.getFullName());
         outputParams.put(PIPELINE_GIT_REPO_NAME, repo.getName());
         outputParams.put(PIPELINE_GIT_REPO_GROUP, repo.getGroup());
         return outputParams;

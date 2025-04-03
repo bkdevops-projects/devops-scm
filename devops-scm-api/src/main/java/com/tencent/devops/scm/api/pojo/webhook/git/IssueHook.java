@@ -16,11 +16,15 @@ import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_COMMIT_MESSAGE;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_EVENT;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_EVENT_URL;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_GROUP;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_ID;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_NAME;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_URL;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_REPO_NAME;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_START_WEBHOOK_USER_ID;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_COMMIT_MESSAGE;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_EVENT_TYPE;
 
 import com.tencent.devops.scm.api.enums.EventAction;
 import com.tencent.devops.scm.api.pojo.Issue;
@@ -92,9 +96,13 @@ public class IssueHook implements Webhook {
         outputParams.put(BK_REPO_GIT_WEBHOOK_ISSUE_OWNER, issue.getAuthor().getName());
         outputParams.put(BK_REPO_GIT_WEBHOOK_ISSUE_URL, issue.getLink());
         outputParams.put(BK_REPO_GIT_WEBHOOK_ISSUE_ACTION, action.value);
+        outputParams.put(PIPELINE_WEBHOOK_EVENT_TYPE, eventType);
 
         outputParams.put(PIPELINE_GIT_COMMIT_MESSAGE, issue.getTitle());
         outputParams.put(PIPELINE_GIT_REPO_URL, repo.getHttpUrl());
+        outputParams.put(PIPELINE_GIT_REPO, repo.getFullName());
+        outputParams.put(PIPELINE_GIT_REPO_NAME, repo.getName());
+        outputParams.put(PIPELINE_GIT_REPO_GROUP, repo.getGroup());
         outputParams.put(PIPELINE_GIT_EVENT_URL, issue.getLink());
         outputParams.put(PIPELINE_GIT_ACTION, action.value);
         outputParams.put(PIPELINE_WEBHOOK_COMMIT_MESSAGE, issue.getTitle());

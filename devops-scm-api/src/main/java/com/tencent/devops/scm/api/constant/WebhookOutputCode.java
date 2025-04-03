@@ -17,6 +17,9 @@ public interface WebhookOutputCode {
     /******************************** ci上下文变量 ********************************/
 
     String PIPELINE_GIT_REPO_URL = "GIT_CI_REPO_URL";
+    String PIPELINE_GIT_REPO = "GIT_CI_REPO";
+    String PIPELINE_GIT_REPO_NAME = "GIT_CI_REPO_NAME";
+    String PIPELINE_GIT_REPO_GROUP = "GIT_CI_REPO_GROUP";
     // 服务端仓库ID
     String PIPELINE_GIT_REPO_ID = "GIT_CI_REPO_ID";
     String PIPELINE_GIT_REF = "GIT_CI_REF";

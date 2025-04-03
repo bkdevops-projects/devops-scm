@@ -29,11 +29,15 @@ import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_URL;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_EVENT;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_EVENT_URL;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_GROUP;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_ID;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_NAME;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_URL;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_REPO_NAME;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_START_WEBHOOK_USER_ID;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_COMMIT_MESSAGE;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_EVENT_TYPE;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_NOTE_COMMENT;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_NOTE_ID;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_REVISION;
@@ -79,6 +83,7 @@ public abstract class AbstractCommentHook implements Webhook {
     @Override
     public Map<String, Object> outputs() {
         Map<String, Object> outputParams = new HashMap<>();
+        outputParams.put(PIPELINE_WEBHOOK_EVENT_TYPE, eventType);
         outputParams.put(PIPELINE_WEBHOOK_COMMIT_MESSAGE, comment.getBody());
         outputParams.put(PIPELINE_WEBHOOK_NOTE_COMMENT, comment.getBody());
         outputParams.put(BK_REPO_GIT_WEBHOOK_NOTE_COMMENT, comment.getBody());
@@ -101,6 +106,9 @@ public abstract class AbstractCommentHook implements Webhook {
         outputParams.put(PIPELINE_GIT_EVENT, "note");
         outputParams.put(PIPELINE_GIT_EVENT_URL, comment.getLink());
         outputParams.put(PIPELINE_GIT_REPO_ID, repo.getId());
+        outputParams.put(PIPELINE_GIT_REPO, repo.getFullName());
+        outputParams.put(PIPELINE_GIT_REPO_NAME, repo.getName());
+        outputParams.put(PIPELINE_GIT_REPO_GROUP, repo.getGroup());
         outputParams.put(PIPELINE_GIT_REPO_URL, repo.getHttpUrl());
         outputParams.put(PIPELINE_WEBHOOK_REVISION, "");
         return outputParams;

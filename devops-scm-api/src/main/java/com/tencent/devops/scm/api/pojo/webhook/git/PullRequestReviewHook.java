@@ -7,13 +7,16 @@ import static com.tencent.devops.scm.api.constant.WebhookI18Code.GIT_REVIEW_CHAN
 import static com.tencent.devops.scm.api.constant.WebhookI18Code.GIT_REVIEW_CLOSED_EVENT_DESC;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_ID;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_IID;
-import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_STATE;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_EVENT;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_EVENT_URL;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_GROUP;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_ID;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_NAME;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_URL;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_REPO_NAME;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_COMMIT_MESSAGE;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_EVENT_TYPE;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_REVISION;
 
 import com.tencent.devops.scm.api.enums.EventAction;
@@ -89,6 +92,8 @@ public class PullRequestReviewHook implements Webhook {
         }
         outputParams.put(BK_REPO_GIT_WEBHOOK_REVIEW_ID, review.getId().toString());
         outputParams.put(BK_REPO_GIT_WEBHOOK_REVIEW_IID, review.getIid().toString());
+
+        outputParams.put(PIPELINE_WEBHOOK_EVENT_TYPE, eventType);
         outputParams.put(PIPELINE_GIT_EVENT_URL, review.getLink());
         outputParams.put(PIPELINE_GIT_REPO_URL, repo.getHttpUrl());
         outputParams.put(PIPELINE_GIT_EVENT, "review");
@@ -105,6 +110,9 @@ public class PullRequestReviewHook implements Webhook {
         outputParams.put(PIPELINE_WEBHOOK_REVISION, "");
         outputParams.put(PIPELINE_GIT_REPO_ID, repo.getId());
         outputParams.put(PIPELINE_REPO_NAME, repo.getFullName());
+        outputParams.put(PIPELINE_GIT_REPO, repo.getFullName());
+        outputParams.put(PIPELINE_GIT_REPO_NAME, repo.getName());
+        outputParams.put(PIPELINE_GIT_REPO_GROUP, repo.getGroup());
         return outputParams;
     }
 

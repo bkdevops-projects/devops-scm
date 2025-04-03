@@ -16,7 +16,10 @@ import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_EVENT;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_EVENT_URL;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REF;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_GROUP;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_ID;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_NAME;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_URL;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_SHA;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_SHA_SHORT;
@@ -131,6 +134,9 @@ public class GitPushHook implements Webhook {
 
         // ci上下文变量,会转换成ci.xxx
         outputParams.put(PIPELINE_GIT_REPO_ID, repo.getId());
+        outputParams.put(PIPELINE_GIT_REPO, repo.getFullName());
+        outputParams.put(PIPELINE_GIT_REPO_NAME, repo.getName());
+        outputParams.put(PIPELINE_GIT_REPO_GROUP, repo.getGroup());
         outputParams.put(PIPELINE_GIT_REPO_URL, repo.getHttpUrl());
         outputParams.put(PIPELINE_GIT_REF, "refs/heads/" + ref);
         outputParams.put(CI_BRANCH, ref);

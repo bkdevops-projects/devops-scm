@@ -109,6 +109,7 @@ devops-scm提供了一套统一的源代码接口，使得开发者能够方便�
     ```
 
 ## 版本日志
+[CHANGELOG](CHANGELOG.md)
 
 ## 新增源码管理平台
 

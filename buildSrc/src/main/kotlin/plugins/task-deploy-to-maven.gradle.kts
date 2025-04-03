@@ -218,8 +218,8 @@ tasks.getByName("publishToMavenLocal") {
     }
 }
 
-/*tasks.getByName("signMavenJavaPublication") {
+tasks.getByName("signMavenJavaPublication") {
     onlyIf {
         project.the<SourceSetContainer>()["main"].allSource.files.isNotEmpty()
     }
-}*/
+}

@@ -178,9 +178,9 @@ publishing {
     }
 }
 
-/*signing {
+signing {
     sign(publishing.publications["mavenJava"])
-}*/
+}
 
 tasks.getByName("publish") {
     onlyIf {

@@ -2,9 +2,6 @@ dependencies {
     api(project(":devops-scm-api"))
     api(project(":devops-scm-provider:devops-scm-provider-git:devops-scm-provider-git-common"))
     api(project(":devops-scm-sdk:devops-scm-sdk-tgit"))
-
-    api("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
     api("org.apache.commons:commons-lang3")
 
     testImplementation("ch.qos.logback:logback-core")

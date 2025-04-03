@@ -56,4 +56,12 @@ public interface Webhook {
      * webhook事件输出的参数
      */
     Map<String, Object> outputs();
+
+    /**
+     * 是否跳过当前事件
+     * 针对webhook进行校验，如果为true，则为无效事件，不进行后续流水线触发
+     */
+    default Boolean skipCi() {
+        return false;
+    }
 }

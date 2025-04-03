@@ -115,7 +115,8 @@ public class TGitWebhookEnricher implements WebhookEnricher {
                 fillPullRequestReviewVars(
                         tGitApi,
                         repository,
-                        pullRequest
+                        pullRequest,
+                        ((PullRequestHook) webhook).getRepo()
                 )
         );
     }
@@ -176,7 +177,14 @@ public class TGitWebhookEnricher implements WebhookEnricher {
                 && ((PullRequestCommentHook) commentHook).getPullRequest() != null) {
             // 仅与MR关联的Review事件才需调用API
             PullRequest pullRequest = ((PullRequestCommentHook) commentHook).getPullRequest();
-            extras.putAll(fillPullRequestReviewVars(tGitApi, repository, pullRequest));
+            extras.putAll(
+                    fillPullRequestReviewVars(
+                            tGitApi,
+                            repository,
+                            pullRequest,
+                            ((PullRequestCommentHook) webhook).getRepo()
+                    )
+            );
         }
         commentHook.setExtras(extras);
     }
@@ -190,7 +198,14 @@ public class TGitWebhookEnricher implements WebhookEnricher {
         PullRequest pullRequest = reviewHook.getPullRequest();
         Map<String, Object> extras = reviewHook.getExtras();
         if (pullRequest != null) {
-            extras.putAll(fillPullRequestReviewVars(tGitApi, repository, pullRequest));
+            extras.putAll(
+                    fillPullRequestReviewVars(
+                            tGitApi,
+                            repository,
+                            pullRequest,
+                            ((PullRequestReviewHook) webhook).getRepo()
+                    )
+            );
         } else {
             Review review = reviewHook.getReview();
             TGitReview commitReview = tGitApi.getReviewApi()
@@ -224,7 +239,8 @@ public class TGitWebhookEnricher implements WebhookEnricher {
     private Map<String, Object> fillPullRequestVars(
             TGitApi tGitApi,
             GitScmProviderRepository repository,
-            PullRequest pullRequest
+            PullRequest pullRequest,
+            GitScmServerRepository scmServerRepository
     ) {
         TGitMergeRequest mergeRequestInfo = tGitApi.getMergeRequestApi()
                 .getMergeRequestById(
@@ -234,7 +250,7 @@ public class TGitWebhookEnricher implements WebhookEnricher {
         Map<String, Object> outputs = new HashMap<>();
         if (mergeRequestInfo != null) {
             pullRequest.setTitle(StringUtils.defaultString(mergeRequestInfo.getTitle(), ""));
-            outputs.putAll(TGitObjectToMapConverter.convertPullRequest(mergeRequestInfo));
+            outputs.putAll(TGitObjectToMapConverter.convertPullRequest(mergeRequestInfo, scmServerRepository));
         }
         return outputs;
     }
@@ -245,9 +261,17 @@ public class TGitWebhookEnricher implements WebhookEnricher {
     private Map<String, Object> fillPullRequestReviewVars(
             TGitApi tGitApi,
             GitScmProviderRepository repository,
-            PullRequest pullRequest
+            PullRequest pullRequest,
+            GitScmServerRepository scmServerRepository
     ) {
-        Map<String, Object> vars = new HashMap<>(fillPullRequestVars(tGitApi, repository, pullRequest));
+        Map<String, Object> vars = new HashMap<>(
+                fillPullRequestVars(
+                        tGitApi,
+                        repository,
+                        pullRequest,
+                        scmServerRepository
+                )
+        );
         TGitReview tGitMergeRequestReviewInfo = tGitApi.getReviewApi()
                 .getMergeRequestReview(
                         repository.getProjectIdOrPath(),

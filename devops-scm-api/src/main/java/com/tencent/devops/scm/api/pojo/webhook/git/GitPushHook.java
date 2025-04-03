@@ -79,6 +79,8 @@ public class GitPushHook implements Webhook {
     private Map<String, Object> extras;
     // 是否输出commit index变量,如BK_REPO_GIT_WEBHOOK_PUSH_COMMIT_,兼容历史数据,后续接入的都不应该输出
     private Boolean outputCommitIndexVar;
+    // 是否跳过
+    private boolean skipCi;
 
     @Override
     public GitScmServerRepository repository() {
@@ -161,5 +163,10 @@ public class GitPushHook implements Webhook {
             outputParams.putAll(GitUtils.getOutputCommitIndexVar(commits));
         }
         return outputParams;
+    }
+
+    @Override
+    public Boolean skipCi() {
+        return skipCi;
     }
 }

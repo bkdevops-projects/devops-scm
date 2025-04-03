@@ -1,9 +1,6 @@
 dependencies {
     api(project(":devops-scm-sdk:devops-scm-sdk-common"))
 
-    api("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
-
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 

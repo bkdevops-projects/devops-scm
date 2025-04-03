@@ -7,9 +7,6 @@ dependencies {
     api("org.apache.commons:commons-lang3")
     api("org.slf4j:slf4j-api")
 
-    api("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
-
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }

@@ -1,6 +1,4 @@
 dependencies {
-    api("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
     api("org.eclipse.jgit:org.eclipse.jgit")
     api("org.eclipse.jgit:org.eclipse.jgit.ssh.jsch")
 

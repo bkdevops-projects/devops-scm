@@ -2,8 +2,10 @@ package com.tencent.devops.scm.sdk.gitee.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class GiteeAssigne extends GiteeBaseUser {
 
     @JsonProperty("gists_url")

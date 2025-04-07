@@ -1,17 +1,22 @@
 package com.tencent.devops.scm.provider.git.gitee;
 
 import com.tencent.devops.scm.api.WebhookParser;
+import com.tencent.devops.scm.api.enums.EventAction;
 import com.tencent.devops.scm.api.pojo.Commit;
 import com.tencent.devops.scm.api.pojo.HookRequest;
 import com.tencent.devops.scm.api.pojo.PullRequest;
 import com.tencent.devops.scm.api.pojo.repository.git.GitScmServerRepository;
 import com.tencent.devops.scm.api.pojo.webhook.Webhook;
+import com.tencent.devops.scm.api.pojo.webhook.git.GitPushHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestHook;
+import com.tencent.devops.scm.api.util.GitUtils;
 import com.tencent.devops.scm.provider.git.gitee.enums.GiteeEventType;
 import com.tencent.devops.scm.sdk.common.util.ScmJsonUtil;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBaseLabel;
+import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteeEventCommit;
 import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteeEventPullRequest;
 import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteePullRequestHook;
+import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteePushHook;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
@@ -34,7 +39,33 @@ public class GiteeWebhookParser implements WebhookParser {
     }
 
     private Webhook parsePushHook(String body) {
-        return null;
+        GiteePushHook giteePushHook = ScmJsonUtil.fromJson(body, GiteePushHook.class);
+        GitScmServerRepository repository = GiteeObjectConverter.convertRepository(
+                giteePushHook.getRepository()
+        );
+        EventAction action = EventAction.PUSH_FILE;
+        if (giteePushHook.getCreated()) {
+            action = EventAction.CREATE;
+        } else if (giteePushHook.getDeleted()) {
+            action = EventAction.DELETE;
+        }
+        GiteeEventCommit headCommit = giteePushHook.getHeadCommit();
+        return GitPushHook.builder()
+                .action(action)
+                .ref(GitUtils.trimRef(giteePushHook.getRef()))
+                .repo(repository)
+                .eventType(GiteeEventType.PUSH.name())
+                .before(giteePushHook.getBefore())
+                .after(giteePushHook.getAfter())
+                .commit(GiteeObjectConverter.convertCommit(headCommit))
+                .sender(GiteeObjectConverter.convertUser(giteePushHook.getSender()))
+                .commits(giteePushHook.getCommits()
+                        .stream()
+                        .map(GiteeObjectConverter::convertCommit)
+                        .collect(Collectors.toList())
+                )
+                .totalCommitsCount(giteePushHook.getTotalCommitsCount().intValue())
+                .build();
     }
 
     private Webhook parsePullRequestHook(String body) {

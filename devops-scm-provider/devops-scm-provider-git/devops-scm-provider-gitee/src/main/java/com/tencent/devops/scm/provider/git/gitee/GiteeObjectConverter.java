@@ -3,20 +3,30 @@ package com.tencent.devops.scm.provider.git.gitee;
 import com.tencent.devops.scm.api.constant.DateFormatConstants;
 import com.tencent.devops.scm.api.enums.EventAction;
 import com.tencent.devops.scm.api.pojo.Change;
+import com.tencent.devops.scm.api.pojo.Change.ChangeBuilder;
+import com.tencent.devops.scm.api.pojo.Commit;
 import com.tencent.devops.scm.api.pojo.Milestone;
 import com.tencent.devops.scm.api.pojo.Reference;
+import com.tencent.devops.scm.api.pojo.Signature;
 import com.tencent.devops.scm.api.pojo.User;
 import com.tencent.devops.scm.api.pojo.repository.git.GitScmServerRepository;
+import com.tencent.devops.scm.sdk.common.util.DateUtils;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBaseUser;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBranch;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeCommitCompare;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteePullRequestDiff;
 import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteeEventAuthor;
+import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteeEventCommit;
 import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteeEventMilestone;
 import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteeEventRef;
 import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteeEventRepository;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class GiteeObjectConverter {
 
@@ -102,5 +112,53 @@ public class GiteeObjectConverter {
                 .blobId(diff.getSha())
                 .oldPath(diff.getPatch().getOldPath())
                 .build();
+    }
+
+    /*========================================commit====================================================*/
+    public static Commit convertCommit(GiteeEventCommit commit) {
+        return Commit.builder()
+                .sha(commit.getId())
+                .message(commit.getMessage())
+                .author(convertSignature(commit.getAuthor()))
+                .committer(convertSignature(commit.getCommitter()))
+                .link(commit.getUrl())
+                .added(commit.getAdded())
+                .modified(commit.getModified())
+                .removed(commit.getRemoved())
+                .commitTime(DateUtils.convertDateToLocalDateTime(commit.getTimestamp()))
+                .build();
+    }
+
+    /*========================================user====================================================*/
+    public static Signature convertSignature(GiteeBaseUser user) {
+        return Signature.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .build();
+    }
+
+    public static User convertUser(GiteeBaseUser user) {
+        return User.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .build();
+    }
+
+    /*========================================compare====================================================*/
+    public static List<Change> convertCompare(GiteeCommitCompare commitCompare) {
+        return commitCompare.getFiles().stream().map(
+                file -> {
+                    ChangeBuilder changeBuilder = Change.builder()
+                            .sha(file.getSha())
+                            .path(file.getFilename())
+                            .blobId(file.getBlobUrl());
+                    if ("removed".equals(file.getStatus())) {
+                        changeBuilder.deleted(true);
+                    } else if ("added".equals(file.getStatus())) {
+                        changeBuilder.added(true);
+                    }
+                    return changeBuilder.build();
+                }
+        ).collect(Collectors.toList());
     }
 }

@@ -18,6 +18,7 @@ public class GiteeApi {
     private final GiteeApiClient client;
     private volatile GiteeBranchesApi branchesApi;
     private volatile GiteePullRequestApi pullRequestApi;
+    private volatile GiteeRepositoryFileApi fileApi;
 
     public GiteeApi(GiteeApiClient client) {
         this.client = client;
@@ -51,5 +52,16 @@ public class GiteeApi {
             }
         }
         return pullRequestApi;
+    }
+
+    public GiteeRepositoryFileApi getFileApi() {
+        if (fileApi == null) {
+            synchronized (this) {
+                if (fileApi == null) {
+                    fileApi = new GiteeRepositoryFileApi(this);
+                }
+            }
+        }
+        return fileApi;
     }
 }

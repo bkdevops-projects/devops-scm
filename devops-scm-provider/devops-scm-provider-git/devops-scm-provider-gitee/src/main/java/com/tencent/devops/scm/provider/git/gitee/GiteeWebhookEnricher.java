@@ -8,11 +8,13 @@ import com.tencent.devops.scm.api.pojo.PullRequest;
 import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository;
 import com.tencent.devops.scm.api.pojo.repository.git.GitScmProviderRepository;
 import com.tencent.devops.scm.api.pojo.webhook.Webhook;
+import com.tencent.devops.scm.api.pojo.webhook.git.GitPushHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestHook;
 import com.tencent.devops.scm.provider.git.gitee.auth.GiteeTokenAuthProviderAdapter;
 import com.tencent.devops.scm.sdk.gitee.GiteeApi;
 import com.tencent.devops.scm.sdk.gitee.GiteeApiException;
 import com.tencent.devops.scm.sdk.gitee.GiteeApiFactory;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeCommitCompare;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteePullRequest;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteePullRequestDiff;
 import java.util.Arrays;
@@ -31,6 +33,19 @@ public class GiteeWebhookEnricher implements WebhookEnricher {
         this.apiFactory = apiFactory;
         this.eventActions = new HashMap<>();
         eventActions.put(PullRequestHook.class, this::enrichPullRequestHook);
+        eventActions.put(GitPushHook.class, this::enrichPushHook);
+    }
+
+    private void enrichPushHook(GiteeApi giteeApi, GitScmProviderRepository repository, Webhook hook) {
+        GitPushHook gitPushHook = (GitPushHook) hook;
+        GiteeCommitCompare commitCompare = giteeApi.getFileApi().commitCompare(
+                repository.getProjectIdOrPath(),
+                gitPushHook.getBefore(),
+                gitPushHook.getAfter(),
+                false
+        );
+        gitPushHook.setChanges(GiteeObjectConverter.convertCompare(commitCompare));
+        gitPushHook.setChanges(GiteeObjectConverter.convertCompare(commitCompare));
     }
 
     private void enrichPullRequestHook(GiteeApi giteeApi, GitScmProviderRepository repository, Webhook hook) {

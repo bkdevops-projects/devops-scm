@@ -3,8 +3,10 @@ package com.tencent.devops.scm.sdk.gitee.pojo.webhook;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBaseUser;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class GiteeEventAuthor extends GiteeBaseUser {
     @JsonProperty("avatar_url")
     private String avatarUrl;

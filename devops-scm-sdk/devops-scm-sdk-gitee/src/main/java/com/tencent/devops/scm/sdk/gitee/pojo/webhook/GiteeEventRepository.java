@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBaseRepository;
 import java.util.Date;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class GiteeEventRepository extends GiteeBaseRepository {
     @JsonProperty("stargazers_count")
     private Long stargazersCount;

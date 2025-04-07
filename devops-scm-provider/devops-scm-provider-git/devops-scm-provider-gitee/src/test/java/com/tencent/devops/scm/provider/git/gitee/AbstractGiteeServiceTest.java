@@ -4,13 +4,12 @@ package com.tencent.devops.scm.provider.git.gitee;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.tencent.devops.scm.api.pojo.auth.IScmAuth;
 import com.tencent.devops.scm.api.pojo.auth.PersonalAccessTokenScmAuth;
-import com.tencent.devops.scm.api.pojo.auth.PrivateTokenScmAuth;
 import com.tencent.devops.scm.api.pojo.repository.git.GitScmProviderRepository;
 import com.tencent.devops.scm.provider.git.gitee.auth.GiteeTokenAuthProviderAdapter;
 import com.tencent.devops.scm.sdk.common.connector.okhttp3.OkHttpScmConnector;
 import com.tencent.devops.scm.sdk.common.util.ScmJsonUtil;
 import com.tencent.devops.scm.sdk.gitee.GiteeApi;
-import com.tencent.devops.scm.sdk.gitee.GiteeApiClient;
+import com.tencent.devops.scm.sdk.gitee.GiteeApiFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -24,17 +23,16 @@ public class AbstractGiteeServiceTest {
 
     protected GitScmProviderRepository providerRepository;
 
+    protected GiteeApiFactory giteeApiFactory;
     protected GiteeApi giteeApi;
 
     protected AbstractGiteeServiceTest() {
         providerRepository = createProviderRepository();
-        giteeApi = new GiteeApi(
-                new GiteeApiClient(
-                    getProperty(TEST_TGIT_API_URL),
-                    new OkHttpScmConnector(new OkHttpClient.Builder().build()),
-                    GiteeTokenAuthProviderAdapter.get(providerRepository.getAuth())
-                )
+        giteeApiFactory = new GiteeApiFactory(
+                getProperty(TEST_TGIT_API_URL),
+                new OkHttpScmConnector(new OkHttpClient.Builder().build())
         );
+        giteeApi = giteeApiFactory.fromAuthProvider(GiteeTokenAuthProviderAdapter.get(providerRepository.getAuth()));
     }
 
     protected static GitScmProviderRepository createProviderRepository() {

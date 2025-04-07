@@ -508,108 +508,14 @@ public class GiteeApi {
   ![add_gitee_test_dir](./img/add_gitee_test_dir.png)  
 
 - step2. 补充测试类
-  ````java
-  package com.tencent.devops.scm.sdk.tgit;
-        
-  import com.fasterxml.jackson.core.type.TypeReference;
-  import com.tencent.devops.scm.sdk.common.auth.HttpAuthProvider;
-  import com.tencent.devops.scm.sdk.common.connector.ScmConnector;
-  import com.tencent.devops.scm.sdk.common.connector.okhttp3.OkHttpScmConnector;
-  import com.tencent.devops.scm.sdk.common.util.ScmJsonUtil;
-  import com.tencent.devops.scm.sdk.gitee.GiteeApi;
-  import com.tencent.devops.scm.sdk.gitee.auth.GiteeTokenAuthProvider;
-  import java.io.File;
-  import java.io.IOException;
-  import java.nio.charset.StandardCharsets;
-  import okhttp3.OkHttpClient;
-  import org.apache.commons.io.FileUtils;
-  import org.mockito.Mockito;
-  
-  /**
-   * 基础的gitee测试类
-   */
-  public class AbstractGiteeTest {
-      // 测试仓库
-      protected static final String TEST_PROJECT_NAME = "Tencent-BlueKing/bk-ci";
-      // 测试分支名
-      protected static final String TEST_DEFAULT_BRANCH = "master";
-      // [环境变量KEY]接口地址
-      protected static final String TEST_TGIT_API_URL = "TEST_GITEE_API_URL";
-      // [环境变量KEY]授权token
-      protected static final String TEST_TGIT_PRIVATE_TOKEN = "TEST_GITEE_PRIVATE_TOKEN";
-      // mock gitee api
-      protected static GiteeApi mockGiteeApi() {
-          return Mockito.mock(GiteeApi.class);
-      }
-  
-      // 读取环境变量构建gitee api
-      protected static GiteeApi createTGitApi() {
-          ScmConnector connector = new OkHttpScmConnector(new OkHttpClient.Builder().build());
-          String apiUrl = getProperty(TEST_TGIT_API_URL);
-          String privateToken = getProperty(TEST_TGIT_PRIVATE_TOKEN);
-          HttpAuthProvider authorizationProvider =
-                  GiteeTokenAuthProvider.fromPersonalAccessToken(privateToken);
-          return new GiteeApi(apiUrl, connector, authorizationProvider);
-      }
-  
-      protected static <T> T read(String fileName, Class<T> clazz) {
-          try {
-              String filePath = AbstractGiteeTest.class.getClassLoader().getResource(fileName).getFile();
-              String jsonString = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
-              return ScmJsonUtil.fromJson(jsonString, clazz);
-          } catch (IOException e) {
-              throw new RuntimeException(e);
-          }
-      }
-  
-      protected static <T> T read(String fileName, TypeReference<T> typeReference) {
-          try {
-              String filePath = AbstractGiteeTest.class.getClassLoader().getResource(fileName).getFile();
-              String jsonString = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
-              return ScmJsonUtil.fromJson(jsonString, typeReference);
-          } catch (IOException e) {
-              throw new RuntimeException(e);
-          }
-      }
-  
-      protected static String getProperty(String key) {
-          String value = System.getProperty(key);
-  
-          if (value == null) {
-              value = System.getenv(key);
-          }
-          return value;
-      }
-  }
-  ````
-  ````java
-  package com.tencent.devops.scm.sdk.tgit;
 
+参考：
 
-  import com.tencent.devops.scm.sdk.gitee.GiteeApi;
-  import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBranch;
-  import java.util.List;
-  import org.junit.jupiter.api.BeforeAll;
-  import org.junit.jupiter.api.Test;
-  
-  public class TGitBranchesApiTest extends AbstractGiteeTest {
-      private static GiteeApi giteeApi;
-  
-      public TGitBranchesApiTest() {
-          super();
-      }
-  
-      @BeforeAll
-      public static void setup() { giteeApi = createTGitApi(); }
-  
-      @Test
-      public void testGetBranches() {
-          List<GiteeBranch> branches = giteeApi.getBranchesApi().getBranches(TEST_PROJECT_NAME);
-          branches.forEach(System.out::println);
-      }
-  }
-  ````
-  ![gitee_add_all_branch_test](./img/gitee_get_all_branch_test.png)
+[AbstractGiteeTest](../devops-scm-sdk/devops-scm-sdk-gitee/src/test/java/com/tencent/devops/scm/sdk/tgit/AbstractGiteeTest.java)
+
+[TGitBranchesApiTest](../devops-scm-sdk/devops-scm-sdk-gitee/src/test/java/com/tencent/devops/scm/sdk/tgit/TGitBranchesApiTest.java)
+
+![gitee_add_all_branch_test](./img/gitee_get_all_branch_test.png)
 
 ## 3. 平台适配模块开发
 此模块主要用于将对 [ devops-scm-sdk-{scmCode}] 模块与 [devops-scm-api] 模块以及第三方服务进行平滑对接，主要包含以下功能：
@@ -623,7 +529,7 @@ public class GiteeApi {
 参考: [增加 devops-scm-sdk-gitee 模块](#211-增加-devops-scm-sdk-gitee-模块)
 
 ### 3.2 增加授权适配器
-蓝盾关联代码库时凭证类型不固定，需要将对应的凭证实体类转化为 GiteeTokenAuthProvider ，针对gitee授权主要有三种：
+关联代码库时凭证类型不固定，因此需要将对应的凭证实体类统一转化为 GiteeTokenAuthProvider ，针对gitee授权主要有三种：
 
 | 授权类型  | 凭证类型                        | 凭证实体类                                            |
 |-------|-----------------------------|----------------------------------------------------------------|
@@ -677,27 +583,12 @@ public class GiteeTokenAuthProviderAdapter {
 - objectCovert: 将 [devops-scm-sdk-{scmCode}] 模块的原始数据对象转换为系统内部统一的数据模型对象
   
   参考：com.tencent.devops.scm.provider.git.tgit.TGitObjectConverter
+
+
 - ObjectToMapConverter: 将 [devops-scm-sdk-{scmCode}] 模块的原始数据对象转换为Map<String, String>， 主要用于组装webhook触发变量
 
   参考：com.tencent.devops.scm.provider.git.tgit.TGitObjectToMapConverter
 
-````java
-package com.tencent.devops.scm.provider.git.gitee;
-
-import com.tencent.devops.scm.api.pojo.Reference;
-import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBranch;
-
-public class GiteeObjectConverter {
-
-    /*========================================ref====================================================*/
-    public static Reference convertBranches(GiteeBranch branch) {
-        return Reference.builder()
-                .name(branch.getName())
-                .sha(branch.getCommit().getSha())
-                .build();
-    }
-}
-````
 ### 3.4 业务服务实现
 在 [devops-scm-provider-gitee] 模块下新建功能服务类实现 [devops-scm-api] 下的服务接口, 此处继续以 [仓库分支] 为例，实现RefService接口
 ````java
@@ -726,7 +617,7 @@ import java.util.stream.Collectors;
 import okhttp3.OkHttpClient;
 import okhttp3.OkHttpClient.Builder;
 
-public class GiteeBranchService implements RefService {
+public class GiteeRefService implements RefService {
     
   @Override
   public List<Reference> listBranches(ScmProviderRepository repository, BranchListOptions opts) {
@@ -755,9 +646,72 @@ public class GiteeBranchService implements RefService {
 }
 ````
 
+### 3.6 优化代码
+结合上述代码可以发现每次创建giteeApi对象都很麻烦，apiUrl以及connector对象的创建较为繁琐，为此方便后续维护，可对此部分
+代码进行优化，采用工厂模式统一创建giteeApi对象，同时也可以用于对接多种connector，将 API 客户端的创建与使用分离，服务类
+不需要关心 API 客户端的构建细节
+
+参考：
+
+[优化后的 GiteeApiFactory](../devops-scm-sdk/devops-scm-sdk-gitee/src/main/java/com/tencent/devops/scm/sdk/gitee/GiteeApiFactory.java)
+
+[优化后的 GiteeRefService](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-gitee/src/main/java/com/tencent/devops/scm/provider/git/gitee/GiteeRefService.java)
+
 ### 3.5 服务功能验证
+增加测试类，进行接口测试
+
+参考：[服务功能验证](#26-接口验证测试)
+
+测试类：[GiteeRefServiceTest](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-gitee/src/test/java/com/tencent/devops/scm/provider/git/gitee/GiteeRefServiceTest.java)
 
 ### 3.6 Webhook支持
+适配模块需对webhook元数据信息解析，并且转化为 [devops-scm-api] 模块所规定的webhook类型，在此以 gitee 代码库的 push 以及 pull_request webhook事件为例介绍webhook解析相关流程
+
+#### 3.6.1 确认webhook消息体数据结构
+随意注册一个webhook，然后执行相应动作，提取push/pull_request的webhook元数据，不同操作对应的webhook元数据可能不同
+![add_gitee_webhook_temp](./img/add_gitee_webhook_temp.png)
+
+|事件类型| 触发webhook的动作                                      |
+|----|---------------------------------------------------|
+|push| - 新增/删除分支<br/>- 推送更新                              |
+|pull_request| - 新增/编辑/关闭/重新打开/合并pull_request<br/>- 基于pr的源分支推送更新 |
+
+提取到的webhook元数据可参考：
+- [push事件](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-gitee/src/test/resources/push_webhook.json)
+
+
+- [pull_request事件](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-gitee/src/test/resources/pull_request_webhook.json)
+
+#### 3.6.1 构建 gitee webhook 实体类
+根据 webhook 元数据在 [devops-scm-sdk-gitee] 模块创建对应的push/pull_request实体类
+
+webhook实体类命名规则：Gitee{事件类型}Event
+
+webhook实体类下级实体类命名规则：GiteeEvent{要素名}
+
+例如：
+- GiteePullRequestEvent -- pull_request 事件 webhook事件实体类
+
+- GiteePushEvent -- push 事件 webhook事件实体类
+
+- GiteeEventRepository -- webhook事件仓库实体类
+
+- GiteeEventCommit -- webhook事件提交实体类
+
+#### 3.6.1 解析webhook
+在 [devops-scm-provider-gitee] 模块下增加webhook解析器和增强器，分别实现两个接口
+- [WebhookParser](../devops-scm-api/src/main/java/com/tencent/devops/scm/api/WebhookParser.java) : webhook解析器，主要用于校验webhook有效性，同时根据不同的webhook 事件组装对应的[Webhook](../devops-scm-api/src/main/java/com/tencent/devops/scm/api/pojo/webhook/Webhook.java)实体类
+- [WebhookEnricher](../devops-scm-api/src/main/java/com/tencent/devops/scm/api/WebhookEnricher.java)：webhook增强器，由于webhook元数据中的信息可能不足以补全[Webhook](../devops-scm-api/src/main/java/com/tencent/devops/scm/api/pojo/webhook/Webhook.java)实体类内的字段，需要额外调用服务端API才能补充，补充操作可在enrich方法内实现
+
+参考：
+- [TGitWebhookEnricher](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-tgit/src/main/java/com/tencent/devops/scm/provider/git/tgit/TGitWebhookEnricher.java)
+- [TGitWebhookParser](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-tgit/src/main/java/com/tencent/devops/scm/provider/git/tgit/TGitWebhookParser.java)
+
+#### 3.6.2 服务挂载
+为了后续集成 spring-boot，需对gitee功能服务类以及webhook解析进行挂载，需继承抽象类 [GitScmProvider](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-git-common/src/main/java/com/tencent/devops/scm/provider/git/command/GitScmProvider.java)，并对应的抽象方法 
+
+参考：
+[TGitScmProvider](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-tgit/src/main/java/com/tencent/devops/scm/provider/git/tgit/TGitScmProvider.java)
 
 ## 4. spring-boot自动装配
 

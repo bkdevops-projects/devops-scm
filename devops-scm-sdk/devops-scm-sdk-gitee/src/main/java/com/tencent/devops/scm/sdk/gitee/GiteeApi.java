@@ -17,6 +17,7 @@ public class GiteeApi {
     @Getter
     private final GiteeApiClient client;
     private volatile GiteeBranchesApi branchesApi;
+    private volatile GiteePullRequestApi pullRequestApi;
 
     public GiteeApi(GiteeApiClient client) {
         this.client = client;
@@ -39,5 +40,16 @@ public class GiteeApi {
             }
         }
         return branchesApi;
+    }
+
+    public GiteePullRequestApi getPullRequestApi() {
+        if (pullRequestApi == null) {
+            synchronized (this) {
+                if (pullRequestApi == null) {
+                    pullRequestApi = new GiteePullRequestApi(this);
+                }
+            }
+        }
+        return pullRequestApi;
     }
 }

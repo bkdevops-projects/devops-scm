@@ -14,6 +14,7 @@ import com.tencent.devops.scm.api.pojo.repository.git.GitScmProviderRepository;
 import com.tencent.devops.scm.provider.git.gitee.auth.GiteeTokenAuthProviderAdapter;
 import com.tencent.devops.scm.sdk.common.connector.okhttp3.OkHttpScmConnector;
 import com.tencent.devops.scm.sdk.gitee.GiteeApi;
+import com.tencent.devops.scm.sdk.gitee.GiteeApiFactory;
 import com.tencent.devops.scm.sdk.gitee.GiteeBranchesApi;
 import com.tencent.devops.scm.sdk.gitee.auth.GiteeTokenAuthProvider;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBranch;
@@ -24,6 +25,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.OkHttpClient.Builder;
 
 public class GiteeRefService implements RefService {
+    private final GiteeApiFactory apiFactory;
+
+    public GiteeRefService(GiteeApiFactory apiFactory) {
+        this.apiFactory = apiFactory;
+    }
 
     @Override
     public void createBranch(ScmProviderRepository repository, ReferenceInput input) {
@@ -37,25 +43,11 @@ public class GiteeRefService implements RefService {
 
     @Override
     public List<Reference> listBranches(ScmProviderRepository repository, BranchListOptions opts) {
-        GitScmProviderRepository gitScmProviderRepository = (GitScmProviderRepository) repository;
-        // 校验授权类型
-        if (!GiteeTokenAuthProviderAdapter.support(gitScmProviderRepository.getAuth())) {
-            return new ArrayList<>();
-        }
-        // 获取授权提供者
-        GiteeTokenAuthProvider giteeTokenAuthProvider = GiteeTokenAuthProviderAdapter.get(
-                gitScmProviderRepository.getAuth()
-        );
-        // 组装请求连接器, 可根据情况自行调整连接器相关配置
-        OkHttpClient client = new Builder().build();
-        OkHttpScmConnector okHttpScmConnector = new OkHttpScmConnector(client);
+        GitScmProviderRepository repo = (GitScmProviderRepository) repository;
+        GiteeApi giteeApi = apiFactory.fromAuthProvider(GiteeTokenAuthProviderAdapter.get(repo.getAuth()));
         // 构建请求接口类
-        GiteeBranchesApi branchesApi = new GiteeApi(
-                "https://gitee.com/api/v5",
-                okHttpScmConnector,
-                giteeTokenAuthProvider
-        ).getBranchesApi();
-        List<GiteeBranch> branches = branchesApi.getBranches(gitScmProviderRepository.getProjectIdOrPath());
+        GiteeBranchesApi branchesApi = giteeApi.getBranchesApi();
+        List<GiteeBranch> branches = branchesApi.getBranches(repo.getProjectIdOrPath());
         // 结果转化
         return branches.stream().map(GiteeObjectConverter::convertBranches).collect(Collectors.toList());
     }

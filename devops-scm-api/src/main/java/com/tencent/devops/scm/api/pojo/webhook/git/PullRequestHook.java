@@ -47,6 +47,7 @@ import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEB
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_TARGET_URL;
 import static com.tencent.devops.scm.api.constant.WebhookOutputConstants.PR_DESC_MAX_LENGTH;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tencent.devops.scm.api.enums.EventAction;
 import com.tencent.devops.scm.api.pojo.Change;
 import com.tencent.devops.scm.api.pojo.Commit;
@@ -88,6 +89,7 @@ public class PullRequestHook implements Webhook {
     private Commit commit;
     // 变更的文件路径
     private List<Change> changes;
+    @JsonIgnore
     // 扩展属性,提供者额外补充需要输出的变量
     private Map<String, Object> extras;
 

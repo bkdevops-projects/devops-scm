@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class GiteeCommit {
-    private GiteeAuthor committer;
-    private GiteeAuthor author;
+    private GiteeBaseUser committer;
+    private GiteeBaseUser author;
     private String message;
 }

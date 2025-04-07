@@ -11,7 +11,7 @@ public class GiteeRefServiceTest extends AbstractGiteeServiceTest {
     private static final String TEST_COMMIT_SHA = "b5f141f9c1b3f87d9b070157097130be7fb7563a";
 
 
-    private final GiteeRefService refService = new GiteeRefService();;
+    private final GiteeRefService refService = new GiteeRefService(giteeApiFactory);
 
     @Test
     public void testListBranches() {

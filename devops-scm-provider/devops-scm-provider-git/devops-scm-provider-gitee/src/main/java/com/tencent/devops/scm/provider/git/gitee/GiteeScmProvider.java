@@ -1,4 +1,4 @@
-package com.tencent.devops.scm.provider.git.tgit;
+package com.tencent.devops.scm.provider.git.gitee;
 
 import com.tencent.devops.scm.api.FileService;
 import com.tencent.devops.scm.api.IssueService;
@@ -10,68 +10,67 @@ import com.tencent.devops.scm.api.UserService;
 import com.tencent.devops.scm.api.WebhookEnricher;
 import com.tencent.devops.scm.api.WebhookParser;
 import com.tencent.devops.scm.provider.git.command.GitScmProvider;
-import com.tencent.devops.scm.sdk.common.connector.ScmConnector;
-import com.tencent.devops.scm.sdk.tgit.TGitApiFactory;
-import com.tencent.devops.scm.sdk.tgit.TGitOauth2Api;
 import com.tencent.devops.scm.sdk.common.GitOauth2ClientProperties;
+import com.tencent.devops.scm.sdk.common.connector.ScmConnector;
+import com.tencent.devops.scm.sdk.gitee.GiteeApiFactory;
 
-public class TGitScmProvider extends GitScmProvider {
-    private final TGitApiFactory apiFactory;
-    private TGitOauth2Api oauth2Api;
+public class GiteeScmProvider extends GitScmProvider {
+    private final GiteeApiFactory apiFactory;
 
-    public TGitScmProvider(String apiUrl, ScmConnector connector) {
-        this(new TGitApiFactory(apiUrl, connector));
+    public GiteeScmProvider(String apiUrl, ScmConnector connector) {
+        this(new GiteeApiFactory(apiUrl, connector));
     }
 
-    public TGitScmProvider(String apiUrl, ScmConnector connector, GitOauth2ClientProperties properties) {
+    public GiteeScmProvider(String apiUrl, ScmConnector connector, GitOauth2ClientProperties properties) {
         this(apiUrl, connector);
-        this.oauth2Api = new TGitOauth2Api(properties, connector);
     }
 
-    public TGitScmProvider(TGitApiFactory apiFactory) {
+    public GiteeScmProvider(GiteeApiFactory apiFactory) {
         this.apiFactory = apiFactory;
     }
 
+    @Override
     public RepositoryService repositories() {
-        return new TGitRepositoryService(apiFactory);
+        return null;
     }
 
     @Override
     public RefService refs() {
-        return new TGitRefService(apiFactory);
+        return new GiteeRefService(apiFactory);
     }
 
     @Override
     public IssueService issues() {
-        return new TGitIssueService(apiFactory);
+        return null;
     }
 
     @Override
     public UserService users() {
-        return new TGitUserService(apiFactory);
+        return null;
     }
 
     @Override
     public FileService files() {
-        return new TGitFileService(apiFactory);
+        return null;
     }
 
     @Override
     public WebhookParser webhookParser() {
-        return new TGitWebhookParser();
+        return new GiteeWebhookParser();
     }
 
     @Override
     public WebhookEnricher webhookEnricher() {
-        return new TGitWebhookEnricher(apiFactory);
+        return new GiteeWebhookEnricher(apiFactory);
     }
 
     @Override
     public PullRequestService pullRequests() {
-        return new TGitPullRequestService(apiFactory);
+        return null;
     }
 
+    @Override
     public TokenService token() {
-        return new TGitTokenService(oauth2Api);
+        return null;
     }
 }

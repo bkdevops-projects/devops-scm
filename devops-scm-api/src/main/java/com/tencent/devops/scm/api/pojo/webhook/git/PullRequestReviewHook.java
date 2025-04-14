@@ -87,9 +87,6 @@ public class PullRequestReviewHook implements Webhook {
     @Override
     public Map<String, Object> outputs() {
         Map<String, Object> outputParams = new HashMap<>();
-        if (extras != null) {
-            outputParams.putAll(extras);
-        }
         outputParams.put(BK_REPO_GIT_WEBHOOK_REVIEW_ID, review.getId().toString());
         outputParams.put(BK_REPO_GIT_WEBHOOK_REVIEW_IID, review.getIid().toString());
 
@@ -113,6 +110,9 @@ public class PullRequestReviewHook implements Webhook {
         outputParams.put(PIPELINE_GIT_REPO, repo.getFullName());
         outputParams.put(PIPELINE_GIT_REPO_NAME, repo.getName());
         outputParams.put(PIPELINE_GIT_REPO_GROUP, repo.getGroup());
+        if (extras != null) {
+            outputParams.putAll(extras);
+        }
         return outputParams;
     }
 

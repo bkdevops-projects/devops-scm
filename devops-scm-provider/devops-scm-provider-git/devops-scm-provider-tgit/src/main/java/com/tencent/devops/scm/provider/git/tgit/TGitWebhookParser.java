@@ -218,6 +218,7 @@ public class TGitWebhookParser implements WebhookParser {
         Map<String, Object> extras = new HashMap<>();
         extras.put(BK_REPO_GIT_MANUAL_UNLOCK, src.getManualUnlock()); // 是否手动解锁
         extras.put(PIPELINE_GIT_MR_ACTION, src.getObjectAttributes().getAction());
+        extras.put(PIPELINE_GIT_ACTION, src.getObjectAttributes().getAction());
 
         TGitEventProject srcTarget = objectAttributes.getTarget();
         GitRepositoryUrl targetRepositoryUrl = new GitRepositoryUrl(srcTarget.getHttpUrl());

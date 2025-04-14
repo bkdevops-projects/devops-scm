@@ -27,9 +27,6 @@ public class PullRequestCommentHook extends AbstractCommentHook {
     @Override
     public Map<String, Object> outputs() {
         Map<String, Object> outputs = super.outputs();
-        if (getExtras() != null) {
-            outputs.putAll(getExtras());
-        }
         // commit review
         if (review != null) {
             outputs.put("BK_REPO_GIT_WEBHOOK_REVIEW_STATE", review.getState().value);
@@ -41,6 +38,9 @@ public class PullRequestCommentHook extends AbstractCommentHook {
             outputs.put("BK_REPO_GIT_WEBHOOK_REVIEW_TARGET_COMMIT", review.getTargetCommit());
             outputs.put("BK_REPO_GIT_WEBHOOK_REVIEW_TARGET_BRANCH", review.getTargetBranch());
             outputs.put("BK_REPO_GIT_WEBHOOK_REVIEW_TARGET_PROJECT_ID", review.getTargetProjectId());
+        }
+        if (getExtras() != null) {
+            outputs.putAll(getExtras());
         }
         return outputs;
     }

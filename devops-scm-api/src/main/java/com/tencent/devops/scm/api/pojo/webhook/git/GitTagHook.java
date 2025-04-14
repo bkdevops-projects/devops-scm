@@ -92,9 +92,6 @@ public class GitTagHook implements Webhook {
     @Override
     public Map<String, Object> outputs() {
         Map<String, Object> outputParams = new HashMap<>();
-        if (extras != null) {
-            outputParams.putAll(extras);
-        }
 
         // 通用变量
         outputParams.put(PIPELINE_WEBHOOK_REVISION, ref.getSha());
@@ -126,6 +123,9 @@ public class GitTagHook implements Webhook {
         }
         outputParams.put(PIPELINE_GIT_EVENT_URL, ref.getLinkUrl());
         outputParams.put(PIPELINE_GIT_ACTION, action.value);
+        if (extras != null) {
+            outputParams.putAll(extras);
+        }
         return outputParams;
     }
 }

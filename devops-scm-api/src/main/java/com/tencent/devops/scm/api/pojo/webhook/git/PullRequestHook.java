@@ -121,9 +121,6 @@ public class PullRequestHook implements Webhook {
     @Override
     public Map<String, Object> outputs() {
         Map<String, Object> outputParams = new HashMap<>();
-        if (extras != null) {
-            outputParams.putAll(extras);
-        }
         outputParams.put(BK_GIT_MR_NUMBER, pullRequest.getNumber());
         outputParams.put(BK_HOOK_MR_ID, pullRequest.getId());
         outputParams.put(
@@ -181,6 +178,9 @@ public class PullRequestHook implements Webhook {
         outputParams.put(PIPELINE_WEBHOOK_SOURCE_URL, sourceRepoUrl);
         outputParams.put(PIPELINE_WEBHOOK_TARGET_REPO_NAME, pullRequest.getTargetRepo().getFullName());
         outputParams.put(PIPELINE_WEBHOOK_TARGET_URL, targetRepoUrl);
+        if (extras != null) {
+            outputParams.putAll(extras);
+        }
         return outputParams;
     }
 

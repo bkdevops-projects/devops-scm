@@ -113,9 +113,6 @@ public class GitPushHook implements Webhook {
     @Override
     public Map<String, Object> outputs() {
         Map<String, Object> outputParams = new HashMap<>();
-        if (extras != null) {
-            outputParams.putAll(extras);
-        }
         outputParams.put(PIPELINE_WEBHOOK_REVISION, commit.getSha());
         outputParams.put(PIPELINE_REPO_NAME, repo.getFullName());
         outputParams.put(PIPELINE_START_WEBHOOK_USER_ID, sender.getName());
@@ -161,6 +158,9 @@ public class GitPushHook implements Webhook {
         outputParams.put(PIPELINE_GIT_SHA, commit.getSha());
         if (Boolean.TRUE.equals(outputCommitIndexVar)) {
             outputParams.putAll(GitUtils.getOutputCommitIndexVar(commits));
+        }
+        if (extras != null) {
+            outputParams.putAll(extras);
         }
         return outputParams;
     }

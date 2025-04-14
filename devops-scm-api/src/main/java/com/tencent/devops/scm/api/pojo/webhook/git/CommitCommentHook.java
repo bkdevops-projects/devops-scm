@@ -29,9 +29,6 @@ public class CommitCommentHook extends AbstractCommentHook {
     @Override
     public Map<String, Object> outputs() {
         Map<String, Object> outputs = super.outputs();
-        if (getExtras() != null) {
-            outputs.putAll(getExtras());
-        }
         if (commit != null) {
             outputs.put(
                     PIPELINE_GIT_COMMIT_AUTHOR,
@@ -40,6 +37,9 @@ public class CommitCommentHook extends AbstractCommentHook {
             outputs.put(PIPELINE_GIT_SHA, commit.getSha());
             outputs.put(PIPELINE_GIT_SHA_SHORT, GitUtils.getShortSha(commit.getSha()));
             outputs.put(PIPELINE_GIT_COMMIT_MESSAGE, commit.getMessage());
+        }
+        if (getExtras() != null) {
+            outputs.putAll(getExtras());
         }
         return outputs;
     }

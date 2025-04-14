@@ -86,9 +86,6 @@ public class IssueHook implements Webhook {
     @Override
     public Map<String, Object> outputs() {
         Map<String, Object> outputParams = new HashMap<>();
-        if (extras != null) {
-            outputParams.putAll(extras);
-        }
         outputParams.put(BK_REPO_GIT_WEBHOOK_ISSUE_TITLE, issue.getTitle());
         outputParams.put(BK_REPO_GIT_WEBHOOK_ISSUE_ID, issue.getId().toString());
         outputParams.put(BK_REPO_GIT_WEBHOOK_ISSUE_IID, issue.getNumber().toString());
@@ -111,6 +108,9 @@ public class IssueHook implements Webhook {
         outputParams.put(PIPELINE_GIT_REPO_ID, repo.getId());
         outputParams.put(PIPELINE_START_WEBHOOK_USER_ID, sender.getName());
         outputParams.put(PIPELINE_GIT_EVENT, "issue");
+        if (extras != null) {
+            outputParams.putAll(extras);
+        }
         return outputParams;
     }
 

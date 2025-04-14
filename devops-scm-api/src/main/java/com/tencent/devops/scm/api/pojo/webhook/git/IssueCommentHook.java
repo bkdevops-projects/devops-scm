@@ -34,9 +34,6 @@ public class IssueCommentHook extends AbstractCommentHook {
     @Override
     public Map<String, Object> outputs() {
         Map<String, Object> outputs = super.outputs();
-        if (getExtras() != null) {
-            outputs.putAll(getExtras());
-        }
         if (issue != null) {
             outputs.put(BK_REPO_GIT_WEBHOOK_ISSUE_TITLE, issue.getTitle());
             outputs.put(BK_REPO_GIT_WEBHOOK_ISSUE_ID, issue.getId());
@@ -46,6 +43,9 @@ public class IssueCommentHook extends AbstractCommentHook {
             outputs.put(BK_REPO_GIT_WEBHOOK_ISSUE_OWNER, getSender().getName());
             outputs.put(BK_REPO_GIT_WEBHOOK_ISSUE_URL, issue.getLink());
             outputs.put(BK_REPO_GIT_WEBHOOK_ISSUE_MILESTONE_ID, issue.getMilestoneId());
+        }
+        if (getExtras() != null) {
+            outputs.putAll(getExtras());
         }
         return outputs;
     }

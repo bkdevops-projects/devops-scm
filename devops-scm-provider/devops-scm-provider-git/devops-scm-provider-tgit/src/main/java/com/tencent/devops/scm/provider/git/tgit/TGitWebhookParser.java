@@ -183,14 +183,6 @@ public class TGitWebhookParser implements WebhookParser {
     private PullRequestHook parsePullRequestHook(String body) {
         TGitMergeRequestEvent src = TGitJsonUtil.fromJson(body, TGitMergeRequestEvent.class);
         TGitMergeRequestEvent.ObjectAttributes objectAttributes = src.getObjectAttributes();
-
-        TGitUser tGitUser = src.getUser();
-        User user = User.builder()
-                .name(tGitUser.getName())
-                .email(tGitUser.getEmail())
-                .avatar(tGitUser.getAvatarUrl())
-                .build();
-
         EventAction action = EventAction.EDIT;
         switch (objectAttributes.getAction()) {
             case "open":
@@ -213,9 +205,6 @@ public class TGitWebhookParser implements WebhookParser {
             default:
 
         }
-
-        PullRequest pullRequest = TGitObjectConverter.convertPullRequest(user, objectAttributes);
-        Commit commit = TGitObjectConverter.convertCommit(objectAttributes.getLastCommit());
         // 补充字段
         Map<String, Object> extras = new HashMap<>();
         extras.put(BK_REPO_GIT_MANUAL_UNLOCK, src.getManualUnlock()); // 是否手动解锁
@@ -233,7 +222,14 @@ public class TGitWebhookParser implements WebhookParser {
                 .sshUrl(srcTarget.getSshUrl())
                 .webUrl(srcTarget.getWebUrl())
                 .build();
-
+        TGitUser tGitUser = src.getUser();
+        User user = User.builder()
+                .name(tGitUser.getName())
+                .email(tGitUser.getEmail())
+                .avatar(tGitUser.getAvatarUrl())
+                .build();
+        PullRequest pullRequest = TGitObjectConverter.convertPullRequest(user, objectAttributes);
+        Commit commit = TGitObjectConverter.convertCommit(objectAttributes.getLastCommit());
         return PullRequestHook.builder()
                 .action(action)
                 .repo(repo)

@@ -7,9 +7,11 @@ import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_PUSH_TOTAL_COMMIT;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_APPROVED_REVIEWERS;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_APPROVING_REVIEWERS;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_OWNER;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_REVIEWABLE_ID;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_REVIEWABLE_TYPE;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_REVIEWERS;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_STATE;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_TAG_CREATE_FROM;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_TAG_OPERATION;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_ACTION;
@@ -433,21 +435,27 @@ public class TGitWebhookParser implements WebhookParser {
 
         Map<String, Object> extra = fillReviewExtra(src);
 
-        PullRequestReviewHook webhook = PullRequestReviewHook.builder()
+        PullRequestReviewHook.PullRequestReviewHookBuilder webhookBuilder = PullRequestReviewHook.builder()
                         .repo(repo)
                         .action(EventAction.CREATE)
                         .eventType(TGitEventType.REVIEW.name())
                         .review(review)
                         .sender(sender)
-                        .extras(extra)
-                        .build();
+                        .extras(extra);
         if ("merge_request".equals(src.getReviewableType())) {
             PullRequest pullRequest = new PullRequest();
             pullRequest.setId(src.getReviewableId());
-            webhook.setPullRequest(pullRequest);
+            webhookBuilder.pullRequest(pullRequest);
+        } else {
+            extra.put(BK_REPO_GIT_WEBHOOK_REVIEW_STATE, src.getState());
+            extra.put(
+                    BK_REPO_GIT_WEBHOOK_REVIEW_OWNER,
+                    Optional.ofNullable(src.getAuthor())
+                            .map(TGitUser::getUsername).orElse("")
+            );
         }
 
-        return webhook;
+        return webhookBuilder.build();
     }
 
     private GitPushHook convertPushHook(TGitPushEvent src) {
@@ -547,11 +555,12 @@ public class TGitWebhookParser implements WebhookParser {
                 extras.put(PIPELINE_GIT_COMMIT_AUTHOR, lastCommit.getAuthor().getName());
                 extras.put(PIPELINE_GIT_COMMIT_MESSAGE, lastCommit.getMessage());
             }
-            GitUtils.getOutputCommitIndexVar(
+            Map<String, Object> outputCommitIndexVar = GitUtils.getOutputCommitIndexVar(
                     src.getCommits().stream()
                             .map(TGitObjectConverter::convertCommit)
                             .collect(Collectors.toList())
             );
+            extras.putAll(outputCommitIndexVar);
         }
         return extras;
     }

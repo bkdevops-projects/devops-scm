@@ -471,6 +471,7 @@ public class TGitWebhookParser implements WebhookParser {
                 .sha(src.getCheckoutSha())
                 .author(author)
                 .committer(author)
+                .message("")
                 .build();
         if (!src.getCommits().isEmpty()) {
             TGitEventCommit lastCommit = src.getCommits().get(0);
@@ -514,14 +515,32 @@ public class TGitWebhookParser implements WebhookParser {
                 .stream()
                 .map(TGitObjectConverter::convertCommit)
                 .collect(Collectors.toList());
+        String ref = GitUtils.trimRef(src.getRef());
+        String link;
+        // 根据事件动作封装事件详情链接
+        switch (action) {
+            case NEW_BRANCH:
+                link = (new StringBuilder())
+                        .append(repository.getWebUrl())
+                        .append("/tree/")
+                        .append(ref)
+                        .toString();
+                break;
+            case DELETE:
+                link = repository.getWebUrl();
+                break;
+            default:
+                link = commit.getLink();
+        }
         return GitPushHook.builder()
                 .action(action)
-                .ref(GitUtils.trimRef(src.getRef()))
+                .ref(ref)
                 .eventType(TGitEventType.PUSH.name())
                 .repo(repository)
                 .before(src.getBefore())
                 .after(src.getAfter())
                 .commit(commit)
+                .link(link)
                 .sender(user)
                 .commits(commits)
                 .changes(changes)

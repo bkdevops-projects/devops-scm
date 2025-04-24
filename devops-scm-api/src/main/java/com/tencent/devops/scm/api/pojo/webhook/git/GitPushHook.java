@@ -1,5 +1,8 @@
 package com.tencent.devops.scm.api.pojo.webhook.git;
 
+import static com.tencent.devops.scm.api.constant.WebhookI18Code.GIT_PUSH_CREATE_EVENT_DESC;
+import static com.tencent.devops.scm.api.constant.WebhookI18Code.GIT_PUSH_DELETE_EVENT_DESC;
+import static com.tencent.devops.scm.api.constant.WebhookI18Code.GIT_PUSH_EVENT_DESC;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_BRANCH;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_COMMIT_ID;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_PUSH_AFTER_COMMIT;
@@ -29,8 +32,8 @@ import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEB
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_COMMIT_MESSAGE;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_EVENT_TYPE;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_REVISION;
+import static com.tencent.devops.scm.api.enums.EventAction.DELETE;
 
-import com.tencent.devops.scm.api.constant.WebhookI18Code;
 import com.tencent.devops.scm.api.enums.EventAction;
 import com.tencent.devops.scm.api.pojo.Change;
 import com.tencent.devops.scm.api.pojo.Commit;
@@ -70,6 +73,7 @@ public class GitPushHook implements Webhook {
     private String before;
     private String after;
     private Commit commit;
+    private String link;
     private User sender;
     private List<Commit> commits;
     // 变更的文件路径
@@ -94,18 +98,14 @@ public class GitPushHook implements Webhook {
 
     @Override
     public ScmI18Variable getEventDesc() {
-        String code = WebhookI18Code.GIT_PUSH_EVENT_DESC;
-        if (action == EventAction.DELETE) {
-            code = WebhookI18Code.GIT_PUSH_DELETE_EVENT_DESC;
-        }
         List<String> params = Arrays.asList(
                 GitUtils.trimRef(ref),
-                commit.getLink(),
+                link,
                 GitUtils.getShortSha(commit.getSha()),
                 sender.getName()
         );
         return ScmI18Variable.builder()
-                .code(code)
+                .code(getI18Code())
                 .params(params)
                 .build();
     }
@@ -137,7 +137,7 @@ public class GitPushHook implements Webhook {
         outputParams.put(PIPELINE_GIT_REPO_URL, repo.getHttpUrl());
         outputParams.put(PIPELINE_GIT_REF, "refs/heads/" + ref);
         outputParams.put(CI_BRANCH, ref);
-        if (action == EventAction.DELETE) {
+        if (action == DELETE) {
             outputParams.put(PIPELINE_GIT_EVENT, "delete");
         } else {
             outputParams.put(PIPELINE_GIT_EVENT, "push");
@@ -168,5 +168,20 @@ public class GitPushHook implements Webhook {
     @Override
     public Boolean skipCi() {
         return skipCi;
+    }
+
+    private String getI18Code() {
+        String code;
+        switch (action) {
+            case NEW_BRANCH:
+                code = GIT_PUSH_CREATE_EVENT_DESC;
+                break;
+            case DELETE:
+                code = GIT_PUSH_DELETE_EVENT_DESC;
+                break;
+            default:
+                code = GIT_PUSH_EVENT_DESC;
+        }
+        return code;
     }
 }

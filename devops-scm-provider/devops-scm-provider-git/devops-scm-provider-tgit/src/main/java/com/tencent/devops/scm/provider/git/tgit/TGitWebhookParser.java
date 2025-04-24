@@ -154,18 +154,34 @@ public class TGitWebhookParser implements WebhookParser {
         );
 
         String refName = GitUtils.trimRef(src.getRef());
-        String linkUrl = String.format("%s/-/tags/%s", repo.getWebUrl(), refName);
+        // Tag 最新的commit
+        Commit commit = null;
+        String linkUrl;
+        //  组装tag链接
+        switch (action) {
+            case DELETE:
+                linkUrl = repo.getWebUrl();
+                commit = Commit.builder()
+                        .sha(src.getBefore())
+                        .message("")
+                        .build();
+                break;
+            case CREATE:
+                linkUrl = String.format("%s/-/tags/%s", repo.getWebUrl(), refName);
+                commit = CollectionUtils.emptyIfNull(src.getCommits())
+                    .stream()
+                    .findFirst()
+                    .map(TGitObjectConverter::convertCommit)
+                    .orElse(null);
+                break;
+            default:
+                linkUrl = "";
+        }
         Reference ref = Reference.builder()
                 .name(refName)
                 .sha(sha)
                 .linkUrl(linkUrl)
                 .build();
-        // Tag 最新的commit
-        Commit commit = CollectionUtils.emptyIfNull(src.getCommits())
-                .stream()
-                .findFirst()
-                .map(TGitObjectConverter::convertCommit)
-                .orElse(null);
         Map<String, Object> extras = fillTagExtra(src);
 
         return GitTagHook.builder()

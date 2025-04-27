@@ -12,7 +12,8 @@ public enum ScmEventType {
     PULL_REQUEST_COMMENT("pull_request_comment"),
     PUSH("push"),
     TAG("tag"),
-    PULL_REQUEST_REVIEW("pull_request_review");
+    PULL_REQUEST_REVIEW("pull_request_review"),
+    POST_COMMIT("post_commit");
 
     public final String value;
 

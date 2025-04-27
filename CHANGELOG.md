@@ -20,3 +20,9 @@
 ##### 2025-05-20
 ### 修复
 - bug: 增加异常错误码 #21 [链接](https://github.com/bkdevops-projects/devops-scm/issues/21)
+
+
+# 1.1.0
+##### 2025-04-20
+### 新增
+- feat: 增加Gitee和TSvn服务提供者 #6 [链接](https://github.com/bkdevops-projects/devops-scm/issues/6)

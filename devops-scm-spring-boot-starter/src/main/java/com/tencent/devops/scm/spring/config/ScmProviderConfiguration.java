@@ -1,6 +1,6 @@
 package com.tencent.devops.scm.spring.config;
 
-import com.tencent.devops.scm.spring.manager.OkHttpScmConnectorFactory;
+import com.tencent.devops.scm.spring.manager.GiteeScmProviderFactory;
 import com.tencent.devops.scm.spring.manager.ScmConnectorFactory;
 import com.tencent.devops.scm.spring.manager.ScmProviderFactory;
 import com.tencent.devops.scm.spring.manager.ScmProviderManager;
@@ -29,5 +29,11 @@ public class ScmProviderConfiguration {
     @ConditionalOnMissingBean(TSvnScmProviderFactory.class)
     public TSvnScmProviderFactory tSvnScmProviderFactory() {
         return new TSvnScmProviderFactory();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(GiteeScmProviderFactory.class)
+    public GiteeScmProviderFactory giteeScmProviderFactory(ScmConnectorFactory connectorFactory) {
+        return new GiteeScmProviderFactory(connectorFactory);
     }
 }

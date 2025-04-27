@@ -27,8 +27,8 @@ public class ScmProviderConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(TSvnScmProviderFactory.class)
-    public TSvnScmProviderFactory tSvnScmProviderFactory() {
-        return new TSvnScmProviderFactory();
+    public TSvnScmProviderFactory tSvnScmProviderFactory(ScmConnectorFactory connectorFactory) {
+        return new TSvnScmProviderFactory(connectorFactory);
     }
 
     @Bean

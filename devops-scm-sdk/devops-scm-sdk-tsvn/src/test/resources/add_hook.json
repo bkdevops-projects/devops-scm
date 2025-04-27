@@ -1,0 +1,18 @@
+{
+  "id": 12345,
+  "url": "http://template.hookServer/external/scm/codesvn/commit",
+  "path": "/trunk",
+  "created_at": "2025-04-18T09:29:39+0000",
+  "updated_at": "2025-04-18T09:29:39+0000",
+  "project_id": 106699,
+  "active": false,
+  "svn_pre_lock_events": false,
+  "svn_post_lock_events": false,
+  "svn_post_commit_events": true,
+  "svn_pre_commit_events": false,
+  "hook_events": [
+    "svn_post_commit"
+  ],
+  "project_setting_events": false,
+  "lock_events": false
+}

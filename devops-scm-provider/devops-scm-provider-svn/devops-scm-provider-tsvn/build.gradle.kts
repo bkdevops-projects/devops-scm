@@ -1,6 +1,7 @@
 dependencies {
     api(project(":devops-scm-api"))
     api(project(":devops-scm-provider:devops-scm-provider-svn:devops-scm-provider-svn-common"))
+    api(project(":devops-scm-sdk:devops-scm-sdk-tsvn"))
     api("org.apache.commons:commons-lang3")
 
     testImplementation("ch.qos.logback:logback-core")

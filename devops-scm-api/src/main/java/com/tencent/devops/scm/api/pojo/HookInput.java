@@ -20,4 +20,6 @@ public class HookInput {
 
     // 在HookEvents中不包含的事件类型
     private List<String> nativeEvents;
+    // 仓库下级目录
+    private String path;
 }

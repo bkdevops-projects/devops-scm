@@ -20,4 +20,6 @@ public class Hook {
     private List<String> nativeEvents;
     private Boolean active;
     private Boolean skipVerify;
+    // 监听仓库的相对路径
+    private String path;
 }

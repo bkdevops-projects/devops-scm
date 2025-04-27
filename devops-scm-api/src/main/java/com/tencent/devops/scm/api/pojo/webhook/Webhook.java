@@ -13,6 +13,7 @@ import com.tencent.devops.scm.api.pojo.webhook.git.IssueHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestCommentHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestReviewHook;
+import com.tencent.devops.scm.api.pojo.webhook.svn.PostCommitHook;
 import java.util.Map;
 
 
@@ -26,7 +27,8 @@ import java.util.Map;
         @JsonSubTypes.Type(value = CommitCommentHook.class, name = CommitCommentHook.CLASS_TYPE),
         @JsonSubTypes.Type(value = IssueCommentHook.class, name = IssueCommentHook.CLASS_TYPE),
         @JsonSubTypes.Type(value = PullRequestCommentHook.class, name = PullRequestCommentHook.CLASS_TYPE),
-        @JsonSubTypes.Type(value = PullRequestReviewHook.class, name = PullRequestReviewHook.CLASS_TYPE)
+        @JsonSubTypes.Type(value = PullRequestReviewHook.class, name = PullRequestReviewHook.CLASS_TYPE),
+        @JsonSubTypes.Type(value = PostCommitHook.class, name = PostCommitHook.CLASS_TYPE)
 })
 public interface Webhook {
 

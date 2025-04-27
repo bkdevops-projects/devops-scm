@@ -48,4 +48,9 @@ public interface WebhookI18Code {
     String GIT_TAG_PUSH_EVENT_DESC = "bkGitTagPushEventDesc";
     // git tag删除事件
     String GIT_TAG_DELETE_EVENT_DESC = "bkGitTagDeleteEventDesc";
+
+
+    /*========================================svn====================================================*/
+    // post commit 事件
+    String SVN_POST_COMMIT = "bkSvnCommitEventDesc";
 }

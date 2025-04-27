@@ -15,6 +15,7 @@ include(":devops-scm-provider:devops-scm-provider-svn:devops-scm-provider-tsvn")
 include(":devops-scm-sdk")
 include(":devops-scm-sdk:devops-scm-sdk-common")
 include(":devops-scm-sdk:devops-scm-sdk-tgit")
+include(":devops-scm-sdk:devops-scm-sdk-tsvn")
 
 include(":devops-scm-spring-boot-starter")
 

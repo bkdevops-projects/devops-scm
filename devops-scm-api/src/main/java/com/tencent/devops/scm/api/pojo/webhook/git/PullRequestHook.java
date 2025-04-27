@@ -93,6 +93,12 @@ public class PullRequestHook implements Webhook {
     private List<Change> changes;
     // 扩展属性,提供者额外补充需要输出的变量
     private Map<String, Object> extras;
+    private boolean skipCi;
+
+    @Override
+    public Boolean skipCi() {
+        return skipCi;
+    }
 
     @Override
     public GitScmServerRepository repository() {

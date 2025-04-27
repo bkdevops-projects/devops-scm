@@ -1,0 +1,113 @@
+{
+  "base_commit": {
+    "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/851457853412a898063baed4efa2e1053745c04a",
+    "sha": "851457853412a898063baed4efa2e1053745c04a",
+    "html_url": "https://gitee.com/Tencent-BlueKing/bk-ci/commit/851457853412a898063baed4efa2e1053745c04a",
+    "comments_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/851457853412a898063baed4efa2e1053745c04a/comments",
+    "commit": {
+      "author": {
+        "name": "mingshewhe",
+        "date": "2025-04-10T20:12:54+08:00",
+        "email": "mingshewhe@tencent.com"
+      },
+      "committer": {
+        "name": "mingshewhe",
+        "date": "2025-04-10T20:12:54+08:00",
+        "email": "mingshewhe@tencent.com"
+      },
+      "message": "feat: 重构代码库服务代码结构 #9952 修复服务状态\n",
+      "tree": {
+        "sha": "ea64dc7b66e19d5dcc94974b4f31db7d869960ff",
+        "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/git/trees/ea64dc7b66e19d5dcc94974b4f31db7d869960ff"
+      }
+    },
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "d7b881db0bae327d336d11f11c81da503742eb73",
+        "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/d7b881db0bae327d336d11f11c81da503742eb73"
+      }
+    ]
+  },
+  "merge_base_commit": {
+    "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/851457853412a898063baed4efa2e1053745c04a",
+    "sha": "851457853412a898063baed4efa2e1053745c04a",
+    "html_url": "https://gitee.com/Tencent-BlueKing/bk-ci/commit/851457853412a898063baed4efa2e1053745c04a",
+    "comments_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/851457853412a898063baed4efa2e1053745c04a/comments",
+    "commit": {
+      "author": {
+        "name": "mingshewhe",
+        "date": "2025-04-10T20:12:54+08:00",
+        "email": "mingshewhe@tencent.com"
+      },
+      "committer": {
+        "name": "mingshewhe",
+        "date": "2025-04-10T20:12:54+08:00",
+        "email": "mingshewhe@tencent.com"
+      },
+      "message": "feat: 重构代码库服务代码结构 #9952 修复服务状态\n",
+      "tree": {
+        "sha": "ea64dc7b66e19d5dcc94974b4f31db7d869960ff",
+        "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/git/trees/ea64dc7b66e19d5dcc94974b4f31db7d869960ff"
+      }
+    },
+    "author": null,
+    "committer": null,
+    "parents": [
+      {
+        "sha": "d7b881db0bae327d336d11f11c81da503742eb73",
+        "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/d7b881db0bae327d336d11f11c81da503742eb73"
+      }
+    ]
+  },
+  "commits": [
+    {
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/fae606af2642ecfbdefb10f502549533b1540702",
+      "sha": "fae606af2642ecfbdefb10f502549533b1540702",
+      "html_url": "https://gitee.com/Tencent-BlueKing/bk-ci/commit/fae606af2642ecfbdefb10f502549533b1540702",
+      "comments_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/fae606af2642ecfbdefb10f502549533b1540702/comments",
+      "commit": {
+        "author": {
+          "name": "mingshewhe",
+          "date": "2025-04-10T20:19:07+08:00",
+          "email": "mingshewhe@tencent.com"
+        },
+        "committer": {
+          "name": "mingshewhe",
+          "date": "2025-04-10T20:19:07+08:00",
+          "email": "mingshewhe@tencent.com"
+        },
+        "message": "feat: 重构代码库服务代码结构 #9952 修复服务状态\n",
+        "tree": {
+          "sha": "e602571f0467aa578521d9f9df828af3172eb35d",
+          "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/git/trees/e602571f0467aa578521d9f9df828af3172eb35d"
+        }
+      },
+      "author": null,
+      "committer": null,
+      "parents": [
+        {
+          "sha": "851457853412a898063baed4efa2e1053745c04a",
+          "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/851457853412a898063baed4efa2e1053745c04a"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "sha": "28d98d60f0c071baf55e399c73f7cd53419ea51f",
+      "filename": "src/backend/ci/core/project/biz-project/src/main/kotlin/com/tencent/devops/project/service/impl/AbsUserProjectServiceServiceImpl.kt",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4,
+      "blob_url": "https://gitee.com/Tencent-BlueKing/bk-ci/blob/fae606af2642ecfbdefb10f502549533b1540702/src/backend/ci/core/project/biz-project/src/main/kotlin/com/tencent/devops/project/service/impl/AbsUserProjectServiceServiceImpl.kt",
+      "raw_url": "https://gitee.com/Tencent-BlueKing/bk-ci/raw/fae606af2642ecfbdefb10f502549533b1540702/src/backend/ci/core/project/biz-project/src/main/kotlin/com/tencent/devops/project/service/impl/AbsUserProjectServiceServiceImpl.kt",
+      "content_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/contents/src/backend/ci/core/project/biz-project/src/main/kotlin/com/tencent/devops/project/service/impl/AbsUserProjectServiceServiceImpl.kt?ref=fae606af2642ecfbdefb10f502549533b1540702",
+      "patch": "@@ -237,7 +237,7 @@ abstract class AbsUserProjectServiceServiceImpl @Autowired constructor(\n                 s?.forEach {\n                     val status = when {\n                         it.englishName == SERVICE_ENGLISH_NAME_PLATFORM &&\n-                                apiPlatformApi.validateUserPlatformPermission(userId) -> SERVICE_ITEM_STATUS_PLANNING\n+                                apiPlatformApi.validateUserPlatformPermission(userId) -> SERVICE_ITEM_STATUS_OK\n \n                         else -> it.status\n                     }\n@@ -350,6 +350,6 @@ abstract class AbsUserProjectServiceServiceImpl @Autowired constructor(\n         private val logger = LoggerFactory.getLogger(AbsUserProjectServiceServiceImpl::class.java)\n         // 平台管理界面\n         const val SERVICE_ENGLISH_NAME_PLATFORM = \"Platform\"\n-        const val SERVICE_ITEM_STATUS_PLANNING = \"planning\"\n+        const val SERVICE_ITEM_STATUS_OK = \"ok\"\n     }\n }\n",
+      "truncated": false
+    }
+  ],
+  "truncated": false
+}

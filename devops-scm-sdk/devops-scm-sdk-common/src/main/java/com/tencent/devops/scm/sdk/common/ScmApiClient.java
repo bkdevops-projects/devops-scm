@@ -1,9 +1,11 @@
 package com.tencent.devops.scm.sdk.common;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tencent.devops.scm.sdk.common.connector.ScmConnector;
 import com.tencent.devops.scm.sdk.common.connector.ScmConnectorRequest;
 import com.tencent.devops.scm.sdk.common.connector.ScmConnectorResponse;
 import com.tencent.devops.scm.sdk.common.function.FunctionThrows;
+import com.tencent.devops.scm.sdk.common.util.ScmJsonUtil;
 import com.tencent.devops.scm.sdk.common.util.ScmSdkJsonFactory;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
@@ -80,8 +82,12 @@ public abstract class ScmApiClient {
      */
     public abstract ScmSdkJsonFactory getJsonFactory();
 
-    public void logRequest(ScmConnectorRequest request) {
-        logger.info("Scm API request|method:{}|url:{}", request.method(), request.url().toString());
+    public void logRequest(ScmConnectorRequest request) throws JsonProcessingException {
+        logger.info("Scm API request|method:{}|url:{}|header:{}",
+                request.method(),
+                request.url().toString(),
+                ScmJsonUtil.getJsonFactory().toJson(request.allHeaders())
+        );
     }
 
     public void logResponse(ScmConnectorResponse response) {

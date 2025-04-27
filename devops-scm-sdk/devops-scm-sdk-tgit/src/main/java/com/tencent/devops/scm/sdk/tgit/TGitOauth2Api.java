@@ -9,11 +9,11 @@ import com.tencent.devops.scm.sdk.common.connector.ScmConnector;
 import com.tencent.devops.scm.sdk.common.util.MapBuilder;
 import com.tencent.devops.scm.sdk.common.util.UrlEncoder;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitOauth2AccessToken;
-import com.tencent.devops.scm.sdk.tgit.pojo.TGitOauth2ClientProperties;
+import com.tencent.devops.scm.sdk.common.GitOauth2ClientProperties;
 
 public class TGitOauth2Api {
 
-    private final TGitOauth2ClientProperties properties;
+    private final GitOauth2ClientProperties properties;
     private final TGitApiClient client;
     private static final String OAUTH2_URI_PATTERN = "oauth/authorize";
     private static final String OAUTH2_CALLBACK_URI_PATTERN =
@@ -29,7 +29,7 @@ public class TGitOauth2Api {
                     + "grant_type=refresh_token&"
                     + "redirect_uri=:redirect_uri";
 
-    public TGitOauth2Api(TGitOauth2ClientProperties properties, ScmConnector connector) {
+    public TGitOauth2Api(GitOauth2ClientProperties properties, ScmConnector connector) {
         this.properties = properties;
         this.client = new TGitApiClient(properties.getWebUrl(), connector, HttpAuthProvider.ANONYMOUS);
     }

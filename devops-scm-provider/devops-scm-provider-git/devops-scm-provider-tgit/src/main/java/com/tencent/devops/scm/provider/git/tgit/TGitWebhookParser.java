@@ -52,6 +52,7 @@ import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestReviewHook;
 import com.tencent.devops.scm.api.util.GitUtils;
 import com.tencent.devops.scm.provider.git.tgit.enums.TGitEventType;
+import com.tencent.devops.scm.sdk.common.util.DateUtils;
 import com.tencent.devops.scm.sdk.common.util.UrlConverter;
 import com.tencent.devops.scm.sdk.tgit.enums.TGitPushOperationKind;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitUser;
@@ -66,7 +67,6 @@ import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitNoteEvent;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitPushEvent;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitReviewEvent;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitTagPushEvent;
-import com.tencent.devops.scm.sdk.tgit.util.TGitDateUtils;
 import com.tencent.devops.scm.sdk.tgit.util.TGitJsonUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -497,7 +497,7 @@ public class TGitWebhookParser implements WebhookParser {
             TGitEventCommit lastCommit = src.getCommits().get(0);
             commit.setLink(lastCommit.getUrl());
             commit.setMessage(lastCommit.getMessage());
-            commit.setCommitTime(TGitDateUtils.convertDateToLocalDateTime(lastCommit.getTimestamp()));
+            commit.setCommitTime(DateUtils.convertDateToLocalDateTime(lastCommit.getTimestamp()));
         }
 
         String operationKind = StringUtils.defaultIfBlank(src.getOperationKind(), "");

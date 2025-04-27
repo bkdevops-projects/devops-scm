@@ -20,3 +20,6 @@ include(":devops-scm-spring-boot-starter")
 
 include(":devops-scm-test")
 include(":devops-scm-sample")
+include(":devops-scm-provider:devops-scm-provider-git:devops-scm-provider-gitee")
+include(":devops-scm-sdk:devops-scm-sdk-gitee")
+include("devops-scm-provider:devops-scm-provider-git:devops-scm-provider-gitee-simple")

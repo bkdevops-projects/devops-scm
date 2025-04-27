@@ -11,9 +11,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Change {
     private String path;
-    private Boolean added;
-    private Boolean renamed;
-    private Boolean deleted;
+    @Builder.Default
+    private Boolean added = false;
+    @Builder.Default
+    private Boolean renamed = false;
+    @Builder.Default
+    private Boolean deleted = false;
     private String sha;
     private String blobId;
     private String oldPath;

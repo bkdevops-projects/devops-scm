@@ -10,6 +10,7 @@ public enum ScmProviderCodes {
     TSVN("tsvn"),
     GITHUB("github"),
     GITLAB("gitlab"),
+    GITEE("gitee"),
     ;
     public final String value;
 

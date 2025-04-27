@@ -6,6 +6,8 @@ package com.tencent.devops.scm.api.constant;
 public interface WebhookI18Code {
     // git push事件描述
     String GIT_PUSH_EVENT_DESC = "bkGitPushEventDesc";
+    // git push创建分支事件描述
+    String GIT_PUSH_CREATE_EVENT_DESC = "bkGitPushCreateEventDesc";
     // git push删除事件描述
     String GIT_PUSH_DELETE_EVENT_DESC = "bkGitPushDeleteEventDesc";
 

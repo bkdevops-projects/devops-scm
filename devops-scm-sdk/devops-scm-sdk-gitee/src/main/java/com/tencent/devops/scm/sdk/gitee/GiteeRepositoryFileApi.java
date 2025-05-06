@@ -5,7 +5,7 @@ import com.tencent.devops.scm.sdk.common.util.MapBuilder;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeCommitCompare;
 
 public class GiteeRepositoryFileApi extends AbstractGiteeApi {
-    private static final String FILE_CHANGE_LIST_URI_PATTERN = "repos/:fullName/compare/:diffRef";
+    private static final String FILE_CHANGE_LIST_URI_PATTERN = "repos/:id/compare/:diff_ref";
 
     public GiteeRepositoryFileApi(GiteeApi tGitApi) {
         super(tGitApi);
@@ -27,8 +27,8 @@ public class GiteeRepositoryFileApi extends AbstractGiteeApi {
                 .withUrlPath(
                         FILE_CHANGE_LIST_URI_PATTERN,
                         MapBuilder.<String, String>newBuilder()
-                                .add("fullName", repoId)
-                                .add("diffRef", String.format("%s...%s", to, from))
+                                .add("id", repoId)
+                                .add("diff_ref", String.format("%s...%s", to, from))
                                 .build()
                 )
                 .withRepoId(repoId)

@@ -10,9 +10,9 @@ import java.util.List;
 
 public class GiteeProjectApi extends AbstractGiteeApi {
 
-    private static final String REPOSITORY_URI_PATTERN = "repos/:fullName";
-    private static final String REPOSITORY_HOOK_URI_PATTERN = "repos/:fullName/hooks";
-    private static final String REPOSITORY_HOOK_ID_URI_PATTERN = "repos/:fullName/hooks/:hookId";
+    private static final String REPOSITORY_URI_PATTERN = "repos/:id";
+    private static final String REPOSITORY_HOOK_URI_PATTERN = "repos/:id/hooks";
+    private static final String REPOSITORY_HOOK_ID_URI_PATTERN = "repos/:id/hooks/:hook_id";
 
     public GiteeProjectApi(GiteeApi tGitApi) {
         super(tGitApi);
@@ -30,7 +30,7 @@ public class GiteeProjectApi extends AbstractGiteeApi {
                 .withUrlPath(
                         REPOSITORY_URI_PATTERN,
                         MapBuilder.<String, String>newBuilder()
-                                .add("fullName", repoId)
+                                .add("id", repoId)
                                 .build()
                 )
                 .withRepoId(repoId)
@@ -50,7 +50,7 @@ public class GiteeProjectApi extends AbstractGiteeApi {
                 .withUrlPath(
                         REPOSITORY_HOOK_URI_PATTERN,
                         MapBuilder.<String, String>newBuilder()
-                                .add("fullName", repoId)
+                                .add("id", repoId)
                                 .build()
                 )
                 .withRepoId(repoId)
@@ -78,8 +78,8 @@ public class GiteeProjectApi extends AbstractGiteeApi {
                 .withUrlPath(
                         REPOSITORY_HOOK_ID_URI_PATTERN,
                         MapBuilder.<String, String>newBuilder()
-                                .add("fullName", repoId)
-                                .add("hookId", hookId.toString())
+                                .add("id", repoId)
+                                .add("hook_id", hookId.toString())
                                 .build()
                 )
                 .withRepoId(repoId)
@@ -101,8 +101,8 @@ public class GiteeProjectApi extends AbstractGiteeApi {
                 .withUrlPath(
                         REPOSITORY_HOOK_ID_URI_PATTERN,
                         MapBuilder.<String, String>newBuilder()
-                                .add("fullName", repoId)
-                                .add("hookId", hookId.toString())
+                                .add("id", repoId)
+                                .add("hook_id", hookId.toString())
                                 .build()
                 )
                 .withRepoId(repoId)
@@ -121,7 +121,7 @@ public class GiteeProjectApi extends AbstractGiteeApi {
                 .withUrlPath(
                         REPOSITORY_HOOK_URI_PATTERN,
                         MapBuilder.<String, String>newBuilder()
-                                .add("fullName", repoId)
+                                .add("id", repoId)
                                 .build()
                 )
                 .withRepoId(repoId)
@@ -138,8 +138,8 @@ public class GiteeProjectApi extends AbstractGiteeApi {
                 .withUrlPath(
                         REPOSITORY_HOOK_ID_URI_PATTERN,
                         MapBuilder.<String, String>newBuilder()
-                                .add("fullName", repoId)
-                                .add("hookId", hookId.toString())
+                                .add("id", repoId)
+                                .add("hook_id", hookId.toString())
                                 .build()
                 )
                 .withRepoId(repoId)

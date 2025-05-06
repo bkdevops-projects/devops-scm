@@ -406,7 +406,7 @@ public class GiteeApi {
        * com.tencent.devops.scm.spring.config.ScmConnectorConfiguration#okHttpMetricsEventListener
        * io.micrometer.core.instrument.binder.okhttp3.OkHttpMetricsEventListener.Builder#uriMapper
        */
-      private static final String BRANCHES_URI_PATTERN = "repos/:fullName/branches";
+      private static final String BRANCHES_URI_PATTERN = "repos/:id/branches";
   
       public GiteeBranchesApi(GiteeApi tGitApi) {
           super(tGitApi);
@@ -456,7 +456,7 @@ public class GiteeApi {
                   .withUrlPath(
                           BRANCHES_URI_PATTERN,
                           MapBuilder.<String, String>newBuilder()
-                                  .add("fullName", repoId)
+                                  .add("id", repoId)
                                   .build()
                   )
                   .withRepoId(repoId)

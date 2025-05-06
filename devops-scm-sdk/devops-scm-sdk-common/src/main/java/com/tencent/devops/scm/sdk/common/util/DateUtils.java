@@ -1,13 +1,13 @@
-package com.tencent.devops.scm.sdk.tgit.util;
+package com.tencent.devops.scm.sdk.common.util;
 
-import com.tencent.devops.scm.sdk.tgit.TGitApiException;
+import com.tencent.devops.scm.sdk.common.exception.ScmApiException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class TGitDateUtils {
+public class DateUtils {
 
     public static final String YYYY_MM_DD_T_HH_MM_SSZ = "yyyy-MM-dd'T'HH:mm:ssZ";
 
@@ -25,7 +25,7 @@ public class TGitDateUtils {
         try {
             return sdf.parse(dateTimeString);
         } catch (ParseException e) {
-            throw new TGitApiException(e.getMessage());
+            throw new ScmApiException(e.getMessage());
         }
     }
 }

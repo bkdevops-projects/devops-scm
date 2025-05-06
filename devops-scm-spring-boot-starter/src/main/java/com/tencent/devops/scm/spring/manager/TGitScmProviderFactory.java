@@ -4,7 +4,7 @@ import com.tencent.devops.scm.api.ScmProvider;
 import com.tencent.devops.scm.api.enums.ScmProviderCodes;
 import com.tencent.devops.scm.provider.git.tgit.TGitScmProvider;
 import com.tencent.devops.scm.sdk.common.connector.ScmConnector;
-import com.tencent.devops.scm.sdk.tgit.pojo.TGitOauth2ClientProperties;
+import com.tencent.devops.scm.sdk.common.GitOauth2ClientProperties;
 import com.tencent.devops.scm.spring.properties.HttpClientProperties;
 import com.tencent.devops.scm.spring.properties.Oauth2ClientProperties;
 import com.tencent.devops.scm.spring.properties.ScmProviderProperties;
@@ -26,7 +26,7 @@ public class TGitScmProviderFactory implements ScmProviderFactory {
     public ScmProvider build(ScmProviderProperties properties, boolean tokenApi) {
         HttpClientProperties httpClientProperties = properties.getHttpClientProperties();
         ScmConnector connector = connectorFactory.create(httpClientProperties);
-        TGitOauth2ClientProperties tgitOauth2ClientProperties = gettGitOauth2ClientProperties(properties, tokenApi);
+        GitOauth2ClientProperties tgitOauth2ClientProperties = gettGitOauth2ClientProperties(properties, tokenApi);
 
         if (tgitOauth2ClientProperties != null) {
             return new TGitScmProvider(httpClientProperties.getApiUrl(), connector, tgitOauth2ClientProperties);
@@ -35,12 +35,12 @@ public class TGitScmProviderFactory implements ScmProviderFactory {
         }
     }
 
-    private TGitOauth2ClientProperties gettGitOauth2ClientProperties(ScmProviderProperties properties,
+    private GitOauth2ClientProperties gettGitOauth2ClientProperties(ScmProviderProperties properties,
             boolean tokenApi) {
-        TGitOauth2ClientProperties tgitOauth2ClientProperties = null;
+        GitOauth2ClientProperties tgitOauth2ClientProperties = null;
         if (tokenApi && properties.getOauth2Enabled() && properties.getOauth2ClientProperties() != null) {
             Oauth2ClientProperties oauth2ClientProperties = properties.getOauth2ClientProperties();
-            tgitOauth2ClientProperties = new TGitOauth2ClientProperties(
+            tgitOauth2ClientProperties = new GitOauth2ClientProperties(
                     oauth2ClientProperties.getWebUrl(),
                     oauth2ClientProperties.getClientId(),
                     oauth2ClientProperties.getClientSecret(),

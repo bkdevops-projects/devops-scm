@@ -113,9 +113,9 @@ signing {
 
 tasks.getByName("publish") {
     onlyIf {
-        project.the<SourceSetContainer>()["main"].allSource.files.isNotEmpty()
         // 演示项目不打包
-        !project.name.contains("devops-scm-provider-gitee-simple")
+        project.the<SourceSetContainer>()["main"].allSource.files.isNotEmpty() ||
+                !project.name.contains("devops-scm-provider-gitee-simple")
     }
 }
 

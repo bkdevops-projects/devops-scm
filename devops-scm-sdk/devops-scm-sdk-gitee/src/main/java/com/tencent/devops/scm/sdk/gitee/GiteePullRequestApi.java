@@ -13,8 +13,8 @@ import java.util.List;
 
 public class GiteePullRequestApi extends AbstractGiteeApi {
 
-    private static final String PULL_REQUEST_ID_URI_PATTERN = "repos/:fullName/pulls/:number";
-    private static final String PULL_REQUEST_ID_DIFF_URI_PATTERN = "repos/:fullName/pulls/:number/files";
+    private static final String PULL_REQUEST_ID_URI_PATTERN = "repos/:id/pulls/:number";
+    private static final String PULL_REQUEST_ID_DIFF_URI_PATTERN = "repos/:id/pulls/:number/files";
 
     public GiteePullRequestApi(GiteeApi tGitApi) {
         super(tGitApi);
@@ -37,7 +37,7 @@ public class GiteePullRequestApi extends AbstractGiteeApi {
                 .withUrlPath(
                         PULL_REQUEST_ID_URI_PATTERN,
                         MapBuilder.<String, String>newBuilder()
-                                .add("fullName", repoId)
+                                .add("id", repoId)
                                 .add("number", pullRequestNumber.toString())
                                 .build()
                 )
@@ -62,7 +62,7 @@ public class GiteePullRequestApi extends AbstractGiteeApi {
                 .withUrlPath(
                         PULL_REQUEST_ID_DIFF_URI_PATTERN,
                         MapBuilder.<String, String>newBuilder()
-                                .add("fullName", repoId)
+                                .add("id", repoId)
                                 .add("number", pullRequestNumber.toString())
                                 .build()
                 )

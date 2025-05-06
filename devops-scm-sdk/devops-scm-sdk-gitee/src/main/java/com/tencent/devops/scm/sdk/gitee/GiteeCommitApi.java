@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GiteeCommitApi extends AbstractGiteeApi {
-    private static final String BRANCHES_URI_PATTERN = "repos/:fullName/commits/:sha";
+    private static final String BRANCHES_URI_PATTERN = "repos/:id/commits/:sha";
 
     public GiteeCommitApi(GiteeApi tGitApi) {
         super(tGitApi);
@@ -28,7 +28,7 @@ public class GiteeCommitApi extends AbstractGiteeApi {
                 .withUrlPath(
                         BRANCHES_URI_PATTERN,
                         MapBuilder.<String, String>newBuilder()
-                                .add("fullName", repoId)
+                                .add("id", repoId)
                                 .add("sha", urlEncode(sha))
                                 .build()
                 )

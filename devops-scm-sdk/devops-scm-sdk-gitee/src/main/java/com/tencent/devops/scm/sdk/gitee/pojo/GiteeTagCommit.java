@@ -4,9 +4,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class GiteeBaseUser {
-    private Long id;
-    private String name;
-    private String email;
+public class GiteeTagCommit {
     private Date date;
+    private String sha;
 }

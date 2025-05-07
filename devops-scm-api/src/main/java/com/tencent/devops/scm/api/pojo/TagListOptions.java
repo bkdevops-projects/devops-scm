@@ -13,4 +13,6 @@ public class TagListOptions {
     private String search;
     private Integer page;
     private Integer pageSize;
+    private String orderBy;
+    private String sort;
 }

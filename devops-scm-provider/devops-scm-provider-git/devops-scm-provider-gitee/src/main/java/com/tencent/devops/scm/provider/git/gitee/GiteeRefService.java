@@ -12,19 +12,22 @@ import com.tencent.devops.scm.api.pojo.TagListOptions;
 import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository;
 import com.tencent.devops.scm.api.pojo.repository.git.GitScmProviderRepository;
 import com.tencent.devops.scm.provider.git.gitee.auth.GiteeTokenAuthProviderAdapter;
-import com.tencent.devops.scm.sdk.common.connector.okhttp3.OkHttpScmConnector;
+import com.tencent.devops.scm.sdk.common.enums.SortOrder;
 import com.tencent.devops.scm.sdk.gitee.GiteeApi;
 import com.tencent.devops.scm.sdk.gitee.GiteeApiFactory;
 import com.tencent.devops.scm.sdk.gitee.GiteeBranchesApi;
-import com.tencent.devops.scm.sdk.gitee.auth.GiteeTokenAuthProvider;
+import com.tencent.devops.scm.sdk.gitee.GiteeTagApi;
+import com.tencent.devops.scm.sdk.gitee.enums.GiteeBranchOrderBy;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBranch;
-import java.util.ArrayList;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeCommitCompare;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeCommitDetail;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeTag;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeTagDetail;
 import java.util.List;
 import java.util.stream.Collectors;
-import okhttp3.OkHttpClient;
-import okhttp3.OkHttpClient.Builder;
 
 public class GiteeRefService implements RefService {
+
     private final GiteeApiFactory apiFactory;
 
     public GiteeRefService(GiteeApiFactory apiFactory) {
@@ -38,7 +41,12 @@ public class GiteeRefService implements RefService {
 
     @Override
     public Reference findBranch(ScmProviderRepository repository, String name) {
-        return null;
+        GitScmProviderRepository repo = (GitScmProviderRepository) repository;
+        GiteeApi giteeApi = apiFactory.fromAuthProvider(GiteeTokenAuthProviderAdapter.get(repo.getAuth()));
+        // 构建请求接口类
+        GiteeBranchesApi branchesApi = giteeApi.getBranchesApi();
+        GiteeBranch branch = branchesApi.getBranch(repo.getProjectIdOrPath(), name);
+        return GiteeObjectConverter.convertBranches(branch);
     }
 
     @Override
@@ -59,17 +67,36 @@ public class GiteeRefService implements RefService {
 
     @Override
     public Reference findTag(ScmProviderRepository repository, String name) {
-        return null;
+        GitScmProviderRepository repo = (GitScmProviderRepository) repository;
+        GiteeApi giteeApi = apiFactory.fromAuthProvider(GiteeTokenAuthProviderAdapter.get(repo.getAuth()));
+        // 构建请求接口类
+        GiteeTagApi tagApi = giteeApi.getTagApi();
+        GiteeTagDetail tag = tagApi.getTags(repo.getProjectIdOrPath(), name);
+        return GiteeObjectConverter.convertTag(tag);
     }
 
     @Override
     public List<Reference> listTags(ScmProviderRepository repository, TagListOptions opts) {
-        return null;
+        GitScmProviderRepository repo = (GitScmProviderRepository) repository;
+        GiteeApi giteeApi = apiFactory.fromAuthProvider(GiteeTokenAuthProviderAdapter.get(repo.getAuth()));
+        // 构建请求接口类
+        GiteeTagApi tagApi = giteeApi.getTagApi();
+        List<GiteeTag> tags = tagApi.getTags(
+                repo.getProjectIdOrPath(),
+                opts.getPage(),
+                opts.getPageSize(),
+                GiteeBranchOrderBy.valueOf(opts.getOrderBy()),
+                SortOrder.valueOf(opts.getSort())
+        );
+        return tags.stream().map(GiteeObjectConverter::convertTag).collect(Collectors.toList());
     }
 
     @Override
     public Commit findCommit(ScmProviderRepository repository, String ref) {
-        return null;
+        GitScmProviderRepository repo = (GitScmProviderRepository) repository;
+        GiteeApi giteeApi = apiFactory.fromAuthProvider(GiteeTokenAuthProviderAdapter.get(repo.getAuth()));
+        GiteeCommitDetail commit = giteeApi.getCommitApi().getCommit(repo.getProjectIdOrPath(), ref);
+        return GiteeObjectConverter.convertCommit(commit);
     }
 
     @Override
@@ -79,7 +106,13 @@ public class GiteeRefService implements RefService {
 
     @Override
     public List<Change> listChanges(ScmProviderRepository repository, String ref, ListOptions opts) {
-        return null;
+        GitScmProviderRepository repo = (GitScmProviderRepository) repository;
+        GiteeApi giteeApi = apiFactory.fromAuthProvider(GiteeTokenAuthProviderAdapter.get(repo.getAuth()));
+        GiteeCommitDetail commit = giteeApi.getCommitApi().getCommit(
+                repo.getProjectIdOrPath(),
+                ref
+        );
+        return GiteeObjectConverter.convertChange(commit);
     }
 
     @Override
@@ -89,6 +122,14 @@ public class GiteeRefService implements RefService {
             String target,
             ListOptions opts
     ) {
-        return null;
+        GitScmProviderRepository repo = (GitScmProviderRepository) repository;
+        GiteeApi giteeApi = apiFactory.fromAuthProvider(GiteeTokenAuthProviderAdapter.get(repo.getAuth()));
+        GiteeCommitCompare commitCompare = giteeApi.getFileApi().commitCompare(
+                repo.getProjectIdOrPath(),
+                source,
+                target,
+                null
+        );
+        return GiteeObjectConverter.convertCompare(commitCompare);
     }
 }

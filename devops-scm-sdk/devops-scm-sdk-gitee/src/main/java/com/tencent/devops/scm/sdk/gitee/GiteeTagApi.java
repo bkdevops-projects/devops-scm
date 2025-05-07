@@ -5,11 +5,12 @@ import com.tencent.devops.scm.sdk.common.ScmRequest.Builder;
 import com.tencent.devops.scm.sdk.common.enums.SortOrder;
 import com.tencent.devops.scm.sdk.common.util.MapBuilder;
 import com.tencent.devops.scm.sdk.gitee.enums.GiteeBranchOrderBy;
-import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBranch;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeTag;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeTagDetail;
 import java.util.Arrays;
 import java.util.List;
 
-public class GiteeBranchesApi extends AbstractGiteeApi {
+public class GiteeTagApi extends AbstractGiteeApi {
 
     /**
      * 分支请求uri
@@ -19,44 +20,44 @@ public class GiteeBranchesApi extends AbstractGiteeApi {
      * com.tencent.devops.scm.spring.config.ScmConnectorConfiguration#okHttpMetricsEventListener
      * io.micrometer.core.instrument.binder.okhttp3.OkHttpMetricsEventListener.Builder#uriMapper
      */
-    private static final String BRANCHES_URI_PATTERN = "repos/:id/branches";
-    private static final String BRANCHES_ID_URI_PATTERN = "repos/:id/branches/:branch";
+    private static final String TAGS_URI_PATTERN = "repos/:id/tags";
+    private static final String TAGS_ID_URI_PATTERN = "repos/:id/releases/tags/:tag";
 
-    public GiteeBranchesApi(GiteeApi tGitApi) {
-        super(tGitApi);
+    public GiteeTagApi(GiteeApi giteeApi) {
+        super(giteeApi);
     }
 
     /**
      * 获取分支列表
      * @param projectIdOrPath 仓库名
      */
-    public List<GiteeBranch> getBranches(Object projectIdOrPath) {
-        return getBranches(projectIdOrPath, null, null);
+    public List<GiteeTag> getTags(Object projectIdOrPath) {
+        return getTags(projectIdOrPath, null, null);
     }
 
     /**
-     * 获取分支列表
+     * 获取Tag列表
      * @param projectIdOrPath 仓库名
      * @param page 当前的页码
      * @param perPage 每页的数量，最大为 100
      */
-    public List<GiteeBranch> getBranches(
+    public List<GiteeTag> getTags(
             Object projectIdOrPath,
             Integer page,
             Integer perPage
     ) {
-        return getBranches(projectIdOrPath, page, perPage, null, null);
+        return getTags(projectIdOrPath, page, perPage, null, null);
     }
 
     /**
-     * 获取分支列表
+     * 获取Tag列表
      * @param projectIdOrPath 仓库名
      * @param page 当前的页码
      * @param perPage 每页的数量，最大为 100
      * @param orderBy 排序字段
      * @param sort 排序方向
      */
-    public List<GiteeBranch> getBranches(
+    public List<GiteeTag> getTags(
             Object projectIdOrPath,
             Integer page,
             Integer perPage,
@@ -64,10 +65,10 @@ public class GiteeBranchesApi extends AbstractGiteeApi {
             SortOrder sort
     ) {
         String repoId = getProjectIdOrPath(projectIdOrPath);
-        GiteeBranch[] branches = giteeApi.createRequest()
+        GiteeTag[] branches = giteeApi.createRequest()
                 .method(ScmHttpMethod.GET)
                 .withUrlPath(
-                        BRANCHES_URI_PATTERN,
+                        TAGS_URI_PATTERN,
                         MapBuilder.<String, String>newBuilder()
                                 .add("id", repoId)
                                 .build()
@@ -77,29 +78,29 @@ public class GiteeBranchesApi extends AbstractGiteeApi {
                 .with(PER_PAGE_PARAM, perPage)
                 .with("sort", orderBy != null ? orderBy.toValue() : null)
                 .with("direction", sort != null ? sort.getValue() : null)
-                .fetch(GiteeBranch[].class);
+                .fetch(GiteeTag[].class);
         return Arrays.asList(branches);
     }
 
     /**
-     * 获取分支详细信息
+     * 获取指定tag详情
      * @param projectIdOrPath 仓库名
      */
-    public GiteeBranch getBranch(
+    public GiteeTagDetail getTags(
             Object projectIdOrPath,
-            String branch
+            String tagName
     ) {
         String repoId = getProjectIdOrPath(projectIdOrPath);
         return giteeApi.createRequest()
                 .method(ScmHttpMethod.GET)
                 .withUrlPath(
-                        BRANCHES_ID_URI_PATTERN,
+                        TAGS_ID_URI_PATTERN,
                         MapBuilder.<String, String>newBuilder()
                                 .add("id", repoId)
-                                .add("branch", branch)
+                                .add("tag", tagName)
                                 .build()
                 )
                 .withRepoId(repoId)
-                .fetch(GiteeBranch.class);
+                .fetch(GiteeTagDetail.class);
     }
 }

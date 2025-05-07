@@ -21,6 +21,7 @@ public class GiteeApi {
     private volatile GiteeRepositoryFileApi fileApi;
     private volatile GiteeProjectApi projectApi;
     private volatile GiteeCommitApi commitApi;
+    private volatile GiteeTagApi tagApi;
 
 
     public GiteeApi(GiteeApiClient client) {
@@ -88,5 +89,16 @@ public class GiteeApi {
             }
         }
         return commitApi;
+    }
+
+    public GiteeTagApi getTagApi() {
+        if (tagApi == null) {
+            synchronized (this) {
+                if (tagApi == null) {
+                    tagApi = new GiteeTagApi(this);
+                }
+            }
+        }
+        return tagApi;
     }
 }

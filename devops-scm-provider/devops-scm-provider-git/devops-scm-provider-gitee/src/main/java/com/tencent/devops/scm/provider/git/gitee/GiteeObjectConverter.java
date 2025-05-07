@@ -17,9 +17,13 @@ import com.tencent.devops.scm.provider.git.gitee.enums.GiteeActionDesc;
 import com.tencent.devops.scm.sdk.common.util.DateUtils;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBaseUser;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBranch;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeCommit;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeCommitCompare;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeCommitDetail;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteePullRequestDiff;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeRepositoryDetail;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeTag;
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeTagDetail;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeWebhookConfig;
 import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteeEventAuthor;
 import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteeEventCommit;
@@ -28,9 +32,13 @@ import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteeEventRef;
 import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteeEventRepository;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class GiteeObjectConverter {
@@ -48,6 +56,20 @@ public class GiteeObjectConverter {
         return Reference.builder()
                 .name(ref.getRef())
                 .sha(ref.getSha())
+                .build();
+    }
+
+    public static Reference convertTag(GiteeTag tag) {
+        return Reference.builder()
+                .name(tag.getName())
+                .sha(tag.getCommit().getSha())
+                .build();
+    }
+
+    public static Reference convertTag(GiteeTagDetail tag) {
+        return Reference.builder()
+                .name(tag.getName())
+                .sha(tag.getTargetCommitish())
                 .build();
     }
 
@@ -156,6 +178,54 @@ public class GiteeObjectConverter {
                 .removed(commit.getRemoved())
                 .commitTime(DateUtils.convertDateToLocalDateTime(commit.getTimestamp()))
                 .build();
+    }
+
+    public static Commit convertCommit(GiteeCommitDetail commit) {
+        Set<String> added = new HashSet<>();
+        Set<String> modified = new HashSet<>();
+        Set<String> removed = new HashSet<>();
+        commit.getFiles().forEach(file -> {
+            if ("removed".equals(file.getStatus())) {
+                removed.add(file.getFilename());
+            } else if ("added".equals(file.getStatus())) {
+                added.add(file.getFilename());
+            } else {
+                modified.add(file.getFilename());
+            }
+        });
+        return Commit.builder()
+                .sha(commit.getSha())
+                .message(commit.getCommit().getMessage())
+                .author(convertSignature(commit.getAuthor()))
+                .committer(convertSignature(commit.getCommitter()))
+                .link(commit.getUrl())
+                .added(added.stream().toList())
+                .modified(modified.stream().toList())
+                .removed(removed.stream().toList())
+                .commitTime(
+                        Optional.ofNullable(commit.getCommit())
+                                .map(GiteeCommit::getCommitter)
+                                .map(GiteeBaseUser::getDate)
+                                .map(DateUtils::convertDateToLocalDateTime)
+                                .orElse(null)
+                )
+                .build();
+    }
+
+    public static List<Change> convertChange(GiteeCommitDetail commit) {
+        return commit.getFiles().stream().map(file -> {
+            ChangeBuilder changeBuilder = Change.builder()
+                    .sha(file.getSha())
+                    .path(file.getFilename())
+                    .blobId(file.getBlobUrl())
+                    .renamed(false);// gitee 的webhook中暂时没办法区分出是rename操作
+            boolean removed = "removed".equals(file.getStatus());
+            boolean added = "added".equals(file.getStatus());
+            return changeBuilder
+                    .added(added)
+                    .deleted(removed)
+                    .build();
+        }).collect(Collectors.toList());
     }
 
     /*========================================user====================================================*/

@@ -1,0 +1,48 @@
+{
+  "name": "master",
+  "commit": {
+    "sha": "fac5ae6ebbd44aea63525f6e9ba88f511df41ac4",
+    "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/fac5ae6ebbd44aea63525f6e9ba88f511df41ac4",
+    "commit": {
+      "author": {
+        "name": "bkci-bot",
+        "date": "2025-05-06T19:46:07+08:00",
+        "email": "64278246+bkci-bot@users.noreply.github.com"
+      },
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/git/commits/fac5ae6ebbd44aea63525f6e9ba88f511df41ac4",
+      "message": "Merge pull request #11679 from fcfang123/issue-11678\n\npref:用户组加人接口优化 #11678",
+      "tree": {
+        "sha": "c36bf09caec6304cfe967ef329abab36a15d22b3",
+        "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/git/trees/c36bf09caec6304cfe967ef329abab36a15d22b3"
+      },
+      "committer": {
+        "name": "GitHub",
+        "date": "2025-05-06T19:46:07+08:00",
+        "email": "noreply@github.com"
+      }
+    },
+    "author": null,
+    "parents": [
+      {
+        "sha": "1c5bea3abcfefb3e812838456acc73ead9fe3c14",
+        "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/1c5bea3abcfefb3e812838456acc73ead9fe3c14"
+      },
+      {
+        "sha": "836d792726d6966ae6024f0f4054d4147a8962a0",
+        "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/836d792726d6966ae6024f0f4054d4147a8962a0"
+      }
+    ],
+    "committer": {
+      "avatar_url": "https://foruda.gitee.com/avatar/1677201096080835335/10181580_github-bot_1639517195.png",
+      "url": "https://gitee.com/api/v5/users/github-bot",
+      "id": 10181580,
+      "login": "github-bot"
+    }
+  },
+  "_links": {
+    "html": "https://gitee.com/Tencent-BlueKing/bk-ci/tree/master",
+    "self": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/master"
+  },
+  "protected": false,
+  "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/master/protection"
+}

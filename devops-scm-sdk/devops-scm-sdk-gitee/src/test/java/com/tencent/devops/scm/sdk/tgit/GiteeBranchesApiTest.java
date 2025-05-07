@@ -1,10 +1,10 @@
 package com.tencent.devops.scm.sdk.tgit;
 
+import static org.mockito.ArgumentMatchers.anyString;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.tencent.devops.scm.sdk.gitee.GiteeApi;
 import com.tencent.devops.scm.sdk.gitee.GiteeBranchesApi;
-import com.tencent.devops.scm.sdk.gitee.GiteeProjectApi;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBranch;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -23,7 +23,7 @@ public class GiteeBranchesApiTest extends AbstractGiteeTest {
     @BeforeAll
     public static void setup() {
         giteeApi = createGiteeApi();
-        mockData();
+//        mockData();
     }
 
     public static void mockData() {
@@ -31,7 +31,13 @@ public class GiteeBranchesApiTest extends AbstractGiteeTest {
         Mockito.when(giteeApi.getBranchesApi()).thenReturn(Mockito.mock(GiteeBranchesApi.class));
         Mockito.when(giteeApi.getBranchesApi().getBranches(TEST_PROJECT_NAME))
                 .thenReturn(
-                        read("get_branch.json", new TypeReference<>() {})
+                        read("get_branch.json", new TypeReference<>() {
+                        })
+                );
+        Mockito.when(giteeApi.getBranchesApi().getBranch(anyString(), anyString()))
+                .thenReturn(
+                        read("get_branch_detail.json", new TypeReference<>() {
+                        })
                 );
     }
 
@@ -41,5 +47,11 @@ public class GiteeBranchesApiTest extends AbstractGiteeTest {
         GiteeBranch giteeBranch = branches.get(0);
         String branchName = "dependabot/go_modules/src/agent/agent/github.com/containerd/containerd-1.6.38";
         Assertions.assertEquals(branchName, giteeBranch.getName());
+    }
+
+    @Test
+    public void testGetBranch() {
+        GiteeBranch branch = giteeApi.getBranchesApi().getBranch(TEST_PROJECT_NAME, "master");
+        System.out.println("branch = " + branch);
     }
 }

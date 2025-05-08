@@ -1,4 +1,5 @@
 package com.tencent.devops.scm.sdk.gitee.pojo;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
 import lombok.AllArgsConstructor;

@@ -23,7 +23,7 @@ public class GiteeBranchesApiTest extends AbstractGiteeTest {
     @BeforeAll
     public static void setup() {
         giteeApi = createGiteeApi();
-//        mockData();
+        mockData();
     }
 
     public static void mockData() {

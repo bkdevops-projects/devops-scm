@@ -15,6 +15,7 @@ public class SvnScmProviderRepository implements ScmProviderRepository {
     private String url;
     private String userName;
     private IScmAuth auth;
+    private String externalId;
 
     public SvnScmProviderRepository withUrl(String url) {
         this.url = url;
@@ -29,5 +30,15 @@ public class SvnScmProviderRepository implements ScmProviderRepository {
     public SvnScmProviderRepository withAuth(IScmAuth auth) {
         this.auth = auth;
         return this;
+    }
+
+    public SvnScmProviderRepository withExternalId(String externalId) {
+        this.externalId = externalId;
+        return this;
+    }
+
+    @Override
+    public String externalId() {
+        return this.externalId;
     }
 }

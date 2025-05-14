@@ -17,7 +17,7 @@ public class GitScmProviderRepository implements ScmProviderRepository {
     private Object projectIdOrPath;
     private IScmAuth auth;
     private String url;
-    private String externalId;
+    private String state;
 
     public GitScmProviderRepository withProjectIdOrPath(Object projectIdOrPath) {
         this.projectIdOrPath = projectIdOrPath;
@@ -35,13 +35,13 @@ public class GitScmProviderRepository implements ScmProviderRepository {
         return this;
     }
 
-    public GitScmProviderRepository withExternalId(String externalId) {
-        this.externalId = externalId;
+    public GitScmProviderRepository withState(String state) {
+        this.state = state;
         return this;
     }
 
     @Override
-    public String externalId() {
-        return this.externalId;
+    public String state() {
+        return this.state;
     }
 }

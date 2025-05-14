@@ -165,6 +165,22 @@ public class GiteeObjectConverter {
                 .build();
     }
 
+    public static List<Change> convertChange(GiteeCommitDetail commit) {
+        return commit.getFiles().stream().map(file -> {
+            ChangeBuilder changeBuilder = Change.builder()
+                    .sha(file.getSha())
+                    .path(file.getFilename())
+                    .blobId(file.getBlobUrl())
+                    .renamed(false);// gitee 的webhook中暂时没办法区分出是rename操作
+            boolean removed = "removed".equals(file.getStatus());
+            boolean added = "added".equals(file.getStatus());
+            return changeBuilder
+                    .added(added)
+                    .deleted(removed)
+                    .build();
+        }).collect(Collectors.toList());
+    }
+
     /*========================================commit====================================================*/
     public static Commit convertCommit(GiteeEventCommit commit) {
         return Commit.builder()
@@ -210,22 +226,6 @@ public class GiteeObjectConverter {
                                 .orElse(null)
                 )
                 .build();
-    }
-
-    public static List<Change> convertChange(GiteeCommitDetail commit) {
-        return commit.getFiles().stream().map(file -> {
-            ChangeBuilder changeBuilder = Change.builder()
-                    .sha(file.getSha())
-                    .path(file.getFilename())
-                    .blobId(file.getBlobUrl())
-                    .renamed(false);// gitee 的webhook中暂时没办法区分出是rename操作
-            boolean removed = "removed".equals(file.getStatus());
-            boolean added = "added".equals(file.getStatus());
-            return changeBuilder
-                    .added(added)
-                    .deleted(removed)
-                    .build();
-        }).collect(Collectors.toList());
     }
 
     /*========================================user====================================================*/

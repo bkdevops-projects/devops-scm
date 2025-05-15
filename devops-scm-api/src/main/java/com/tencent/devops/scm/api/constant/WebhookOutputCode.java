@@ -48,10 +48,12 @@ public interface WebhookOutputCode {
     String PIPELINE_GIT_MR_DESC = "GIT_CI_MR_DESC";
     String PIPELINE_GIT_MR_PROPOSER = "GIT_CI_MR_PROPOSER";
     String PIPELINE_GIT_MR_ACTION = "GIT_CI_MR_ACTION";
+    String PIPELINE_GIT_MR_TAPD_ISSUES = "GIT_CI_MR_TAPD_ISSUES";
 
     // tag
     String PIPELINE_GIT_TAG_FROM = "GIT_CI_TAG_FROM";
     String PIPELINE_GIT_TAG_MESSAGE = "GIT_CI_TAG_MESSAGE";
+    String PIPELINE_GIT_TAG_DESC = "GIT_CI_TAG_DESC";
     String BK_REPO_GIT_MANUAL_UNLOCK = "BK_CI_REPO_GIT_MANUAL_UNLOCK";
 
     /******************************** ci传统文变量 ********************************/

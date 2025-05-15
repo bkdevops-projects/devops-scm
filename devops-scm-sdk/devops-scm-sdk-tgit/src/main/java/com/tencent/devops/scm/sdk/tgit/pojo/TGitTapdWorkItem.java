@@ -1,11 +1,12 @@
 package com.tencent.devops.scm.sdk.tgit.pojo;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class TGitTapdWorkItem {
     @JsonProperty("workspace_id")
-    private Long workspace_id;
+    private Long workspaceId;
     @JsonProperty("status_zh")
     private String statusZh;
     @JsonProperty("id_str")

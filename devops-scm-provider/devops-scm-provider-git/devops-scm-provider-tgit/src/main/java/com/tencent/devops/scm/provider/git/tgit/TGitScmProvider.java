@@ -13,7 +13,7 @@ import com.tencent.devops.scm.provider.git.command.GitScmProvider;
 import com.tencent.devops.scm.sdk.common.connector.ScmConnector;
 import com.tencent.devops.scm.sdk.tgit.TGitApiFactory;
 import com.tencent.devops.scm.sdk.tgit.TGitOauth2Api;
-import com.tencent.devops.scm.sdk.tgit.pojo.TGitOauth2ClientProperties;
+import com.tencent.devops.scm.sdk.common.GitOauth2ClientProperties;
 
 public class TGitScmProvider extends GitScmProvider {
     private final TGitApiFactory apiFactory;
@@ -23,7 +23,7 @@ public class TGitScmProvider extends GitScmProvider {
         this(new TGitApiFactory(apiUrl, connector));
     }
 
-    public TGitScmProvider(String apiUrl, ScmConnector connector, TGitOauth2ClientProperties properties) {
+    public TGitScmProvider(String apiUrl, ScmConnector connector, GitOauth2ClientProperties properties) {
         this(apiUrl, connector);
         this.oauth2Api = new TGitOauth2Api(properties, connector);
     }

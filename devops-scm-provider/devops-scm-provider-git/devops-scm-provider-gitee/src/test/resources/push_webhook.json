@@ -1,0 +1,235 @@
+{
+  "ref": "refs/heads/feat_0",
+  "sign": "",
+  "user": {
+    "id": 4766201,
+    "url": "https://gitee.com/zhangsan",
+    "name": "zhangsan",
+    "email": "zhangsan@163.com",
+    "username": "zhangsan",
+    "user_name": "zhangsan"
+  },
+  "after": "c34a2c245959b4631dc811749510dfbcdd2f7016",
+  "before": "8f242860a34cd7444de610dad507791382bb4f6d",
+  "pusher": {
+    "id": 4766201,
+    "url": "https://gitee.com/zhangsan",
+    "name": "zhangsan",
+    "email": "zhangsan@163.com",
+    "username": "zhangsan",
+    "user_name": "zhangsan"
+  },
+  "sender": {
+    "id": 4766201,
+    "url": "https://gitee.com/zhangsan",
+    "name": "zhangsan",
+    "type": "User",
+    "email": "zhangsan@163.com",
+    "login": "zhangsan",
+    "remark": null,
+    "html_url": "https://gitee.com/zhangsan",
+    "username": "zhangsan",
+    "user_name": "zhangsan",
+    "avatar_url": "https://gitee.com/assets/no_portrait.png",
+    "site_admin": false
+  },
+  "commits": [
+    {
+      "id": "c34a2c245959b4631dc811749510dfbcdd2f7016",
+      "url": "https://gitee.com/repo_group/repo_name/commit/c34a2c245959b4631dc811749510dfbcdd2f7016",
+      "added": [
+
+      ],
+      "author": {
+        "id": 4766201,
+        "url": "https://gitee.com/zhangsan",
+        "name": "zhangsan",
+        "time": "2025-04-02T10:48:22+08:00",
+        "user": null,
+        "email": "zhangsan@163.com",
+        "remark": null,
+        "username": "zhangsan",
+        "user_name": "zhangsan"
+      },
+      "message": "feat_0: 初始化仓库\n",
+      "removed": [
+
+      ],
+      "tree_id": "74102d387f72ee0548a18588fe36266297420688",
+      "distinct": true,
+      "modified": [
+        "files/a/a_1/a_1.txt"
+      ],
+      "committer": {
+        "id": 4766201,
+        "url": "https://gitee.com/zhangsan",
+        "name": "zhangsan",
+        "time": null,
+        "user": null,
+        "email": "zhangsan@163.com",
+        "remark": null,
+        "username": "zhangsan",
+        "user_name": "zhangsan"
+      },
+      "timestamp": "2025-04-02T10:48:22+08:00",
+      "parent_ids": [
+        "8f242860a34cd7444de610dad507791382bb4f6d"
+      ]
+    }
+  ],
+  "compare": "https://gitee.com/repo_group/repo_name/compare/8f242860a34cd7444de610dad507791382bb4f6d...c34a2c245959b4631dc811749510dfbcdd2f7016",
+  "created": false,
+  "deleted": false,
+  "hook_id": 1468475,
+  "project": {
+    "id": 39537743,
+    "url": "https://gitee.com/repo_group/repo_name",
+    "fork": false,
+    "name": "private_repo",
+    "path": "private_repo",
+    "owner": {
+      "id": 4766201,
+      "url": "https://gitee.com/zhangsan",
+      "name": "zhangsan",
+      "type": "User",
+      "email": "zhangsan@163.com",
+      "login": "zhangsan",
+      "remark": null,
+      "html_url": "https://gitee.com/zhangsan",
+      "username": "zhangsan",
+      "user_name": "zhangsan",
+      "avatar_url": "https://gitee.com/assets/no_portrait.png",
+      "site_admin": false
+    },
+    "git_url": "git://gitee.com/repo_group/repo_name.git",
+    "license": null,
+    "private": false,
+    "ssh_url": "git@gitee.com:repo_group/repo_name.git",
+    "svn_url": "svn://gitee.com/repo_group/repo_name",
+    "has_wiki": true,
+    "homepage": null,
+    "html_url": "https://gitee.com/repo_group/repo_name",
+    "language": "Java",
+    "clone_url": "https://gitee.com/repo_group/repo_name.git",
+    "full_name": "repo_group/repo_name",
+    "has_pages": false,
+    "namespace": "zhangsan",
+    "pushed_at": "2025-04-02T10:48:35+08:00",
+    "created_at": "2025-02-05T17:52:12+08:00",
+    "has_issues": true,
+    "updated_at": "2025-04-02T10:48:35+08:00",
+    "description": "测试仓库",
+    "forks_count": 0,
+    "git_ssh_url": "git@gitee.com:repo_group/repo_name.git",
+    "git_svn_url": "svn://gitee.com/repo_group/repo_name",
+    "git_http_url": "https://gitee.com/repo_group/repo_name.git",
+    "default_branch": "master",
+    "watchers_count": 1,
+    "stargazers_count": 0,
+    "open_issues_count": 0,
+    "name_with_namespace": "repo_group/repo_name",
+    "path_with_namespace": "repo_group/repo_name"
+  },
+  "user_id": 4766201,
+  "hook_url": "https://gitee.com/repo_group/repo_name/hooks/1468475/edit",
+  "password": "",
+  "hook_name": "push_hooks",
+  "push_data": null,
+  "timestamp": "1743562115989",
+  "user_name": "zhangsan",
+  "enterprise": null,
+  "repository": {
+    "id": 39537743,
+    "url": "https://gitee.com/repo_group/repo_name",
+    "fork": false,
+    "name": "private_repo",
+    "path": "private_repo",
+    "owner": {
+      "id": 4766201,
+      "url": "https://gitee.com/zhangsan",
+      "name": "zhangsan",
+      "type": "User",
+      "email": "zhangsan@163.com",
+      "login": "zhangsan",
+      "remark": null,
+      "html_url": "https://gitee.com/zhangsan",
+      "username": "zhangsan",
+      "user_name": "zhangsan",
+      "avatar_url": "https://gitee.com/assets/no_portrait.png",
+      "site_admin": false
+    },
+    "git_url": "git://gitee.com/repo_group/repo_name.git",
+    "license": null,
+    "private": false,
+    "ssh_url": "git@gitee.com:repo_group/repo_name.git",
+    "svn_url": "svn://gitee.com/repo_group/repo_name",
+    "has_wiki": true,
+    "homepage": null,
+    "html_url": "https://gitee.com/repo_group/repo_name",
+    "language": "Java",
+    "clone_url": "https://gitee.com/repo_group/repo_name.git",
+    "full_name": "repo_group/repo_name",
+    "has_pages": false,
+    "namespace": "zhangsan",
+    "pushed_at": "2025-04-02T10:48:35+08:00",
+    "created_at": "2025-02-05T17:52:12+08:00",
+    "has_issues": true,
+    "updated_at": "2025-04-02T10:48:35+08:00",
+    "description": "测试仓库",
+    "forks_count": 0,
+    "git_ssh_url": "git@gitee.com:repo_group/repo_name.git",
+    "git_svn_url": "svn://gitee.com/repo_group/repo_name",
+    "git_http_url": "https://gitee.com/repo_group/repo_name.git",
+    "default_branch": "master",
+    "watchers_count": 1,
+    "stargazers_count": 0,
+    "open_issues_count": 0,
+    "name_with_namespace": "repo_group/repo_name",
+    "path_with_namespace": "repo_group/repo_name"
+  },
+  "user_email": "zhangsan@163.com",
+  "head_commit": {
+    "id": "c34a2c245959b4631dc811749510dfbcdd2f7016",
+    "url": "https://gitee.com/repo_group/repo_name/commit/c34a2c245959b4631dc811749510dfbcdd2f7016",
+    "added": [
+
+    ],
+    "author": {
+      "id": 4766201,
+      "url": "https://gitee.com/zhangsan",
+      "name": "zhangsan",
+      "time": "2025-04-02T10:48:22+08:00",
+      "user": null,
+      "email": "zhangsan@163.com",
+      "remark": null,
+      "username": "zhangsan",
+      "user_name": "zhangsan"
+    },
+    "message": "feat_0: 初始化仓库\n",
+    "removed": [
+
+    ],
+    "tree_id": "74102d387f72ee0548a18588fe36266297420688",
+    "distinct": true,
+    "modified": [
+      "files/a/a_1/a_1.txt"
+    ],
+    "committer": {
+      "id": 4766201,
+      "url": "https://gitee.com/zhangsan",
+      "name": "zhangsan",
+      "time": null,
+      "user": null,
+      "email": "zhangsan@163.com",
+      "remark": null,
+      "username": "zhangsan",
+      "user_name": "zhangsan"
+    },
+    "timestamp": "2025-04-02T10:48:22+08:00",
+    "parent_ids": [
+      "8f242860a34cd7444de610dad507791382bb4f6d"
+    ]
+  },
+  "total_commits_count": 1,
+  "commits_more_than_ten": false
+}

@@ -1,6 +1,5 @@
 package com.tencent.devops.scm.api.exception;
 
-import lombok.Data;
 import lombok.Getter;
 
 /**
@@ -8,7 +7,7 @@ import lombok.Getter;
  */
 @Getter
 public class ScmApiException extends RuntimeException {
-    int code;
+    Integer code;
 
     public ScmApiException(String message, int code) {
         super(message);

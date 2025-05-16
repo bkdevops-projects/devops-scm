@@ -2,6 +2,7 @@ package com.tencent.devops.scm.provider.git.tgit;
 
 import com.tencent.devops.scm.api.exception.NotFoundScmApiException;
 import com.tencent.devops.scm.api.exception.ScmApiException;
+import com.tencent.devops.scm.api.exception.UnAuthorizedScmApiException;
 import com.tencent.devops.scm.api.pojo.auth.IScmAuth;
 import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository;
 import com.tencent.devops.scm.api.pojo.repository.git.GitScmProviderRepository;
@@ -53,9 +54,10 @@ public class TGitApiTemplate {
         switch (e.getStatusCode()) {
             case 404:
                 return new NotFoundScmApiException(e.getMessage());
+            case 401, 403:
+                return new UnAuthorizedScmApiException(e.getMessage());
             default:
                 return new ScmApiException(e.getMessage(), e.getStatusCode());
-
         }
     }
 

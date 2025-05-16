@@ -73,20 +73,5 @@ public class UriTemplate {
     }
 
     private static final Logger logger = LoggerFactory.getLogger(UriTemplate.class);
-
-    public static void main(String[] args) {
-
-        String urlPath = UriTemplate.from("oauth/token?client_id=:client_id&"
-                        + "client_secret=:client_secret&"
-                        + "code=:code&"
-                        + "grant_type=authorization_code&"
-                        + "redirect_uri=:redirect_uri")
-                .with("client_id", "00000")
-                .with("client_secret", "11111")
-                .with("code", "22222")
-                .with("redirect_uri", "ssssss")
-                .expand();
-        System.out.println("urlPath = " + urlPath);
-    }
 }
 

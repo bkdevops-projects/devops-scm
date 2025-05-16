@@ -25,11 +25,7 @@ public class TGitApiTemplate {
             TGitApi tGitApi = apiFactory.fromAuthProvider(TGitAuthProviderFactory.create(repo.getAuth()));
             return apiFunction.apply(repo, tGitApi);
         } catch (Throwable t) {
-            if (t instanceof TGitApiException) {
-                throw translateException((TGitApiException) t);
-            } else {
-                throw new ScmApiException(t);
-            }
+            throw handleThrowable(t);
         }
     }
 
@@ -38,11 +34,7 @@ public class TGitApiTemplate {
             TGitApi tGitApi = apiFactory.fromAuthProvider(TGitAuthProviderFactory.create(auth));
             return apiFunction.apply(tGitApi);
         } catch (Throwable t) {
-            if (t instanceof TGitApiException) {
-                throw translateException((TGitApiException) t);
-            } else {
-                throw new ScmApiException(t);
-            }
+            throw handleThrowable(t);
         }
     }
 
@@ -53,11 +45,7 @@ public class TGitApiTemplate {
             TGitApi tGitApi = apiFactory.fromAuthProvider(TGitAuthProviderFactory.create(repo.getAuth()));
             apiConsumer.accept(repo, tGitApi);
         } catch (Throwable t) {
-            if (t instanceof TGitApiException) {
-                throw translateException((TGitApiException) t);
-            } else {
-                throw new ScmApiException(t);
-            }
+            throw handleThrowable(t);
         }
     }
 
@@ -66,8 +54,16 @@ public class TGitApiTemplate {
             case 404:
                 return new NotFoundScmApiException(e.getMessage());
             default:
-                return new ScmApiException(e);
+                return new ScmApiException(e.getMessage(), e.getStatusCode());
 
+        }
+    }
+
+    private static ScmApiException handleThrowable(Throwable t) {
+        if (t instanceof TGitApiException) {
+            return translateException((TGitApiException) t);
+        } else {
+            return new ScmApiException(t);
         }
     }
 }

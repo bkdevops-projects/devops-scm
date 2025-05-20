@@ -49,6 +49,7 @@ jobs:
           echo "GITHUB_REF=${GITHUB_REF}"
           chmod +x ./gradlew
           ./gradlew clean publish \
+          -Dorg.gradle.parallel=false \
           -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }} \
           -Psigning.password='${{ secrets.SIGNING_PASSWORD }}' \
           -Psigning.secretKeyRingFile=${{ github.workspace }}/secretKeyRingFile.gpg

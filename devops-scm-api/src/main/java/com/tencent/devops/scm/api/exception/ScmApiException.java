@@ -7,11 +7,11 @@ import lombok.Getter;
  */
 @Getter
 public class ScmApiException extends RuntimeException {
-    Integer code;
+    Integer statusCode;
 
     public ScmApiException(String message, int code) {
         super(message);
-        this.code = code;
+        this.statusCode = code;
     }
 
     public ScmApiException(String message) {

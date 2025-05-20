@@ -10,7 +10,7 @@ import lombok.Getter;
 public class NotFoundScmApiException extends ScmApiException {
     public NotFoundScmApiException(String message) {
         super(message);
-        this.code = 404;
+        this.statusCode = 404;
     }
 
     public NotFoundScmApiException(String message, Throwable cause) {

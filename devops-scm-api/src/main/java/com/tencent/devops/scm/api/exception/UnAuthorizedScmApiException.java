@@ -11,7 +11,7 @@ package com.tencent.devops.scm.api.exception;
 public class UnAuthorizedScmApiException extends ScmApiException {
     public UnAuthorizedScmApiException(String message) {
         super(message);
-        this.code = 401;
+        this.statusCode = 401;
     }
 
     public UnAuthorizedScmApiException(String message, Throwable cause) {

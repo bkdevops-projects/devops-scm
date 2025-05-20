@@ -9,9 +9,9 @@ package com.tencent.devops.scm.api.exception;
  * 4. 权限范围不足
  */
 public class UnAuthorizedScmApiException extends ScmApiException {
-
     public UnAuthorizedScmApiException(String message) {
         super(message);
+        this.statusCode = 401;
     }
 
     public UnAuthorizedScmApiException(String message, Throwable cause) {

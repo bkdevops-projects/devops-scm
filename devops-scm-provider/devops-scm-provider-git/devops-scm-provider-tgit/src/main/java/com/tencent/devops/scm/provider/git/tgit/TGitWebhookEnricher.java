@@ -15,9 +15,7 @@ import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEB
 import static com.tencent.devops.scm.sdk.tgit.enums.TGitPushOperationKind.UPDATE_NONFASTFORWORD;
 
 import com.tencent.devops.scm.api.WebhookEnricher;
-import com.tencent.devops.scm.api.exception.UnAuthorizedScmApiException;
 import com.tencent.devops.scm.api.function.PairConsumer;
-import com.tencent.devops.scm.api.function.TriConsumer;
 import com.tencent.devops.scm.api.pojo.Change;
 import com.tencent.devops.scm.api.pojo.PullRequest;
 import com.tencent.devops.scm.api.pojo.Review;
@@ -33,8 +31,6 @@ import com.tencent.devops.scm.api.pojo.webhook.git.IssueHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestCommentHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestReviewHook;
-import com.tencent.devops.scm.provider.git.tgit.auth.TGitAuthProviderFactory;
-import com.tencent.devops.scm.sdk.tgit.TGitApi;
 import com.tencent.devops.scm.sdk.tgit.TGitApiException;
 import com.tencent.devops.scm.sdk.tgit.TGitApiFactory;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitCommit;
@@ -55,7 +51,7 @@ import org.slf4j.LoggerFactory;
 public class TGitWebhookEnricher implements WebhookEnricher {
 
     private final TGitApiFactory apiFactory;
-    private final Map<Class<? extends Webhook>, TriConsumer<TGitApi, GitScmProviderRepository, Webhook>> eventActions;
+    private final Map<Class<? extends Webhook>, PairConsumer<GitScmProviderRepository, Webhook>> eventActions;
 
     private static final Logger logger = LoggerFactory.getLogger(TGitApiException.class);
 
@@ -74,85 +70,81 @@ public class TGitWebhookEnricher implements WebhookEnricher {
     @Override
     public Webhook enrich(ScmProviderRepository repository, Webhook webhook) {
         GitScmProviderRepository repo = (GitScmProviderRepository) repository;
-        TGitApi tGitApi = apiFactory.fromAuthProvider(TGitAuthProviderFactory.create(repo.getAuth()));
-        try {
-            enrichServerRepository(tGitApi, repo, webhook);
-
-            if (eventActions.containsKey(webhook.getClass())) {
-                eventActions.get(webhook.getClass()).accept(tGitApi, repo, webhook);
-            }
-            return webhook;
-        } catch (TGitApiException exception) {
-            if (exception.getStatusCode() == 401 || exception.getStatusCode() == 403) {
-                throw new UnAuthorizedScmApiException(exception.getMessage());
-            } else {
-                throw exception;
-            }
+        enrichServerRepository(repo, webhook);
+        if (eventActions.containsKey(webhook.getClass())) {
+            eventActions.get(webhook.getClass()).accept(repo, webhook);
         }
+        return webhook;
     }
 
-    private void enrichServerRepository(TGitApi tGitApi, GitScmProviderRepository repo, Webhook webhook) {
-        TGitProject project = tGitApi.getProjectApi().getProject(repo.getProjectIdOrPath());
-        GitScmServerRepository serverRepository = (GitScmServerRepository) webhook.repository();
-        serverRepository.setDefaultBranch(project.getDefaultBranch());
-        serverRepository.setArchived(project.getArchived());
+    private void enrichServerRepository(GitScmProviderRepository repo, Webhook webhook) {
+        TGitApiTemplate.execute(repo, apiFactory, (providerRepository, tGitApi) -> {
+            TGitProject project = tGitApi.getProjectApi().getProject(repo.getProjectIdOrPath());
+            GitScmServerRepository serverRepository = (GitScmServerRepository) webhook.repository();
+            serverRepository.setDefaultBranch(project.getDefaultBranch());
+            serverRepository.setArchived(project.getArchived());
+        });
     }
 
-    private void enrichPullRequestHook(TGitApi tGitApi, GitScmProviderRepository repository, Webhook webhook) {
-        PullRequestHook pullRequestHook = (PullRequestHook) webhook;
-        PullRequest pullRequest = pullRequestHook.getPullRequest();
-        TGitMergeRequest mergeRequest = tGitApi.getMergeRequestApi()
-                .getMergeRequestChanges(repository.getProjectIdOrPath(), pullRequest.getId());
-        if (mergeRequest != null) {
-            List<Change> changes = mergeRequest.getFiles()
-                    .stream()
-                    .map(TGitObjectConverter::convertChange)
-                    .collect(Collectors.toList());
-            pullRequestHook.setChanges(changes);
-        }
-        // 根据完整的MR/Review信息填充变量
-        pullRequestHook.getExtras().putAll(
-                fillPullRequestReviewVars(
-                        tGitApi,
-                        repository,
-                        pullRequest,
-                        ((PullRequestHook) webhook).getRepo()
-                )
+    private void enrichPullRequestHook(GitScmProviderRepository repository, Webhook webhook) {
+        TGitApiTemplate.execute(repository, apiFactory, (providerRepository, tGitApi) -> {
+                    PullRequestHook pullRequestHook = (PullRequestHook) webhook;
+                    PullRequest pullRequest = pullRequestHook.getPullRequest();
+                    TGitMergeRequest mergeRequest = tGitApi.getMergeRequestApi()
+                            .getMergeRequestChanges(repository.getProjectIdOrPath(), pullRequest.getId());
+                    if (mergeRequest != null) {
+                        List<Change> changes = mergeRequest.getFiles()
+                                .stream()
+                                .map(TGitObjectConverter::convertChange)
+                                .collect(Collectors.toList());
+                        pullRequestHook.setChanges(changes);
+                    }
+                    // 根据完整的MR/Review信息填充变量
+                    pullRequestHook.getExtras().putAll(
+                            fillPullRequestReviewVars(
+                                    repository,
+                                    pullRequest,
+                                    ((PullRequestHook) webhook).getRepo()
+                            )
+                    );
+                }
         );
     }
 
-    private void enrichPushHook(TGitApi tGitApi, GitScmProviderRepository repository, Webhook webhook) {
-        GitPushHook pushHook = (GitPushHook) webhook;
-        String operationKind = (String) pushHook.getExtras().get(BK_REPO_GIT_WEBHOOK_PUSH_OPERATION_KIND);
-        if (UPDATE_NONFASTFORWORD.value.equals(operationKind)) {
-            List<TGitDiff> diffs = tGitApi.getRepositoryFileApi()
-                    .getFileChange(
-                            repository.getProjectIdOrPath(),
-                            pushHook.getAfter(),
-                            pushHook.getBefore(),
-                            false,
-                            false,
-                            1,
-                            1000
-                    );
-            if (CollectionUtils.isEmpty(diffs)) {
-                return;
+    private void enrichPushHook(GitScmProviderRepository repository, Webhook webhook) {
+        TGitApiTemplate.execute(repository, apiFactory, (providerRepository, tGitApi) -> {
+            GitPushHook pushHook = (GitPushHook) webhook;
+            String operationKind = (String) pushHook.getExtras().get(BK_REPO_GIT_WEBHOOK_PUSH_OPERATION_KIND);
+            if (UPDATE_NONFASTFORWORD.value.equals(operationKind)) {
+                List<TGitDiff> diffs = tGitApi.getRepositoryFileApi()
+                        .getFileChange(
+                                repository.getProjectIdOrPath(),
+                                pushHook.getAfter(),
+                                pushHook.getBefore(),
+                                false,
+                                false,
+                                1,
+                                1000
+                        );
+                if (CollectionUtils.isEmpty(diffs)) {
+                    return;
+                }
+                pushHook.setChanges(diffs.stream()
+                        .map(TGitObjectConverter::convertChange)
+                        .collect(Collectors.toList()));
             }
-            pushHook.setChanges(diffs.stream()
-                    .map(TGitObjectConverter::convertChange)
-                    .collect(Collectors.toList()));
-        }
+        });
     }
 
-    private void enrichIssueHook(TGitApi tGitApi, GitScmProviderRepository repository, Webhook webhook) {
+    private void enrichIssueHook(GitScmProviderRepository repository, Webhook webhook) {
         IssueHook issueHook = (IssueHook) webhook;
         if (issueHook.getExtras() == null) {
             issueHook.setExtras(new HashMap<>());
         }
-        issueHook.getExtras().putAll(fillDefaultBranchVars(tGitApi, repository, webhook, null));
+        issueHook.getExtras().putAll(fillDefaultBranchVars(repository, webhook, null));
     }
 
-    private void enrichNoteHook(TGitApi tGitApi, GitScmProviderRepository repository, Webhook webhook) {
+    private void enrichNoteHook(GitScmProviderRepository repository, Webhook webhook) {
         AbstractCommentHook commentHook = (AbstractCommentHook) webhook;
         if (commentHook.getExtras() == null) {
             commentHook.setExtras(new HashMap<>());
@@ -160,7 +152,6 @@ public class TGitWebhookEnricher implements WebhookEnricher {
         // 默认分支的其他信息
         Map<String, Object> extras = commentHook.getExtras();
         Map<String, String> defaultBranchVars = fillDefaultBranchVars(
-                tGitApi,
                 repository,
                 webhook,
                 (defaultBranch, commit) -> {
@@ -179,7 +170,6 @@ public class TGitWebhookEnricher implements WebhookEnricher {
             PullRequest pullRequest = ((PullRequestCommentHook) commentHook).getPullRequest();
             extras.putAll(
                     fillPullRequestReviewVars(
-                            tGitApi,
                             repository,
                             pullRequest,
                             ((PullRequestCommentHook) webhook).getRepo()
@@ -190,7 +180,6 @@ public class TGitWebhookEnricher implements WebhookEnricher {
     }
 
     private void enrichPullRequestViewHook(
-            TGitApi tGitApi,
             GitScmProviderRepository repository,
             Webhook webhook
     ) {
@@ -200,23 +189,24 @@ public class TGitWebhookEnricher implements WebhookEnricher {
         if (pullRequest != null) {
             extras.putAll(
                     fillPullRequestReviewVars(
-                            tGitApi,
                             repository,
                             pullRequest,
                             ((PullRequestReviewHook) webhook).getRepo()
                     )
             );
         } else {
-            Review review = reviewHook.getReview();
-            TGitReview commitReview = tGitApi.getReviewApi()
-                    .getCommitReview(
-                            repository.getProjectIdOrPath(),
-                            review.getId()
-                    );
-            review.setTitle(StringUtils.defaultString(commitReview.getTitle(), ""));
+            TGitApiTemplate.execute(repository, apiFactory, (providerRepository, tGitApi) -> {
+                Review review = reviewHook.getReview();
+                TGitReview commitReview = tGitApi.getReviewApi()
+                        .getCommitReview(
+                                repository.getProjectIdOrPath(),
+                                review.getId()
+                        );
+                review.setTitle(StringUtils.defaultString(commitReview.getTitle(), ""));
+            });
         }
         // 默认分支信息
-        Map<String, String> defaultBranchVars = fillDefaultBranchVars(tGitApi, repository, webhook,
+        Map<String, String> defaultBranchVars = fillDefaultBranchVars(repository, webhook,
                 (defaultBranch, commit) -> {
                     if (defaultBranch != null && commit != null) {
                         extras.put(
@@ -237,21 +227,22 @@ public class TGitWebhookEnricher implements WebhookEnricher {
      * @param pullRequest pull request 基础信息，webhook body中获取的基础信息
      */
     private Map<String, Object> fillPullRequestVars(
-            TGitApi tGitApi,
             GitScmProviderRepository repository,
             PullRequest pullRequest,
             GitScmServerRepository scmServerRepository
     ) {
-        TGitMergeRequest mergeRequestInfo = tGitApi.getMergeRequestApi()
-                .getMergeRequestById(
-                        repository.getProjectIdOrPath(),
-                        pullRequest.getId()
-                );
         Map<String, Object> outputs = new HashMap<>();
-        if (mergeRequestInfo != null) {
-            pullRequest.setTitle(StringUtils.defaultString(mergeRequestInfo.getTitle(), ""));
-            outputs.putAll(TGitObjectToMapConverter.convertPullRequest(mergeRequestInfo, scmServerRepository));
-        }
+        TGitApiTemplate.execute(repository, apiFactory, (providerRepository, tGitApi) -> {
+            TGitMergeRequest mergeRequestInfo = tGitApi.getMergeRequestApi()
+                    .getMergeRequestById(
+                            repository.getProjectIdOrPath(),
+                            pullRequest.getId()
+                    );
+            if (mergeRequestInfo != null) {
+                pullRequest.setTitle(StringUtils.defaultString(mergeRequestInfo.getTitle(), ""));
+                outputs.putAll(TGitObjectToMapConverter.convertPullRequest(mergeRequestInfo, scmServerRepository));
+            }
+        });
         return outputs;
     }
 
@@ -259,47 +250,45 @@ public class TGitWebhookEnricher implements WebhookEnricher {
      * 填充与Mr关联的Review参数
      */
     private Map<String, Object> fillPullRequestReviewVars(
-            TGitApi tGitApi,
             GitScmProviderRepository repository,
             PullRequest pullRequest,
             GitScmServerRepository scmServerRepository
     ) {
         Map<String, Object> vars = new HashMap<>(
                 fillPullRequestVars(
-                        tGitApi,
                         repository,
                         pullRequest,
                         scmServerRepository
                 )
         );
-        TGitReview tGitMergeRequestReviewInfo = tGitApi.getReviewApi()
-                .getMergeRequestReview(
-                        repository.getProjectIdOrPath(),
-                        pullRequest.getId()
-                );
-        if (tGitMergeRequestReviewInfo != null) {
-            vars.putAll(TGitObjectToMapConverter.convertReview(tGitMergeRequestReviewInfo));
-        }
+
+        TGitApiTemplate.execute(repository, apiFactory, (providerRepository, tGitApi) -> {
+            TGitReview tGitMergeRequestReviewInfo = tGitApi.getReviewApi()
+                    .getMergeRequestReview(
+                            repository.getProjectIdOrPath(),
+                            pullRequest.getId()
+                    );
+            if (tGitMergeRequestReviewInfo != null) {
+                vars.putAll(TGitObjectToMapConverter.convertReview(tGitMergeRequestReviewInfo));
+            }
+        });
         return vars;
     }
 
     /**
      * 获取默认分支变量
-     * @param tGitApi API调用
      * @param repository 仓库信息
      * @param webhook webhook信息
      * @param extAction 扩展action, 用于扩展默认分支和commit信息
      * @return 默认分支和commit信息（基础变量，不包含扩展字段，扩展字段需在外部手动组装）
      */
     private Map<String, String> fillDefaultBranchVars(
-            TGitApi tGitApi,
             GitScmProviderRepository repository,
             Webhook webhook,
             PairConsumer<String, TGitCommit> extAction
     ) {
         Map<String, String> extra = new HashMap<>();
         enrichDefaultBranchAndCommitInfo(
-                tGitApi,
                 repository,
                 webhook,
                 (defaultBranch, commit) -> {
@@ -321,17 +310,18 @@ public class TGitWebhookEnricher implements WebhookEnricher {
     }
 
     private void enrichDefaultBranchAndCommitInfo(
-            TGitApi tGitApi,
             GitScmProviderRepository repository,
             Webhook webhook,
             PairConsumer<String, TGitCommit> action
     ) {
-        GitScmServerRepository serverRepository = (GitScmServerRepository) webhook.repository();
-        String defaultBranch = serverRepository.getDefaultBranch();
-        TGitCommit commit = null;
-        if (defaultBranch != null) {
-            commit = tGitApi.getCommitsApi().getCommit(repository.getProjectIdOrPath(), defaultBranch);
-        }
-        action.accept(defaultBranch, commit);
+        TGitApiTemplate.execute(repository, apiFactory, (providerRepository, tGitApi) -> {
+            GitScmServerRepository serverRepository = (GitScmServerRepository) webhook.repository();
+            String defaultBranch = serverRepository.getDefaultBranch();
+            TGitCommit commit = null;
+            if (defaultBranch != null) {
+                commit = tGitApi.getCommitsApi().getCommit(repository.getProjectIdOrPath(), defaultBranch);
+            }
+            action.accept(defaultBranch, commit);
+        });
     }
 }

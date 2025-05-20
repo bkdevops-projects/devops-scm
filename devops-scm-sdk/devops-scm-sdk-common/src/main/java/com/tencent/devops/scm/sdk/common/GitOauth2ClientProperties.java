@@ -1,4 +1,4 @@
-package com.tencent.devops.scm.sdk.tgit.pojo;
+package com.tencent.devops.scm.sdk.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TGitOauth2ClientProperties {
+public class GitOauth2ClientProperties {
 
     /**
      * 服务端url

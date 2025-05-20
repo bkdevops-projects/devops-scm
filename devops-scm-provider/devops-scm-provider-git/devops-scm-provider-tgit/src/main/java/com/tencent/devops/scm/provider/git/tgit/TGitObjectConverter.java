@@ -17,6 +17,7 @@ import com.tencent.devops.scm.api.pojo.Tree;
 import com.tencent.devops.scm.api.pojo.User;
 import com.tencent.devops.scm.api.pojo.repository.git.GitRepositoryUrl;
 import com.tencent.devops.scm.api.pojo.repository.git.GitScmServerRepository;
+import com.tencent.devops.scm.sdk.common.util.DateUtils;
 import com.tencent.devops.scm.sdk.common.util.UrlConverter;
 import com.tencent.devops.scm.sdk.tgit.enums.TGitIssueState;
 import com.tencent.devops.scm.sdk.tgit.enums.TGitReviewState;
@@ -43,7 +44,6 @@ import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventIssue;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventMergeRequest;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventProject;
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventRepository;
-import com.tencent.devops.scm.sdk.tgit.util.TGitDateUtils;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -294,7 +294,7 @@ public class TGitObjectConverter {
         return Commit.builder()
                 .sha(eventCommit.getId())
                 .message(eventCommit.getMessage())
-                .commitTime(TGitDateUtils.convertDateToLocalDateTime(eventCommit.getTimestamp()))
+                .commitTime(DateUtils.convertDateToLocalDateTime(eventCommit.getTimestamp()))
                 .link(eventCommit.getUrl())
                 .author(committer)
                 .committer(committer)
@@ -318,7 +318,7 @@ public class TGitObjectConverter {
                 .message(from.getMessage())
                 .author(author)
                 .committer(committer)
-                .commitTime(TGitDateUtils.convertDateToLocalDateTime(from.getCommittedDate()))
+                .commitTime(DateUtils.convertDateToLocalDateTime(from.getCommittedDate()))
                 .build();
     }
 

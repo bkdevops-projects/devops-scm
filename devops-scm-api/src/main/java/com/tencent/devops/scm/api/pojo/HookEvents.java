@@ -21,6 +21,10 @@ public class HookEvents {
     private Boolean push;
     private Boolean tag;
     private Boolean pullRequestReview;
+    private Boolean svnPreCommitEvents;
+    private Boolean svnPostCommitEvents;
+    private Boolean svnPreLockEvents;
+    private Boolean svnPostLockEvents;
 
     public HookEvents(List<String> enabledEvents) {
         if (enabledEvents.contains(ScmEventType.ISSUE.value)) {
@@ -43,6 +47,9 @@ public class HookEvents {
         }
         if (enabledEvents.contains(ScmEventType.PULL_REQUEST_REVIEW.value)) {
             this.pullRequestReview = true;
+        }
+        if (enabledEvents.contains(ScmEventType.POST_COMMIT.value)) {
+            this.svnPostCommitEvents = true;
         }
     }
 
@@ -75,6 +82,9 @@ public class HookEvents {
         }
         if (pullRequestReview != null && pullRequestReview) {
             events.add(ScmEventType.PULL_REQUEST_REVIEW.value);
+        }
+        if (svnPostCommitEvents != null && svnPostCommitEvents) {
+            events.add(ScmEventType.POST_COMMIT.value);
         }
         return events;
     }

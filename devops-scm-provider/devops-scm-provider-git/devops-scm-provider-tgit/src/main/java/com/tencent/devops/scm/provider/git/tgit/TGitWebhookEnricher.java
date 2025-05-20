@@ -187,11 +187,10 @@ public class TGitWebhookEnricher implements WebhookEnricher {
         commentHook.setExtras(extras);
     }
 
-    private void enrichTagHook(TGitApi tGitApi, GitScmProviderRepository repository, Webhook webhook) {
+    private void enrichTagHook(GitScmProviderRepository repository, Webhook webhook) {
         GitTagHook tagHook = (GitTagHook) webhook;
         tagHook.getExtras().putAll(
                 fillTagVars(
-                        tGitApi,
                         repository,
                         tagHook.getRef().getName()
                 )
@@ -241,7 +240,6 @@ public class TGitWebhookEnricher implements WebhookEnricher {
         extras.put(PIPELINE_GIT_HEAD_REF, extras.get(BK_REPO_GIT_WEBHOOK_MR_SOURCE_BRANCH));
         extras.putAll(
                 fillTapdWorkItemsVar(
-                        tGitApi,
                         repository,
                         TGitTapdWorkType.MR,
                         ((PullRequestReviewHook) webhook).getPullRequest().getNumber().longValue()
@@ -353,46 +351,48 @@ public class TGitWebhookEnricher implements WebhookEnricher {
     }
 
     private Map<String, String> fillTapdWorkItemsVar(
-            TGitApi tGitApi,
             GitScmProviderRepository repository,
             TGitTapdWorkType type,
             Long iid
     ) {
         Map<String, String> extra = new HashMap<>();
-        List<TGitTapdWorkItem> tapdWorkItems = tGitApi.getProjectApi()
-                .getTapdWrorkItems(
-                        repository.getProjectIdOrPath(),
-                        type,
-                        iid,
-                        1,
-                        100
-                );
-        String tapdIds = TGitStringHelper.join(
-                CollectionUtils.emptyIfNull(tapdWorkItems)
-                        .stream()
-                        .map(TGitTapdWorkItem::getTapdId)
-                        .collect(Collectors.toList())
-        );
-        if (type == TGitTapdWorkType.MR) {
-            extra.put(PIPELINE_GIT_MR_TAPD_ISSUES, tapdIds);
-        }
+        TGitApiTemplate.execute(repository, apiFactory, (providerRepository, tGitApi) -> {
+            List<TGitTapdWorkItem> tapdWorkItems = tGitApi.getProjectApi()
+                    .getTapdWrorkItems(
+                            repository.getProjectIdOrPath(),
+                            type,
+                            iid,
+                            1,
+                            100
+                    );
+            String tapdIds = TGitStringHelper.join(
+                    CollectionUtils.emptyIfNull(tapdWorkItems)
+                            .stream()
+                            .map(TGitTapdWorkItem::getTapdId)
+                            .collect(Collectors.toList())
+            );
+            if (type == TGitTapdWorkType.MR) {
+                extra.put(PIPELINE_GIT_MR_TAPD_ISSUES, tapdIds);
+            }
+        });
         return extra;
     }
 
     private Map<String, String> fillTagVars(
-            TGitApi tGitApi,
             GitScmProviderRepository repository,
             String tagName
     ) {
         Map<String, String> extra = new HashMap<>();
-        TGitTag tag = tGitApi.getTagsApi()
-                .getTag(
-                        repository.getProjectIdOrPath(),
-                        tagName
-                );
-        if (tag != null) {
-            extra.put(PIPELINE_GIT_TAG_DESC, tag.getDescription());
-        }
+        TGitApiTemplate.execute(repository, apiFactory, (providerRepository, tGitApi) -> {
+            TGitTag tag = tGitApi.getTagsApi()
+                    .getTag(
+                            repository.getProjectIdOrPath(),
+                            tagName
+                    );
+            if (tag != null) {
+                extra.put(PIPELINE_GIT_TAG_DESC, tag.getDescription());
+            }
+        });
         return extra;
     }
 }

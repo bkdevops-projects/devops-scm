@@ -48,6 +48,9 @@ import com.tencent.devops.scm.sdk.tgit.pojo.TGitMergeRequest;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitMilestone;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitReview;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitReviewer;
+import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitMergeRequestEvent;
+import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitMergeRequestEvent.ObjectAttributes;
+import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitPushEvent;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -164,7 +167,7 @@ public class TGitObjectToMapConverter {
             params.put(
                     BK_REPO_GIT_WEBHOOK_MR_ASSIGNEE,
                     Optional.ofNullable(mergeRequest.getAssignee())
-                            .map(TGitAssignee::getName)
+                            .map(TGitAssignee::getUsername)
                             .orElse("")
             );
             // 里程碑信息
@@ -254,6 +257,81 @@ public class TGitObjectToMapConverter {
             );
         }
 
+        return params;
+    }
+
+    /**
+     * 获取 merge request 基础触发参数
+     */
+    public static Map<String, Object> convertMergeRequestEvent(TGitMergeRequestEvent mergeRequestEvent) {
+        Map<String, Object> params = new HashMap<>();
+        ObjectAttributes attributes = mergeRequestEvent.getObjectAttributes();
+        // Merge Request基础信息
+        if (attributes != null) {
+            putMultipleKeys(
+                    params,
+                    StringUtils.defaultString(attributes.getTitle(), ""),
+                    SetUtils.hashSet(
+                            BK_REPO_GIT_WEBHOOK_MR_TITLE,
+                            PIPELINE_GIT_MR_TITLE
+                    )
+            );
+            putMultipleKeys(
+                    params,
+                    StringUtils.defaultString(attributes.getSourceBranch(), ""),
+                    SetUtils.hashSet(
+                            PIPELINE_GIT_BASE_REF,
+                            PIPELINE_WEBHOOK_SOURCE_BRANCH,
+                            BK_REPO_GIT_WEBHOOK_MR_SOURCE_BRANCH
+                    )
+            );
+            putMultipleKeys(
+                    params,
+                    StringUtils.defaultString(attributes.getTargetBranch(), ""),
+                    SetUtils.hashSet(
+                            PIPELINE_GIT_HEAD_REF,
+                            PIPELINE_WEBHOOK_TARGET_BRANCH,
+                            BK_REPO_GIT_WEBHOOK_MR_TARGET_BRANCH
+                    )
+            );
+            putMultipleKeys(
+                    params,
+                    Optional.ofNullable(attributes.getId()).map(Object::toString).orElse(""),
+                    SetUtils.hashSet(
+                            BK_HOOK_MR_ID,
+                            PIPELINE_GIT_MR_ID,
+                            BK_REPO_GIT_WEBHOOK_MR_ID
+                    )
+            );
+            putMultipleKeys(
+                    params,
+                    Optional.ofNullable(attributes.getIid()).map(Object::toString).orElse(""),
+                    SetUtils.hashSet(
+                            PIPELINE_GIT_MR_IID,
+                            BK_REPO_GIT_WEBHOOK_MR_NUMBER
+                    )
+            );
+            putMultipleKeys(
+                    params,
+                    StringUtils.defaultString(attributes.getTitle(), ""),
+                    SetUtils.hashSet(
+                            PIPELINE_GIT_MR_IID,
+                            BK_REPO_GIT_WEBHOOK_MR_NUMBER
+                    )
+            );
+            params.put(PIPELINE_GIT_MR_PROPOSER, mergeRequestEvent.getUser().getUsername());
+            params.put(PIPELINE_GIT_MR_URL, StringUtils.defaultIfEmpty(attributes.getUrl(), ""));
+        }
+        return params;
+    }
+
+
+
+    /**
+     * 获取 merge request 基础触发参数
+     */
+    public static Map<String, Object> convertPushEvent(TGitPushEvent pushEvent) {
+        Map<String, Object> params = new HashMap<>();
         return params;
     }
 

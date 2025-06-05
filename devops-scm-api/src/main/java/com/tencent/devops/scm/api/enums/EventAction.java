@@ -25,6 +25,7 @@ public enum EventAction {
     PUSH_FILE("push-file"),
     // 编辑
     EDIT("edit"),
+    NEW_BRANCH_AND_PUSH_FILE("new-branch-and-push-file"),
     ;
     public final String value;
 

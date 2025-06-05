@@ -226,7 +226,7 @@ public class TGitWebhookParser implements WebhookParser {
         extras.put(BK_REPO_GIT_MANUAL_UNLOCK, src.getManualUnlock()); // 是否手动解锁
         extras.put(PIPELINE_GIT_MR_ACTION, src.getObjectAttributes().getAction());
         extras.put(PIPELINE_GIT_ACTION, src.getObjectAttributes().getAction());
-
+        extras.putAll(TGitObjectToMapConverter.convertMergeRequestEvent(src));
         TGitEventProject srcTarget = objectAttributes.getTarget();
         GitRepositoryUrl targetRepositoryUrl = new GitRepositoryUrl(srcTarget.getHttpUrl());
         GitScmServerRepository repo = GitScmServerRepository.builder()
@@ -241,6 +241,7 @@ public class TGitWebhookParser implements WebhookParser {
         TGitUser tGitUser = src.getUser();
         User user = User.builder()
                 .name(tGitUser.getName())
+                .username(tGitUser.getUsername())
                 .email(tGitUser.getEmail())
                 .avatar(tGitUser.getAvatarUrl())
                 .build();
@@ -286,6 +287,7 @@ public class TGitWebhookParser implements WebhookParser {
         User sender = User.builder()
                 .id(tGitUser.getId())
                 .name(tGitUser.getName())
+                .username(tGitUser.getUsername())
                 .avatar(tGitUser.getAvatarUrl())
                 .build();
 
@@ -327,6 +329,7 @@ public class TGitWebhookParser implements WebhookParser {
         User user = User.builder()
                 .id(objectAttributes.getAuthorId())
                 .name(tGitUser.getName())
+                .username(tGitUser.getUsername())
                 .avatar(tGitUser.getAvatarUrl())
                 .build();
 
@@ -401,7 +404,7 @@ public class TGitWebhookParser implements WebhookParser {
                     .name(reviewer.getName())
                     .avatar(reviewer.getAvatarUrl())
                     .build();
-            sourceState = reviewer.getState();
+            sourceState = eventReviewer.getState();
         } else {
             TGitUser author = src.getAuthor();
             sender = User.builder()
@@ -472,7 +475,8 @@ public class TGitWebhookParser implements WebhookParser {
 
     private GitPushHook convertPushHook(TGitPushEvent src) {
         EventAction action = EventAction.PUSH_FILE;
-        if (src.getCreateAndUpdate() != null && !src.getCreateAndUpdate()) {
+        Boolean createAndUpdate = src.getCreateAndUpdate();
+        if (createAndUpdate != null && !createAndUpdate) {
             action = EventAction.NEW_BRANCH;
         } else if (TGitPushOperationKind.DELETE.value.equals(src.getOperationKind())
                 && "0000000000000000000000000000000000000000".equals(src.getAfter())) {
@@ -501,8 +505,7 @@ public class TGitWebhookParser implements WebhookParser {
         List<Change> changes = new ArrayList<>();
         // 非强推的情况下，直接读取diffFiles
         if (!UPDATE_NONFASTFORWORD.value.equals(operationKind)) {
-            List<TGitEventDiffFile> eventDiffFiles = src.getDiffFiles();
-            changes = eventDiffFiles.stream().map(eventDiffFile ->
+            changes = CollectionUtils.emptyIfNull(src.getDiffFiles()).stream().map(eventDiffFile ->
                     Change.builder()
                             .added(eventDiffFile.getNewFile())
                             .renamed(eventDiffFile.getRenamedFile())
@@ -517,6 +520,12 @@ public class TGitWebhookParser implements WebhookParser {
         extras.put(BK_REPO_GIT_WEBHOOK_PUSH_ACTION_KIND, actionKind);
         extras.put(BK_REPO_GIT_WEBHOOK_PUSH_OPERATION_KIND, operationKind);
         extras.put(BK_REPO_GIT_MANUAL_UNLOCK, false);
+        String ciAction = action.value;
+        if (Boolean.TRUE.equals(createAndUpdate)) {
+            ciAction = EventAction.NEW_BRANCH_AND_PUSH_FILE.value;
+        }
+        extras.put(PIPELINE_GIT_ACTION, ciAction);
+
         GitScmServerRepository repository = TGitObjectConverter.convertRepository(
                 src.getProjectId(),
                 src.getRepository()

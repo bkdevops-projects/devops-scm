@@ -106,7 +106,7 @@ public class IssueHook implements Webhook {
         outputParams.put(BK_REPO_GIT_WEBHOOK_ISSUE_MILESTONE_ID, issue.getMilestoneId());
         outputParams.put(PIPELINE_REPO_NAME, repo.getFullName());
         outputParams.put(PIPELINE_GIT_REPO_ID, repo.getId());
-        outputParams.put(PIPELINE_START_WEBHOOK_USER_ID, sender.getName());
+        outputParams.put(PIPELINE_START_WEBHOOK_USER_ID, sender.getUsername());
         outputParams.put(PIPELINE_GIT_EVENT, "issue");
         if (extras != null) {
             outputParams.putAll(extras);

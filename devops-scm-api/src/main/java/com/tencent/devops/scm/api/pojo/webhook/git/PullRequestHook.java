@@ -169,7 +169,7 @@ public class PullRequestHook implements Webhook {
         outputParams.put(PIPELINE_GIT_REPO_URL, targetRepoUrl);
         outputParams.put(PIPELINE_GIT_SHA, commit.getSha());
         outputParams.put(PIPELINE_REPO_NAME, repo.getFullName());
-        outputParams.put(PIPELINE_START_WEBHOOK_USER_ID, sender.getName());
+        outputParams.put(PIPELINE_START_WEBHOOK_USER_ID, sender.getUsername());
         outputParams.put(PIPELINE_WEBHOOK_BRANCH, pullRequest.getTargetRef().getName());
         outputParams.put(PIPELINE_WEBHOOK_COMMIT_MESSAGE, pullRequest.getTitle());
         outputParams.put(PIPELINE_WEBHOOK_EVENT_TYPE, eventType);

@@ -8,9 +8,11 @@ import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_COMMIT_AUTHOR;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_COMMIT_MESSAGE;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_HEAD_REF;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_TAPD_ISSUES;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REF;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_SHA;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_SHA_SHORT;
+import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_TAG_DESC;
 import static com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_WEBHOOK_BRANCH;
 import static com.tencent.devops.scm.sdk.tgit.enums.TGitPushOperationKind.UPDATE_NONFASTFORWORD;
 
@@ -26,6 +28,7 @@ import com.tencent.devops.scm.api.pojo.webhook.Webhook;
 import com.tencent.devops.scm.api.pojo.webhook.git.AbstractCommentHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.CommitCommentHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.GitPushHook;
+import com.tencent.devops.scm.api.pojo.webhook.git.GitTagHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.IssueCommentHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.IssueHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestCommentHook;
@@ -33,12 +36,16 @@ import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestHook;
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestReviewHook;
 import com.tencent.devops.scm.sdk.tgit.TGitApiException;
 import com.tencent.devops.scm.sdk.tgit.TGitApiFactory;
+import com.tencent.devops.scm.sdk.tgit.enums.TGitTapdWorkType;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitCommit;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitDiff;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitMergeRequest;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitProject;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitReview;
 
+import com.tencent.devops.scm.sdk.tgit.pojo.TGitTag;
+import com.tencent.devops.scm.sdk.tgit.pojo.TGitTapdWorkItem;
+import com.tencent.devops.scm.sdk.tgit.util.TGitStringHelper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +72,7 @@ public class TGitWebhookEnricher implements WebhookEnricher {
         eventActions.put(CommitCommentHook.class, this::enrichNoteHook);
         eventActions.put(IssueCommentHook.class, this::enrichNoteHook);
         eventActions.put(PullRequestCommentHook.class, this::enrichNoteHook);
+        eventActions.put(GitTagHook.class, this::enrichTagHook);
     }
 
     @Override
@@ -177,6 +185,16 @@ public class TGitWebhookEnricher implements WebhookEnricher {
             );
         }
         commentHook.setExtras(extras);
+    }
+
+    private void enrichTagHook(GitScmProviderRepository repository, Webhook webhook) {
+        GitTagHook tagHook = (GitTagHook) webhook;
+        tagHook.getExtras().putAll(
+                fillTagVars(
+                        repository,
+                        tagHook.getRef().getName()
+                )
+        );
     }
 
     private void enrichPullRequestViewHook(
@@ -323,5 +341,51 @@ public class TGitWebhookEnricher implements WebhookEnricher {
             }
             action.accept(defaultBranch, commit);
         });
+    }
+
+    private Map<String, String> fillTapdWorkItemsVar(
+            GitScmProviderRepository repository,
+            TGitTapdWorkType type,
+            Long iid
+    ) {
+        Map<String, String> extra = new HashMap<>();
+        TGitApiTemplate.execute(repository, apiFactory, (providerRepository, tGitApi) -> {
+            List<TGitTapdWorkItem> tapdWorkItems = tGitApi.getProjectApi()
+                    .getTapdWrorkItems(
+                            repository.getProjectIdOrPath(),
+                            type,
+                            iid,
+                            1,
+                            100
+                    );
+            String tapdIds = TGitStringHelper.join(
+                    CollectionUtils.emptyIfNull(tapdWorkItems)
+                            .stream()
+                            .map(TGitTapdWorkItem::getTapdId)
+                            .collect(Collectors.toList())
+            );
+            if (type == TGitTapdWorkType.MR) {
+                extra.put(PIPELINE_GIT_MR_TAPD_ISSUES, tapdIds);
+            }
+        });
+        return extra;
+    }
+
+    private Map<String, String> fillTagVars(
+            GitScmProviderRepository repository,
+            String tagName
+    ) {
+        Map<String, String> extra = new HashMap<>();
+        TGitApiTemplate.execute(repository, apiFactory, (providerRepository, tGitApi) -> {
+            TGitTag tag = tGitApi.getTagsApi()
+                    .getTag(
+                            repository.getProjectIdOrPath(),
+                            tagName
+                    );
+            if (tag != null) {
+                extra.put(PIPELINE_GIT_TAG_DESC, tag.getDescription());
+            }
+        });
+        return extra;
     }
 }

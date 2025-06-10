@@ -238,13 +238,6 @@ public class TGitWebhookEnricher implements WebhookEnricher {
         // 目前BASE_REF和HEAD_REF分别代表目标分支和源分支
         extras.put(PIPELINE_GIT_BASE_REF, extras.get(BK_REPO_GIT_WEBHOOK_MR_TARGET_BRANCH));
         extras.put(PIPELINE_GIT_HEAD_REF, extras.get(BK_REPO_GIT_WEBHOOK_MR_SOURCE_BRANCH));
-        extras.putAll(
-                fillTapdWorkItemsVar(
-                        repository,
-                        TGitTapdWorkType.MR,
-                        ((PullRequestReviewHook) webhook).getPullRequest().getNumber().longValue()
-                )
-        );
     }
 
     /**

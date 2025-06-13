@@ -88,7 +88,7 @@ public abstract class AbstractCommentHook implements Webhook {
         outputParams.put(PIPELINE_WEBHOOK_NOTE_COMMENT, comment.getBody());
         outputParams.put(BK_REPO_GIT_WEBHOOK_NOTE_COMMENT, comment.getBody());
         outputParams.put(PIPELINE_REPO_NAME, repo.getFullName());
-        outputParams.put(PIPELINE_START_WEBHOOK_USER_ID, sender.getName());
+        outputParams.put(PIPELINE_START_WEBHOOK_USER_ID, sender.getUsername());
 
         outputParams.put(BK_REPO_GIT_WEBHOOK_NOTE_AUTHOR_ID, sender.getId());
         outputParams.put(BK_REPO_GIT_WEBHOOK_NOTE_ID, comment.getId());

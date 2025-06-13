@@ -325,16 +325,6 @@ public class TGitObjectToMapConverter {
         return params;
     }
 
-
-
-    /**
-     * 获取 merge request 基础触发参数
-     */
-    public static Map<String, Object> convertPushEvent(TGitPushEvent pushEvent) {
-        Map<String, Object> params = new HashMap<>();
-        return params;
-    }
-
     /**
      * 填充多个key-value
      *

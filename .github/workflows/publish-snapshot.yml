@@ -43,7 +43,7 @@ jobs:
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
       - name: Gradle Build
         env:
-          build_snapshotMavenRepoDeployUrl: "https://oss.sonatype.org/content/repositories/snapshots"
+          build_snapshotMavenRepoDeployUrl: "https://central.sonatype.com/repository/maven-snapshots/"
           build_snapshotMavenRepoUsername: ${{ secrets.SONATYPE_USERNAME }}
           build_snapshotMavenRepoPassword: ${{ secrets.SONATYPE_PASSWORD }}
         run: |

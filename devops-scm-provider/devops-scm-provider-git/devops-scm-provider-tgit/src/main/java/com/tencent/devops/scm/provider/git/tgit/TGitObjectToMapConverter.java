@@ -311,14 +311,6 @@ public class TGitObjectToMapConverter {
                             BK_REPO_GIT_WEBHOOK_MR_NUMBER
                     )
             );
-            putMultipleKeys(
-                    params,
-                    StringUtils.defaultString(attributes.getTitle(), ""),
-                    SetUtils.hashSet(
-                            PIPELINE_GIT_MR_IID,
-                            BK_REPO_GIT_WEBHOOK_MR_NUMBER
-                    )
-            );
             params.put(PIPELINE_GIT_MR_PROPOSER, mergeRequestEvent.getUser().getUsername());
             params.put(PIPELINE_GIT_MR_URL, StringUtils.defaultIfEmpty(attributes.getUrl(), ""));
         }

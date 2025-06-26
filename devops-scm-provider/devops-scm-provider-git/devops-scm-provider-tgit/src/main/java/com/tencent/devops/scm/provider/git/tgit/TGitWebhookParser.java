@@ -227,6 +227,7 @@ public class TGitWebhookParser implements WebhookParser {
         extras.put(PIPELINE_GIT_MR_ACTION, src.getObjectAttributes().getAction());
         extras.put(PIPELINE_GIT_ACTION, src.getObjectAttributes().getAction());
         extras.putAll(TGitObjectToMapConverter.convertMergeRequestEvent(src));
+        logger.info("parse pull request hook|extras={}", extras);
         TGitEventProject srcTarget = objectAttributes.getTarget();
         GitRepositoryUrl targetRepositoryUrl = new GitRepositoryUrl(srcTarget.getHttpUrl());
         GitScmServerRepository repo = GitScmServerRepository.builder()

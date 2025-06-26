@@ -7,6 +7,7 @@ plugins {
     id("java-library")
     id("io.spring.dependency-management") version Versions.dependencyManagement
     id("checkstyle")
+    nexusPublishing
 }
 
 allprojects {

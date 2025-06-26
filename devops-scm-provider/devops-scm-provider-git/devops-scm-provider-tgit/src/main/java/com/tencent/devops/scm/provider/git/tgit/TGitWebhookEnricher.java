@@ -240,7 +240,6 @@ public class TGitWebhookEnricher implements WebhookEnricher {
         extras.put(PIPELINE_GIT_HEAD_REF, extras.get(BK_REPO_GIT_WEBHOOK_MR_SOURCE_BRANCH));
         extras.putAll(
                 fillTapdWorkItemsVar(
-                        tGitApi,
                         repository,
                         TGitTapdWorkType.MR,
                         ((PullRequestReviewHook) webhook).getPullRequest().getNumber().longValue()

@@ -111,21 +111,8 @@ signing {
     sign(publishing.publications["mavenJava"])
 }
 
-tasks.getByName("publish") {
-    onlyIf {
-        // 演示项目不打包
-        project.the<SourceSetContainer>()["main"].allSource.files.isNotEmpty() ||
-                !project.name.contains("devops-scm-provider-gitee-simple")
-    }
-}
-
-tasks.getByName("generateMetadataFileForMavenJavaPublication") {
-    onlyIf {
-        project.the<SourceSetContainer>()["main"].allSource.files.isNotEmpty()
-    }
-}
-
-val shouldPublish = project.the<SourceSetContainer>()["main"].allSource.files.isNotEmpty()
+val shouldPublish = project.the<SourceSetContainer>()["main"].allSource.files.isNotEmpty() ||
+        !project.name.contains("devops-scm-provider-gitee-simple")
 
 tasks.forEach {
     if (it.group == "publish") {

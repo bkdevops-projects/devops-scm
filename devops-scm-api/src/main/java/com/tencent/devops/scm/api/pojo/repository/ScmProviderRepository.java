@@ -11,5 +11,4 @@ import com.tencent.devops.scm.api.pojo.repository.svn.SvnScmProviderRepository;
         @JsonSubTypes.Type(value = SvnScmProviderRepository.class, name = SvnScmProviderRepository.CLASS_TYPE),
 })
 public interface ScmProviderRepository {
-    String state();
 }

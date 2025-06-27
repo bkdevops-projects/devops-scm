@@ -35,7 +35,7 @@ public class TGitPullRequestService implements PullRequestService {
     }
 
     @Override
-    public PullRequest find(ScmProviderRepository repository, Integer number) {
+    public PullRequest find(ScmProviderRepository repository, int number) {
         return TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
             TGitMergeRequest mergeRequest = tGitApi.getMergeRequestApi()
                     .getMergeRequestByIid(repo.getProjectIdOrPath(), number);
@@ -101,7 +101,7 @@ public class TGitPullRequestService implements PullRequestService {
     }
 
     @Override
-    public List<Change> listChanges(ScmProviderRepository repository, Integer number, ListOptions opts) {
+    public List<Change> listChanges(ScmProviderRepository repository, int number, ListOptions opts) {
         return TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
             TGitMergeRequest mergeRequest = getMergeRequestByIid(tGitApi, repo.getProjectIdOrPath(), number);
             TGitMergeRequest mergeRequestChanges = tGitApi.getMergeRequestApi()
@@ -113,7 +113,7 @@ public class TGitPullRequestService implements PullRequestService {
     }
 
     @Override
-    public List<Commit> listCommits(ScmProviderRepository repository, Integer number, ListOptions opts) {
+    public List<Commit> listCommits(ScmProviderRepository repository, int number, ListOptions opts) {
         return TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
             TGitMergeRequest mergeRequest = getMergeRequestByIid(tGitApi, repo.getProjectIdOrPath(), number);
             List<TGitCommit> mergeRequestCommits = tGitApi.getMergeRequestApi()
@@ -126,7 +126,7 @@ public class TGitPullRequestService implements PullRequestService {
     }
 
     @Override
-    public void merge(ScmProviderRepository repository, Integer number) {
+    public void merge(ScmProviderRepository repository, int number) {
         TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
             TGitMergeRequest mergeRequest = getMergeRequestByIid(tGitApi, repo.getProjectIdOrPath(), number);
             tGitApi.getMergeRequestApi().mergeMergeRequest(repo.getProjectIdOrPath(), mergeRequest.getId());
@@ -134,7 +134,7 @@ public class TGitPullRequestService implements PullRequestService {
     }
 
     @Override
-    public void close(ScmProviderRepository repository, Integer number) {
+    public void close(ScmProviderRepository repository, int number) {
         TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
             TGitMergeRequest mergeRequest = getMergeRequestByIid(tGitApi, repo.getProjectIdOrPath(), number);
             tGitApi.getMergeRequestApi().closeMergeRequest(repo.getProjectIdOrPath(), mergeRequest.getId());
@@ -142,7 +142,7 @@ public class TGitPullRequestService implements PullRequestService {
     }
 
     @Override
-    public Comment findComment(ScmProviderRepository repository, Integer number, Long commentId) {
+    public Comment findComment(ScmProviderRepository repository, int number, long commentId) {
         return TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
             TGitMergeRequest mergeRequest = getMergeRequestByIid(tGitApi, repo.getProjectIdOrPath(), number);
             TGitNote mergeRequestNote = tGitApi.getNotesApi()
@@ -152,7 +152,7 @@ public class TGitPullRequestService implements PullRequestService {
     }
 
     @Override
-    public List<Comment> listComments(ScmProviderRepository repository, Integer number, ListOptions opts) {
+    public List<Comment> listComments(ScmProviderRepository repository, int number, ListOptions opts) {
         return TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
             TGitMergeRequest mergeRequest = getMergeRequestByIid(tGitApi, repo.getProjectIdOrPath(), number);
             List<TGitNote> mergeRequestNotes = tGitApi.getNotesApi()
@@ -166,7 +166,7 @@ public class TGitPullRequestService implements PullRequestService {
     }
 
     @Override
-    public Comment createComment(ScmProviderRepository repository, Integer number, CommentInput input) {
+    public Comment createComment(ScmProviderRepository repository, int number, CommentInput input) {
         if (StringUtils.isBlank(input.getBody())) {
             throw new IllegalArgumentException("body cannot be empty");
         }
@@ -179,7 +179,7 @@ public class TGitPullRequestService implements PullRequestService {
     }
 
     @Override
-    public void deleteComment(ScmProviderRepository repository, Integer number, Long commentId) {
+    public void deleteComment(ScmProviderRepository repository, int number, long commentId) {
     }
 
     private TGitMergeRequestState convertFromState(PullRequestState from) {
@@ -206,7 +206,7 @@ public class TGitPullRequestService implements PullRequestService {
         return state;
     }
 
-    private TGitMergeRequest getMergeRequestByIid(TGitApi tGitApi, Object projectIdOrPath, Integer number) {
+    private TGitMergeRequest getMergeRequestByIid(TGitApi tGitApi, Object projectIdOrPath, int number) {
         TGitMergeRequest mergeRequest = tGitApi.getMergeRequestApi().getMergeRequestByIid(projectIdOrPath, number);
         if (mergeRequest == null) {
             throw new NotFoundScmApiException(String.format("merge request %s not found", number));

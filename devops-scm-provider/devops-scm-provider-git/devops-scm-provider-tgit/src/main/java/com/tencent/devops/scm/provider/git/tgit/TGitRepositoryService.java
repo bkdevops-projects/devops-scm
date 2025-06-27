@@ -98,7 +98,7 @@ public class TGitRepositoryService implements RepositoryService {
     }
 
     @Override
-    public Hook updateHook(ScmProviderRepository repository, Long hookId, HookInput input) {
+    public Hook updateHook(ScmProviderRepository repository, long hookId, HookInput input) {
         TGitProjectHook tGitProjectHook = convertFromHookInput(input);
 
         return TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
@@ -109,14 +109,14 @@ public class TGitRepositoryService implements RepositoryService {
     }
 
     @Override
-    public void deleteHook(ScmProviderRepository repository, Long hookId) {
+    public void deleteHook(ScmProviderRepository repository, long hookId) {
         TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
             tGitApi.getProjectApi().deleteHook(repo.getProjectIdOrPath(), hookId);
         });
     }
 
     @Override
-    public Hook getHook(ScmProviderRepository repository, Long hookId) {
+    public Hook getHook(ScmProviderRepository repository, long hookId) {
         return TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
             TGitProjectHook hook = tGitApi.getProjectApi().getHook(repo.getProjectIdOrPath(), hookId);
             return convertHook(hook);

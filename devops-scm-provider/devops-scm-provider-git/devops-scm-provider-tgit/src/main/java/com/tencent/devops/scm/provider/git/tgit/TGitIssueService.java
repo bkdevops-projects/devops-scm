@@ -28,7 +28,7 @@ public class TGitIssueService implements IssueService {
     }
 
     @Override
-    public Issue find(ScmProviderRepository repository, Integer number) {
+    public Issue find(ScmProviderRepository repository, int number) {
         return TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
             TGitIssue issue = tGitApi.getIssuesApi().getIssueByIid(repo.getProjectIdOrPath(), number);
             return TGitObjectConverter.convertIssue(issue);
@@ -60,7 +60,7 @@ public class TGitIssueService implements IssueService {
     }
 
     @Override
-    public void close(ScmProviderRepository repository, Integer number) {
+    public void close(ScmProviderRepository repository, int number) {
         TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
             TGitIssue issue = getIssueIdByNumber(tGitApi, repo.getProjectIdOrPath(), number);
             tGitApi.getIssuesApi().closeIssue(repo.getProjectIdOrPath(), issue.getId());
@@ -68,7 +68,7 @@ public class TGitIssueService implements IssueService {
     }
 
     @Override
-    public Comment findComment(ScmProviderRepository repository, Integer number, Long commentId) {
+    public Comment findComment(ScmProviderRepository repository, int number, long commentId) {
         return TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
             TGitIssue issue = getIssueIdByNumber(tGitApi, repo.getProjectIdOrPath(), number);
             TGitNote issueNote = tGitApi.getNotesApi()
@@ -78,7 +78,7 @@ public class TGitIssueService implements IssueService {
     }
 
     @Override
-    public List<Comment> listComments(ScmProviderRepository repository, Integer number, ListOptions opts) {
+    public List<Comment> listComments(ScmProviderRepository repository, int number, ListOptions opts) {
         return TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
             TGitIssue issue = getIssueIdByNumber(tGitApi, repo.getProjectIdOrPath(), number);
             List<TGitNote> issueNotes = tGitApi.getNotesApi()
@@ -90,7 +90,7 @@ public class TGitIssueService implements IssueService {
     }
 
     @Override
-    public Comment createComment(ScmProviderRepository repository, Integer number, CommentInput input) {
+    public Comment createComment(ScmProviderRepository repository, int number, CommentInput input) {
         if (StringUtils.isBlank(input.getBody())) {
             throw new IllegalArgumentException("comment body cannot be empty");
         }
@@ -104,11 +104,11 @@ public class TGitIssueService implements IssueService {
     }
 
     @Override
-    public void deleteComment(ScmProviderRepository repository, Integer number, Long commentId) {
+    public void deleteComment(ScmProviderRepository repository, int number, long commentId) {
 
     }
 
-    private TGitIssue getIssueIdByNumber(TGitApi tGitApi, Object projectIdOrPath, Integer number) {
+    private TGitIssue getIssueIdByNumber(TGitApi tGitApi, Object projectIdOrPath, int number) {
         TGitIssue issue = tGitApi.getIssuesApi().getIssueByIid(projectIdOrPath, number);
         if (issue == null) {
             throw new ScmApiException(String.format("issue (%d) not found", number));

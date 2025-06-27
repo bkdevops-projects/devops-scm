@@ -47,7 +47,7 @@ public class TGitFileService implements FileService {
     }
 
     @Override
-    public List<Tree> listTree(ScmProviderRepository repository, String path, String ref, Boolean recursive) {
+    public List<Tree> listTree(ScmProviderRepository repository, String path, String ref, boolean recursive) {
         return TGitApiTemplate.execute(repository, apiFactory, (repo, tGitApi) -> {
             List<TGitTreeItem> treeItems = tGitApi.getRepositoryFileApi()
                     .getTree(repo.getProjectIdOrPath(), path, ref, recursive);

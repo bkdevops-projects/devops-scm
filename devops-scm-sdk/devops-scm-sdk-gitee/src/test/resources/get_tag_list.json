@@ -1,0 +1,1002 @@
+[
+  {
+    "name": "v1.0.0",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "d66e9bd574f3d5207c451d6c8be703de6beaa667",
+      "date": "2020-06-17T17:23:45+08:00"
+    },
+    "tagger": {
+      "name": "zanyzhao",
+      "email": "zanyzhao@gmail.com",
+      "date": "2020-06-29T23:33:02+08:00"
+    }
+  },
+  {
+    "name": "v1.0.0-rc.3",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "99e2fa53a0b3e2875ad20b64af0c732e741ddea8",
+      "date": "2020-06-04T17:14:13+08:00"
+    },
+    "tagger": {
+      "name": "zanyzhao",
+      "email": "zanyzhao@gmail.com",
+      "date": "2020-06-04T17:17:40+08:00"
+    }
+  },
+  {
+    "name": "v1.0.0-rc.4",
+    "message": "修复大构件上传失败问题",
+    "commit": {
+      "sha": "5932b14ed0eefb2308d5fdea93b777611be1b2a8",
+      "date": "2020-06-10T23:45:51+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2020-06-10T23:59:33+08:00"
+    }
+  },
+  {
+    "name": "v1.0.0-rc.5",
+    "message": "修改归档自定义上传问题",
+    "commit": {
+      "sha": "fb850d1a484e33f28492e68961b87b53afd2a553",
+      "date": "2020-06-16T09:35:21+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2020-06-16T09:37:59+08:00"
+    }
+  },
+  {
+    "name": "v1.0.0-rc.6",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "f82760d48587bfd7c812ac781bf76e2a4333efd9",
+      "date": "2020-06-23T17:08:08+08:00"
+    },
+    "tagger": {
+      "name": "zanyzhao",
+      "email": "zanyzhao@gmail.com",
+      "date": "2020-06-23T18:07:42+08:00"
+    }
+  },
+  {
+    "name": "v1.1.0",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "e6e562c8d0a138e00538174233a4575f9baed544",
+      "date": "2020-07-15T15:22:05+08:00"
+    },
+    "tagger": {
+      "name": "zanyzhao",
+      "email": "zanyzhao@gmail.com",
+      "date": "2020-07-15T15:42:45+08:00"
+    }
+  },
+  {
+    "name": "v1.1.1-alpha.1",
+    "message": "",
+    "commit": {
+      "sha": "559d02c93b23b3c16a88c2636fc69628c0367727",
+      "date": "2020-07-19T13:15:57+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.1.2",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "952037f832d1ac9ac1ed4f6a6a40297bfdbe536b",
+      "date": "2020-07-24T10:20:51+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2020-07-24T21:12:43+08:00"
+    }
+  },
+  {
+    "name": "v1.10.0-beta.10",
+    "message": "",
+    "commit": {
+      "sha": "57b8659314e79a94601b024e293c0a1adc4231ed",
+      "date": "2023-03-07T20:32:02+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.10.0-beta.11",
+    "message": "",
+    "commit": {
+      "sha": "6081eee3a080fc9c8bab348043ae5cb7febd97e9",
+      "date": "2023-03-16T12:26:09+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.10.0-beta.12",
+    "message": "",
+    "commit": {
+      "sha": "2320e05a7b6ae439839cb25499b9f5959b1af5ec",
+      "date": "2023-04-23T18:05:54+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.10.0-beta.8",
+    "message": "",
+    "commit": {
+      "sha": "c6227513602a0d37aff8c302f7d47bb0ecc37d2d",
+      "date": "2023-02-28T15:39:56+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.10.0-beta.9",
+    "message": "",
+    "commit": {
+      "sha": "9b068b575b7b6df186c59544d208b8b07eadcb84",
+      "date": "2023-03-02T15:37:04+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.10.0-rc.13",
+    "message": "",
+    "commit": {
+      "sha": "0cb21bff5e2847657b3454077035f2b9def755f1",
+      "date": "2023-04-13T21:39:18+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.10.0-rc.17",
+    "message": "",
+    "commit": {
+      "sha": "53633db187b4c00b0619d80cfd1de76eec51c9c3",
+      "date": "2023-04-25T11:10:22+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.10.0-rc.3",
+    "message": "",
+    "commit": {
+      "sha": "57b8659314e79a94601b024e293c0a1adc4231ed",
+      "date": "2023-03-07T20:32:02+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.10.0-rc.6",
+    "message": "",
+    "commit": {
+      "sha": "48415b79b282c1966f12cba5ed741d71ddc1a814",
+      "date": "2023-03-24T17:09:52+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.11.0-rc.1",
+    "message": "",
+    "commit": {
+      "sha": "1a1c8b0ad8d24b15e465d9f70415a4de1f538712",
+      "date": "2023-05-10T15:03:16+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.11.0-rc.16",
+    "message": "",
+    "commit": {
+      "sha": "4e7c3ec9ed0b1c8b97907123a6a1cdc409bed82c",
+      "date": "2023-06-29T17:48:34+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.11.0-rc.2",
+    "message": "",
+    "commit": {
+      "sha": "a8e1898504cb9477e50523d3f9917a0be0cc9826",
+      "date": "2023-05-16T18:30:56+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.11.0-rc.23",
+    "message": "",
+    "commit": {
+      "sha": "bfd90c57a81935bd6fa86dc62fd757baa4cac93f",
+      "date": "2023-07-10T16:50:14+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.11.0-rc.6",
+    "message": "",
+    "commit": {
+      "sha": "ff773990bf925185b286cb44d7bfb9e23e79ac53",
+      "date": "2023-06-02T19:11:10+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.12.0-rc.3",
+    "message": "",
+    "commit": {
+      "sha": "38c2eea5daf64ab2ac62b7ccd00fcc30a94a65cf",
+      "date": "2023-07-25T21:32:58+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.12.0-rc.7",
+    "message": "",
+    "commit": {
+      "sha": "45cdb6801e11899d97c03a6b44bcf304b1cb84b8",
+      "date": "2023-08-11T15:51:27+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.12.0-rc.8",
+    "message": "",
+    "commit": {
+      "sha": "de8495ca1d902dc9ea1e3e057574d3253c4aab5c",
+      "date": "2023-08-29T10:52:52+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.13.0",
+    "message": "",
+    "commit": {
+      "sha": "a419bd49671cf07875b41c587d3a629ccc01a68f",
+      "date": "2023-11-17T13:25:00+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.13.0-rc.2",
+    "message": "",
+    "commit": {
+      "sha": "d6e10b0b664fb0f3fab25736d5cced19d4a5fe38",
+      "date": "2023-09-21T18:36:46+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.13.0-rc.3",
+    "message": "",
+    "commit": {
+      "sha": "83b982e20df7f0ad42d2ff25c6f68d1246976510",
+      "date": "2023-10-21T20:20:24+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.13.0-rc.4",
+    "message": "",
+    "commit": {
+      "sha": "af6f2a9711b068d0d905be9d435290efd1ccddc3",
+      "date": "2023-10-21T20:53:33+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.13.0-rc.5",
+    "message": "",
+    "commit": {
+      "sha": "f74833dbc0d173f5cb0093e213b0244e8fe50ef5",
+      "date": "2023-11-03T11:59:47+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.13.0-rc.6",
+    "message": "",
+    "commit": {
+      "sha": "db4d9fc8d5faede418d7585eb4382f77c02b39b4",
+      "date": "2023-11-16T16:46:44+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.14.0",
+    "message": "",
+    "commit": {
+      "sha": "9802986f84f0878ee80c23e960d83c60ef2e3618",
+      "date": "2024-01-02T10:29:14+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.14.0-rc.1",
+    "message": "",
+    "commit": {
+      "sha": "eec84accfd6c83fa5bf26d1a36b37565f2db7a77",
+      "date": "2023-12-08T16:17:09+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.14.0-rc.2",
+    "message": "",
+    "commit": {
+      "sha": "2dc8a6bfb19677163c8124b259468712739bf8d2",
+      "date": "2023-12-28T17:49:14+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0",
+    "message": "",
+    "commit": {
+      "sha": "55167448150c6c39011a4b8fd4436cf387640a17",
+      "date": "2020-10-27T16:39:07+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-alpha.1",
+    "message": "",
+    "commit": {
+      "sha": "ebdffd66da0d5e377a8e95705427984c2f51b5e2",
+      "date": "2020-08-03T15:11:01+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-alpha.10",
+    "message": "",
+    "commit": {
+      "sha": "ca0c97c4ee766a8345d448f24eae420459fe168d",
+      "date": "2020-09-18T20:57:58+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-alpha.11",
+    "message": "",
+    "commit": {
+      "sha": "d4e49bba385570b06740f870f15d5ff5b2585522",
+      "date": "2020-09-24T18:03:37+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-alpha.2",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "4b722d834fa274353bf4016a4ec43c31cbdea985",
+      "date": "2020-08-04T10:27:04+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2020-08-04T10:30:10+08:00"
+    }
+  },
+  {
+    "name": "v1.2.0-alpha.3",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "02bda0dfea41a09ef06ad764c2ee95eeff094b03",
+      "date": "2020-08-04T16:26:12+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2020-08-04T16:28:33+08:00"
+    }
+  },
+  {
+    "name": "v1.2.0-alpha.4",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "c319ca89e405d994849b5fbe92207cafbc1f8fb5",
+      "date": "2020-08-05T20:10:50+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2020-08-06T11:12:20+08:00"
+    }
+  },
+  {
+    "name": "v1.2.0-alpha.5",
+    "message": "",
+    "commit": {
+      "sha": "c043a78100053f938c2d1ad6985ecfcda5b5240c",
+      "date": "2020-08-11T16:21:24+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-alpha.6",
+    "message": "",
+    "commit": {
+      "sha": "ff7ed106f9bae940f466313fe534983c96f9d23f",
+      "date": "2020-09-04T16:11:00+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-alpha.7",
+    "message": "",
+    "commit": {
+      "sha": "185d53409ae92e47dab62ffa7636da5721c78b0f",
+      "date": "2020-09-11T20:33:34+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-alpha.8",
+    "message": "",
+    "commit": {
+      "sha": "0a9a286ef44a532dda8ab4296c6abd1a6b3dd12d",
+      "date": "2020-09-14T21:50:14+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-alpha.9",
+    "message": "",
+    "commit": {
+      "sha": "e7871fed8e3581395ff81775771916e45d8bd9c1",
+      "date": "2020-09-15T21:29:04+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-rc",
+    "message": "",
+    "commit": {
+      "sha": "d4e49bba385570b06740f870f15d5ff5b2585522",
+      "date": "2020-09-24T18:03:37+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-rc.2",
+    "message": "",
+    "commit": {
+      "sha": "32a6bc7a917cdb6a2dd76c7dd007c5d452405f6e",
+      "date": "2020-09-29T17:53:58+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-rc.3",
+    "message": "",
+    "commit": {
+      "sha": "32a6bc7a917cdb6a2dd76c7dd007c5d452405f6e",
+      "date": "2020-09-29T17:53:58+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-rc.5",
+    "message": "",
+    "commit": {
+      "sha": "14b02cbb3232f536eaa84cf4b60b21040a865b6a",
+      "date": "2020-10-13T22:50:18+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-rc.6",
+    "message": "",
+    "commit": {
+      "sha": "91980be31f8f886ba543a7c755fe59124558eb2c",
+      "date": "2020-10-16T11:05:52+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-rc.7",
+    "message": "",
+    "commit": {
+      "sha": "1ee679e799c7763eaabcc6f740f6273719428c3d",
+      "date": "2020-10-22T20:48:07+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0-rc.8",
+    "message": "",
+    "commit": {
+      "sha": "4017ff96ef0d43e044ce6d272068cbca3331b689",
+      "date": "2020-10-24T14:48:20+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.0.alpha.5",
+    "message": "",
+    "commit": {
+      "sha": "c043a78100053f938c2d1ad6985ecfcda5b5240c",
+      "date": "2020-08-11T16:21:24+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.1",
+    "message": "",
+    "commit": {
+      "sha": "28e018b6c03026a0ee4a78c87d093e31b8d7c214",
+      "date": "2020-10-30T12:17:26+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.10",
+    "message": "",
+    "commit": {
+      "sha": "fac7d827d844708455d09bf04cd5e141343bc602",
+      "date": "2020-12-07T15:25:06+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.11",
+    "message": "",
+    "commit": {
+      "sha": "7dcca23c12383c18d4b1710c42fe97adb44c7c8b",
+      "date": "2020-12-17T21:49:34+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.2",
+    "message": "",
+    "commit": {
+      "sha": "f550ba4df62745b8e243e8bc45b221a0dd2df012",
+      "date": "2020-11-02T14:17:05+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.3",
+    "message": "",
+    "commit": {
+      "sha": "4104dd6c2d25dbf0944a221a53c7e82d262e3657",
+      "date": "2020-11-04T15:50:19+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.4",
+    "message": "",
+    "commit": {
+      "sha": "31f9197df08b0d6b79f8e35ee5abf66d4f7e6555",
+      "date": "2020-11-05T22:08:17+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.5",
+    "message": "",
+    "commit": {
+      "sha": "1e1486272c26e1c71bc2c6951d3825147184ed85",
+      "date": "2020-11-09T21:53:11+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.6",
+    "message": "",
+    "commit": {
+      "sha": "0d078040fd79887a34f84ab70edb5e8ac930e07b",
+      "date": "2020-11-25T20:28:01+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.7",
+    "message": "",
+    "commit": {
+      "sha": "cbd43dce0a2428f7cc01ce8663c2b8f3e49c47db",
+      "date": "2020-11-25T20:44:39+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.8",
+    "message": "",
+    "commit": {
+      "sha": "9b4bc3ec290833f3afbd99c2e4fc448775d4b5a5",
+      "date": "2020-11-26T11:26:31+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.2.9",
+    "message": "",
+    "commit": {
+      "sha": "14c8bf119f7d08b68fe455a202fdd4ea95b9f371",
+      "date": "2020-11-26T16:40:05+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.3.0-RELEASE",
+    "message": "",
+    "commit": {
+      "sha": "fa8e784c6253430e540734ee56001ea3e853930f",
+      "date": "2021-04-25T12:07:07+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2021-04-25T14:22:24+08:00"
+    }
+  },
+  {
+    "name": "v1.3.0-rc.1",
+    "message": "",
+    "commit": {
+      "sha": "bf19fd9be6571b83877b384a07faa1d6e981e5a3",
+      "date": "2020-12-13T14:08:40+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.3.0-rc.10",
+    "message": "",
+    "commit": {
+      "sha": "d64a889b61e80e3e9309031f067d977d5760b85d",
+      "date": "2021-01-18T17:47:56+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.3.0-rc.11",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "39753355aeba9c5120e53be117358df87e3180ff",
+      "date": "2021-02-25T14:17:45+08:00"
+    },
+    "tagger": {
+      "name": "zanyzhao",
+      "email": "zanyzhao@gmail.com",
+      "date": "2021-02-25T15:26:52+08:00"
+    }
+  },
+  {
+    "name": "v1.3.0-rc.12",
+    "message": "",
+    "commit": {
+      "sha": "7ae2d9b9ba3a8213624c186b6adc4c00111af07e",
+      "date": "2021-02-25T23:17:44+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2021-02-25T23:18:21+08:00"
+    }
+  },
+  {
+    "name": "v1.3.0-rc.13",
+    "message": "",
+    "commit": {
+      "sha": "b7f562faab619e21ac49693e50e2ccd4316a457f",
+      "date": "2021-03-09T17:40:14+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2021-03-09T17:43:00+08:00"
+    }
+  },
+  {
+    "name": "v1.3.0-rc.15",
+    "message": "",
+    "commit": {
+      "sha": "0a9364e6bd0b18aad3f440211999a2226a6f4ffb",
+      "date": "2021-03-22T18:29:52+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2021-03-25T11:16:06+08:00"
+    }
+  },
+  {
+    "name": "v1.3.0-rc.16",
+    "message": "",
+    "commit": {
+      "sha": "b730ae404365babb7c5b4425e4f3161781392a26",
+      "date": "2021-04-12T10:46:57+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2021-04-12T10:51:16+08:00"
+    }
+  },
+  {
+    "name": "v1.3.0-rc.17",
+    "message": "",
+    "commit": {
+      "sha": "2d2beb1c7b8b9af9d3b3ef7d7910dc2f7a7805b1",
+      "date": "2021-04-15T18:11:26+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.3.0-rc.2",
+    "message": "",
+    "commit": {
+      "sha": "1676d0d5e03cba75b37ea9be73dc874a4381fcb6",
+      "date": "2020-12-14T23:26:18+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.3.0-rc.3",
+    "message": "",
+    "commit": {
+      "sha": "339344831c8a7376ca8247bfbe239d2fd9490f70",
+      "date": "2020-12-14T23:31:13+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.3.0-rc.5",
+    "message": "",
+    "commit": {
+      "sha": "5b5b8380100cd5872bb6b4f96951608273b5491f",
+      "date": "2020-12-16T18:55:23+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.3.0-rc.6",
+    "message": "",
+    "commit": {
+      "sha": "b604f07fd22aa83a64f0808c44abd833c5709642",
+      "date": "2020-12-16T19:37:29+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.3.0-rc.7",
+    "message": "",
+    "commit": {
+      "sha": "283daaf99be2412714d4e52ab721e1ff45e3d8c6",
+      "date": "2020-12-23T16:01:58+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.3.0-rc.8",
+    "message": "",
+    "commit": {
+      "sha": "ca8aceffaf47cbbdb9b9422f9667bbd056d07f9f",
+      "date": "2021-01-07T11:47:32+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.3.0-rc.9",
+    "message": "",
+    "commit": {
+      "sha": "6ab63dbfce66b68251dc326fea6d6b805ccbc964",
+      "date": "2021-01-15T21:18:52+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.3.1-RELEASE",
+    "message": "",
+    "commit": {
+      "sha": "f6d4b0b55bb10ebc3221b47d06e531dc1c18210f",
+      "date": "2021-05-10T16:41:48+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.3.2",
+    "message": "",
+    "commit": {
+      "sha": "05c3ecdf540ef5f263bd9c85e39820a04aef37a6",
+      "date": "2021-06-07T21:37:40+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.5.0",
+    "message": "",
+    "commit": {
+      "sha": "8d80c129b32cc054b45c9883bb1b7349fd09381a",
+      "date": "2021-06-08T09:45:52+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.5.0-RC",
+    "message": "",
+    "commit": {
+      "sha": "a57ca0b5605ac12ad8db31d567c52dde0283e7b8",
+      "date": "2021-05-31T10:19:51+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.5.0-RC.2",
+    "message": "",
+    "commit": {
+      "sha": "4d6875cac1e1a48fc5c89534c0fd8be727b96393",
+      "date": "2021-05-31T11:24:36+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.5.0-alpha.1",
+    "message": "enjoy ci",
+    "commit": {
+      "sha": "38e471deb5178f91aaec6f1b31fb993360c287e3",
+      "date": "2021-05-08T15:20:34+08:00"
+    },
+    "tagger": {
+      "name": "zanyzhao",
+      "email": "zanyzhao@gmail.com",
+      "date": "2021-05-08T20:50:31+08:00"
+    }
+  },
+  {
+    "name": "v1.5.0-alpha.2",
+    "message": "",
+    "commit": {
+      "sha": "6ae652ff4824b5d334aacb943b21a63d0b548dae",
+      "date": "2021-05-10T16:37:25+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.5.0-alpha.3",
+    "message": "",
+    "commit": {
+      "sha": "daf6e64e42dcb559822d6ff47622cd993936353a",
+      "date": "2021-05-13T12:10:28+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.5.0-alpha.5",
+    "message": "",
+    "commit": {
+      "sha": "58add531c0fdb8d54532284b0326e281b43e9d9d",
+      "date": "2021-05-17T20:14:40+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.5.0-alpha.6",
+    "message": "",
+    "commit": {
+      "sha": "a86a9f6184817257adc6bf48119952fc64a1aea1",
+      "date": "2021-05-18T20:53:48+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.5.0-alpha.7",
+    "message": "",
+    "commit": {
+      "sha": "b61d9e4c79c246df6a3634dda16298ad288b394c",
+      "date": "2021-05-28T12:08:12+08:00"
+    },
+    "tagger": null
+  },
+  {
+    "name": "v1.5.1",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "e624b06988bec6cd6cce9e8d496754d26bffc117",
+      "date": "2021-06-10T16:54:52+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2021-06-10T16:56:06+08:00"
+    }
+  },
+  {
+    "name": "v1.5.10-rc",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "53d60fdb6496d868e0815553f8925e9657c1e603",
+      "date": "2021-07-12T12:24:07+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2021-07-12T12:26:38+08:00"
+    }
+  },
+  {
+    "name": "v1.5.11",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "a4a1171203d8587cc3870a26d4eff56c9189726b",
+      "date": "2021-07-21T21:53:20+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2021-07-21T21:54:30+08:00"
+    }
+  },
+  {
+    "name": "v1.5.12",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "9a9fcb69c12cc6af60c57013046c94fa1399c8ff",
+      "date": "2021-07-22T17:01:18+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2021-07-22T17:11:39+08:00"
+    }
+  },
+  {
+    "name": "v1.5.13",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "d0449072748d914c691b92de2539eccb33a8b3e5",
+      "date": "2021-07-22T18:18:59+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2021-07-22T18:22:06+08:00"
+    }
+  },
+  {
+    "name": "v1.5.14",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "7ec44d097d140a03d1955bcb3035a62eeea4480d",
+      "date": "2021-07-22T19:40:30+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2021-07-22T19:43:23+08:00"
+    }
+  },
+  {
+    "name": "v1.5.15",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "bc8d64330972249812361ff3248c5f1f7a751608",
+      "date": "2021-07-22T20:54:11+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2021-07-22T20:54:50+08:00"
+    }
+  },
+  {
+    "name": "v1.5.16",
+    "message": "enjoy ci~",
+    "commit": {
+      "sha": "416e9749a2af4a1715896b8531bfb5422a59216a",
+      "date": "2021-07-23T18:44:48+08:00"
+    },
+    "tagger": {
+      "name": "irwinsun",
+      "email": "irwinsun@tencent.com",
+      "date": "2021-07-23T18:45:08+08:00"
+    }
+  }
+]

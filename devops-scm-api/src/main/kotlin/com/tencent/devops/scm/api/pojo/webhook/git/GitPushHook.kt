@@ -52,14 +52,28 @@ data class GitPushHook(
     override val eventType: String,
     val before: String,
     val after: String,
-    val commit: Commit,
+    /**
+     * 提交信息
+     *
+     * 删除分支时,commit为空
+     */
+    val commit: Commit?,
+    /**
+     * 触发链接
+     * 1. 当创建分支时,link为分支名链接, $homePage/tree/$branch
+     * 2. 当提交时,link为提交链接, $homePage/commit/$commit
+     * 3. 当删除分支时,link为仓库homePage, $homePage
+     */
     val link: String,
+    /**
+     * push推送者
+     */
     val sender: User,
     val commits: List<Commit> = emptyList(),
     val changes: List<Change> = emptyList(),
-    val totalCommitsCount: Int? = null,
-    val extras: Map<String, Any>? = null,
-    val outputCommitIndexVar: Boolean? = null,
+    val totalCommitsCount: Int = 0,
+    val extras: Map<String, Any> = emptyMap(),
+    val outputCommitIndexVar: Boolean = false,
     val skipCi: Boolean = false
 ) : Webhook {
 
@@ -76,7 +90,7 @@ data class GitPushHook(
         params = listOf(
             GitUtils.trimRef(ref),
             link,
-            GitUtils.getShortSha(commit.sha),
+            commit?.sha?.let { GitUtils.getShortSha(it) } ?: "",
             sender.name
         )
     )
@@ -84,21 +98,20 @@ data class GitPushHook(
     override fun outputs(): Map<String, Any> {
         val outputParams = mutableMapOf<String, Any>()
         // 通用变量
-        outputParams[PIPELINE_WEBHOOK_REVISION] = commit.sha
+
         outputParams[PIPELINE_REPO_NAME] = repo.fullName
         outputParams[PIPELINE_START_WEBHOOK_USER_ID] = sender.name
         outputParams[PIPELINE_WEBHOOK_EVENT_TYPE] = eventType
-        outputParams[PIPELINE_WEBHOOK_COMMIT_MESSAGE] = commit.message
+
         outputParams[PIPELINE_WEBHOOK_BRANCH] = ref
 
         // 传统变量
         outputParams[BK_REPO_GIT_WEBHOOK_PUSH_USERNAME] = sender.name
         outputParams[BK_REPO_GIT_WEBHOOK_PUSH_BEFORE_COMMIT] = before
         outputParams[BK_REPO_GIT_WEBHOOK_PUSH_AFTER_COMMIT] = after
-        outputParams[BK_REPO_GIT_WEBHOOK_PUSH_TOTAL_COMMIT] = totalCommitsCount ?: commits.size
+        outputParams[BK_REPO_GIT_WEBHOOK_PUSH_TOTAL_COMMIT] = totalCommitsCount
         outputParams[BK_REPO_GIT_WEBHOOK_PUSH_PROJECT_ID] = repo.id
         outputParams[BK_REPO_GIT_WEBHOOK_BRANCH] = ref
-        outputParams[BK_REPO_GIT_WEBHOOK_COMMIT_ID] = commit.sha
 
         // CI上下文变量
         outputParams[PIPELINE_GIT_REPO_ID] = repo.id
@@ -110,6 +123,16 @@ data class GitPushHook(
         outputParams[CI_BRANCH] = ref
         outputParams[PIPELINE_GIT_EVENT] = if (action == EventAction.DELETE) "delete" else "push"
 
+        commit?.let {
+            outputParams[BK_REPO_GIT_WEBHOOK_COMMIT_ID] = commit.sha
+            outputParams[PIPELINE_WEBHOOK_REVISION] = commit.sha
+            outputParams[PIPELINE_WEBHOOK_COMMIT_MESSAGE] = commit.message
+            outputParams[PIPELINE_GIT_EVENT_URL] = commit.link
+            outputParams[PIPELINE_GIT_COMMIT_MESSAGE] = commit.message
+            outputParams[PIPELINE_GIT_SHA_SHORT] = GitUtils.getShortSha(commit.sha)
+            outputParams[PIPELINE_GIT_SHA] = commit.sha
+        }
+
         commits.firstOrNull { it.sha == after }?.author?.let {
             outputParams[PIPELINE_GIT_COMMIT_AUTHOR] = it.name
         }
@@ -117,12 +140,8 @@ data class GitPushHook(
         outputParams[PIPELINE_GIT_BEFORE_SHA] = before
         outputParams[PIPELINE_GIT_BEFORE_SHA_SHORT] = GitUtils.getShortSha(before)
         outputParams[PIPELINE_GIT_ACTION] = action.value
-        outputParams[PIPELINE_GIT_EVENT_URL] = commit.link
-        outputParams[PIPELINE_GIT_COMMIT_MESSAGE] = commit.message
-        outputParams[PIPELINE_GIT_SHA_SHORT] = GitUtils.getShortSha(commit.sha)
-        outputParams[PIPELINE_GIT_SHA] = commit.sha
 
-        outputCommitIndexVar?.takeIf { it }?.let {
+        outputCommitIndexVar.takeIf { it }?.let {
             outputParams.putAll(GitUtils.getOutputCommitIndexVar(commits))
         }
 

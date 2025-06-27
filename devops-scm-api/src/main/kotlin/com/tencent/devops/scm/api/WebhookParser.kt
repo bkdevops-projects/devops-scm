@@ -12,7 +12,7 @@ interface WebhookParser {
      * @param request 请求对象
      * @return 解析后的webhook信息
      */
-    fun parse(request: HookRequest): Webhook
+    fun parse(request: HookRequest): Webhook?
 
     /**
      * 验证webhook合法性

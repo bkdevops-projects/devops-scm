@@ -23,7 +23,7 @@ interface PullRequestService {
 
     fun merge(repository: ScmProviderRepository, number: Int)
 
-    fun close(repository: ScmProviderRepository?, number: Int)
+    fun close(repository: ScmProviderRepository, number: Int)
 
     fun findComment(repository: ScmProviderRepository, number: Int, commentId: Long): Comment
 

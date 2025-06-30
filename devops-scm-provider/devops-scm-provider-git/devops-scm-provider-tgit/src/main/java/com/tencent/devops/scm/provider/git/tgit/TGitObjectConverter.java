@@ -267,7 +267,7 @@ public class TGitObjectConverter {
                 .id(from.getId())
                 .number(from.getIid())
                 .title(from.getTitle())
-                .body(from.getDescription())
+                .body(Optional.ofNullable(from.getDescription()).orElse(""))
                 .link(target.getWebUrl() + "/merge_requests/" + from.getIid())
                 .targetRef(base)
                 .sourceRef(head)

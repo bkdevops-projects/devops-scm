@@ -94,9 +94,9 @@ public class GitTagHook implements Webhook {
         Map<String, Object> outputParams = new HashMap<>();
 
         // 通用变量
-        outputParams.put(PIPELINE_WEBHOOK_REVISION, ref.getSha());
+        outputParams.put(PIPELINE_WEBHOOK_REVISION, commit.getSha());
         outputParams.put(PIPELINE_REPO_NAME, repo.getFullName());
-        outputParams.put(PIPELINE_START_WEBHOOK_USER_ID, sender.getName());
+        outputParams.put(PIPELINE_START_WEBHOOK_USER_ID, sender.getUsername());
         outputParams.put(PIPELINE_WEBHOOK_EVENT_TYPE, eventType);
         outputParams.put(PIPELINE_WEBHOOK_COMMIT_MESSAGE, ref.getName());
         outputParams.put(PIPELINE_WEBHOOK_BRANCH, ref.getName());

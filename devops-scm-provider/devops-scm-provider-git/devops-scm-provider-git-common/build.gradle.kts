@@ -6,4 +6,5 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
     api(project(":devops-scm-api"))
+    api(project(":devops-scm-provider:devops-scm-provider-common"))
 }

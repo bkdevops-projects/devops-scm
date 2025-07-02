@@ -74,11 +74,13 @@ object GitUtils {
             startParams.apply {
                 put("$BK_REPO_GIT_WEBHOOK_PUSH_COMMIT_PREFIX$curIndex", gitCommit.sha)
                 put("$BK_REPO_GIT_WEBHOOK_PUSH_COMMIT_MSG_PREFIX$curIndex", gitCommit.message)
-                put(
-                    "$BK_REPO_GIT_WEBHOOK_PUSH_COMMIT_TIMESTAMP_PREFIX$curIndex",
-                    gitCommit.commitTime.atZone(ZoneId.systemDefault()).toEpochSecond() * 1000
-                )
-                put("$BK_REPO_GIT_WEBHOOK_PUSH_COMMIT_AUTHOR_PREFIX$curIndex", gitCommit.author)
+                gitCommit.commitTime?.let {
+                    put(
+                        "$BK_REPO_GIT_WEBHOOK_PUSH_COMMIT_TIMESTAMP_PREFIX$curIndex",
+                        it.atZone(ZoneId.systemDefault()).toEpochSecond() * 1000
+                    )
+                }
+                put("$BK_REPO_GIT_WEBHOOK_PUSH_COMMIT_AUTHOR_PREFIX$curIndex", gitCommit.author ?: "")
             }
 
             addCount += gitCommit.added.size

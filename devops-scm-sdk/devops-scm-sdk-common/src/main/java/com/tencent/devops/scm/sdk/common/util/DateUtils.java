@@ -1,6 +1,6 @@
 package com.tencent.devops.scm.sdk.common.util;
 
-import com.tencent.devops.scm.sdk.common.exception.ScmApiException;
+import com.tencent.devops.scm.sdk.common.exception.BaseScmApiException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -25,7 +25,7 @@ public class DateUtils {
         try {
             return sdf.parse(dateTimeString);
         } catch (ParseException e) {
-            throw new ScmApiException(e.getMessage());
+            throw new BaseScmApiException(e.getMessage());
         }
     }
 }

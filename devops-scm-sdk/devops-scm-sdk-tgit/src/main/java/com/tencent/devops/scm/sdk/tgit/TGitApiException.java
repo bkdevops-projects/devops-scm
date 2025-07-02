@@ -1,9 +1,9 @@
 package com.tencent.devops.scm.sdk.tgit;
 
 import com.tencent.devops.scm.sdk.common.connector.ScmConnectorResponse;
-import com.tencent.devops.scm.sdk.common.exception.ScmApiException;
+import com.tencent.devops.scm.sdk.common.exception.BaseScmApiException;
 
-public class TGitApiException extends ScmApiException {
+public class TGitApiException extends BaseScmApiException {
 
     public TGitApiException(String message) {
         super(message);

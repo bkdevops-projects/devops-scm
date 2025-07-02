@@ -6,7 +6,7 @@ data class Reference(
     // 引用的SHA值
     val sha: String,
     // 链接URL
-    val linkUrl: String,
+    val linkUrl: String = "",
     // 路径
     val path: String? = null
 )

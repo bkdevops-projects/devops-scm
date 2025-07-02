@@ -1,9 +1,9 @@
 package com.tencent.devops.scm.sdk.gitee;
 
 import com.tencent.devops.scm.sdk.common.connector.ScmConnectorResponse;
-import com.tencent.devops.scm.sdk.common.exception.ScmApiException;
+import com.tencent.devops.scm.sdk.common.exception.BaseScmApiException;
 
-public class GiteeApiException extends ScmApiException {
+public class GiteeApiException extends BaseScmApiException {
 
     public GiteeApiException(String message) {
         super(message);

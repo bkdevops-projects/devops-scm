@@ -17,7 +17,7 @@ data class CommitCommentHook(
     override val eventType: String,
     override val comment: Comment,
     override val sender: User,
-    override val extras: Map<String, Any> = emptyMap(),
+    override var extras: MutableMap<String, Any> = mutableMapOf(),
     val commit: Commit
 ) : AbstractCommentHook(
     action = action,

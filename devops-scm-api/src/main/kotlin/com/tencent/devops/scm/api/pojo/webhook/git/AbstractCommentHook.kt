@@ -41,7 +41,7 @@ abstract class AbstractCommentHook(
     open val comment: Comment,
     open val sender: User,
     // 扩展属性,提供者额外补充需要输出的变量
-    open val extras: Map<String, Any> = emptyMap()
+    open var extras: MutableMap<String, Any> = mutableMapOf()
 ) : Webhook {
 
     override fun repository(): GitScmServerRepository = repo

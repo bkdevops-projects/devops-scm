@@ -72,9 +72,9 @@ data class PullRequestHook(
     // PR源分支最后的commit信息
     val commit: Commit,
     // 变更的文件路径
-    val changes: List<Change>,
+    var changes: List<Change>,
     // 扩展属性,提供者额外补充需要输出的变量
-    val extras: Map<String, Any> = emptyMap(),
+    val extras: MutableMap<String, Any> = mutableMapOf(),
     val skipCi: Boolean = false
 ) : Webhook {
 
@@ -132,7 +132,7 @@ data class PullRequestHook(
         outputParams[PIPELINE_GIT_ACTION] = action.value
         outputParams[PIPELINE_GIT_BASE_REF] = pullRequest.sourceRef.name
         outputParams[PIPELINE_GIT_BASE_REPO_URL] = pullRequest.sourceRepo.httpUrl
-        outputParams[PIPELINE_GIT_COMMIT_AUTHOR] = commit.author.name
+        outputParams[PIPELINE_GIT_COMMIT_AUTHOR] = commit.author?.name ?: ""
         outputParams[PIPELINE_GIT_COMMIT_MESSAGE] = commit.message
         outputParams[PIPELINE_GIT_EVENT] = eventType.lowercase()
         outputParams[PIPELINE_GIT_EVENT_URL] = pullRequest.link

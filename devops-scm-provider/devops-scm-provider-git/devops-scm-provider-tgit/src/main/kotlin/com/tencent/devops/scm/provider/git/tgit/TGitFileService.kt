@@ -6,8 +6,6 @@ import com.tencent.devops.scm.api.pojo.ContentInput
 import com.tencent.devops.scm.api.pojo.Tree
 import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository
 import com.tencent.devops.scm.sdk.tgit.TGitApiFactory
-import com.tencent.devops.scm.sdk.tgit.pojo.TGitRepositoryFile
-import com.tencent.devops.scm.sdk.tgit.pojo.TGitTreeItem
 
 /**
  * TGit 文件服务实现类

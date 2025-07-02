@@ -93,7 +93,7 @@ class TGitPullRequestService(
                     .targetBranch(input.targetBranch)
 
             if (input.targetRepo is Long) {
-                builder.targetProjectId(input.targetRepo)
+                builder.targetProjectId(input.targetRepo as Long)
             }
 
             val mergeRequest = tGitApi.mergeRequestApi.createMergeRequest(repo.projectIdOrPath, builder.build())

@@ -20,8 +20,9 @@ class TGitUserService(
      * @return 用户信息
      */
     override fun find(auth: IScmAuth): User {
-        val tGitApi = apiFactory.fromAuthProvider(TGitAuthProviderFactory.create(auth))
-        val tGitUser = tGitApi.userApi.currentUser
-        return TGitObjectConverter.convertUser(tGitUser)
+        return TGitApiTemplate.execute(auth, apiFactory) { tGitApi ->
+            val tGitUser = tGitApi.userApi.currentUser
+            TGitObjectConverter.convertUser(tGitUser)
+        }
     }
 }

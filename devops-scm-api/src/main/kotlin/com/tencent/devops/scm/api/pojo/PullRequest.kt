@@ -12,7 +12,7 @@ data class PullRequest(
     // PR/MR 编号
     val number: Int,
     // 标题
-    val title: String,
+    var title: String,
     // 正文内容
     val body: String,
     // 链接

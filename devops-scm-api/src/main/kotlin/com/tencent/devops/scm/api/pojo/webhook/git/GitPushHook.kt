@@ -70,7 +70,7 @@ data class GitPushHook(
      */
     val sender: User,
     val commits: List<Commit> = emptyList(),
-    val changes: List<Change> = emptyList(),
+    var changes: List<Change> = emptyList(),
     val totalCommitsCount: Int = 0,
     val extras: Map<String, Any> = emptyMap(),
     val outputCommitIndexVar: Boolean = false,

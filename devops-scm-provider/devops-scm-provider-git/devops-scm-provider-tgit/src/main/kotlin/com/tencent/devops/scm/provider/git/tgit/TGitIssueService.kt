@@ -14,7 +14,6 @@ import com.tencent.devops.scm.sdk.tgit.TGitApi
 import com.tencent.devops.scm.sdk.tgit.TGitApiFactory
 import com.tencent.devops.scm.sdk.tgit.enums.TGitIssueState
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitIssue
-import com.tencent.devops.scm.sdk.tgit.pojo.TGitNote
 import org.apache.commons.lang3.StringUtils
 
 /**
@@ -65,7 +64,7 @@ class TGitIssueService(
         return TGitApiTemplate.execute(repository, apiFactory) { repo, tGitApi ->
             tGitApi.issuesApi.getIssues(
                 repo.projectIdOrPath,
-                convertFromState(opts.state),
+                opts.state?.let { convertFromState(it) },
                 opts.page,
                 opts.pageSize
             ).map { TGitObjectConverter.convertIssue(it) }

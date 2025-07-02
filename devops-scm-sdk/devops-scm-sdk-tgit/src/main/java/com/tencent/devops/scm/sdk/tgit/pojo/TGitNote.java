@@ -9,7 +9,7 @@ public class TGitNote {
     private Long parentId;
     private String body;
     private TGitAuthor author;
-    private Date createAt;
+    private Date createdAt;
     private Boolean system;
     private String attachment;
     private Boolean downvote;

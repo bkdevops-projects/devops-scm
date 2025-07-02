@@ -16,13 +16,13 @@ data class GitScmServerRepository(
     // 代码库全名,组+名称
     override val fullName: String,
     // 默认分支
-    val defaultBranch: String? = null,
+    var defaultBranch: String? = null,
     // 是否已归档
-    val archived: Boolean? = null,
+    var archived: Boolean? = null,
     // 是否是私有仓库
     val isPrivate: Boolean? = null,
     val visibility: Visibility? = null,
-    val httpUrl: String,
+    var httpUrl: String,
     val sshUrl: String,
     val webUrl: String,
     val created: LocalDateTime? = null,

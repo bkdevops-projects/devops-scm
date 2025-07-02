@@ -1,9 +1,9 @@
 package com.tencent.devops.scm.sdk.tsvn;
 
 import com.tencent.devops.scm.sdk.common.connector.ScmConnectorResponse;
-import com.tencent.devops.scm.sdk.common.exception.ScmApiException;
+import com.tencent.devops.scm.sdk.common.exception.BaseScmApiException;
 
-public class TSvnApiException extends ScmApiException {
+public class TSvnApiException extends BaseScmApiException {
 
     public TSvnApiException(String message) {
         super(message);

@@ -1,5 +1,6 @@
 package com.tencent.devops.scm.provider.git.tgit
 
+import TGitRepositoryService
 import com.tencent.devops.scm.api.FileService
 import com.tencent.devops.scm.api.IssueService
 import com.tencent.devops.scm.api.PullRequestService

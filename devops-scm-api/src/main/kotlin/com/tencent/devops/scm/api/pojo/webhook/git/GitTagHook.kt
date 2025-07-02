@@ -40,9 +40,9 @@ data class GitTagHook(
     override var eventType: String,
     val action: EventAction,
     val sender: User,
-    val commit: Commit,
+    val commit: Commit?,
     val createFrom: String? = null,
-    val extras: Map<String, Any> = emptyMap()
+    val extras: MutableMap<String, Any> = mutableMapOf()
 ) : Webhook {
 
     companion object {
@@ -67,7 +67,8 @@ data class GitTagHook(
     override fun outputs(): Map<String, Any> {
         val outputParams = mutableMapOf<String, Any>()
         // 通用变量
-        outputParams[PIPELINE_WEBHOOK_REVISION] = commit.sha
+        val tagVersion = commit?.sha ?: ""
+        outputParams[PIPELINE_WEBHOOK_REVISION] = tagVersion
         outputParams[PIPELINE_REPO_NAME] = repo.fullName
         outputParams[PIPELINE_START_WEBHOOK_USER_ID] = sender.username
         outputParams[PIPELINE_WEBHOOK_EVENT_TYPE] = eventType
@@ -77,7 +78,7 @@ data class GitTagHook(
         outputParams[BK_REPO_GIT_WEBHOOK_TAG_NAME] = ref.name
         outputParams[BK_REPO_GIT_WEBHOOK_TAG_USERNAME] = sender.name
         outputParams[BK_REPO_GIT_WEBHOOK_BRANCH] = ref.name
-        outputParams[BK_REPO_GIT_WEBHOOK_COMMIT_ID] = commit.sha
+        outputParams[BK_REPO_GIT_WEBHOOK_COMMIT_ID] = tagVersion
 
         outputParams[PIPELINE_GIT_REPO_ID] = repo.id
         outputParams[PIPELINE_GIT_REPO_URL] = repo.httpUrl
@@ -85,7 +86,7 @@ data class GitTagHook(
         outputParams[PIPELINE_GIT_REPO_NAME] = repo.name
         outputParams[PIPELINE_GIT_REPO_GROUP] = repo.group
         outputParams[PIPELINE_GIT_REF] = "refs/tags/${ref.name}"
-        outputParams[PIPELINE_GIT_SHA] = commit.sha
+        outputParams[PIPELINE_GIT_SHA] = tagVersion
         outputParams[CI_BRANCH] = ref.name
         outputParams[PIPELINE_GIT_EVENT] = if (action == EventAction.DELETE) "delete" else "tag_push"
         outputParams[PIPELINE_GIT_EVENT_URL] = ref.linkUrl

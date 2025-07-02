@@ -1,7 +1,6 @@
 import com.tencent.devops.scm.api.RepositoryService
 import com.tencent.devops.scm.api.enums.StatusState
 import com.tencent.devops.scm.api.pojo.Hook
-import com.tencent.devops.scm.api.pojo.HookEvents
 import com.tencent.devops.scm.api.pojo.HookInput
 import com.tencent.devops.scm.api.pojo.ListOptions
 import com.tencent.devops.scm.api.pojo.Perm
@@ -16,10 +15,6 @@ import com.tencent.devops.scm.provider.git.tgit.TGitApiTemplate
 import com.tencent.devops.scm.provider.git.tgit.TGitObjectConverter
 import com.tencent.devops.scm.sdk.tgit.TGitApiFactory
 import com.tencent.devops.scm.sdk.tgit.enums.TGitAccessLevel
-import com.tencent.devops.scm.sdk.tgit.pojo.TGitCommitStatus
-import com.tencent.devops.scm.sdk.tgit.pojo.TGitMember
-import com.tencent.devops.scm.sdk.tgit.pojo.TGitProject
-import com.tencent.devops.scm.sdk.tgit.pojo.TGitProjectHook
 
 /**
  * TGit 仓库服务实现类
@@ -52,16 +47,24 @@ class TGitRepositoryService(
             try {
                 val member = tGitApi.projectApi.getMember(repo.projectIdOrPath, username)
                 if (member == null) {
-                    Perm.builder().pull(true).push(false).admin(false).build()
+                    Perm(
+                        pull = true,
+                        push = false,
+                        admin = false
+                    )
                 } else {
-                    Perm.builder()
-                            .pull(true)
-                            .push(canPush(member.accessLevel))
-                            .admin(canAdmin(member.accessLevel))
-                            .build()
+                    Perm(
+                        pull = true,
+                        push = canPush(member.accessLevel),
+                        admin = canAdmin(member.accessLevel)
+                    )
                 }
             } catch (e: Exception) {
-                Perm.builder().pull(false).push(false).admin(false).build()
+                Perm(
+                    pull = false,
+                    push = false,
+                    admin = false
+                )
             }
         }
     }
@@ -88,7 +91,7 @@ class TGitRepositoryService(
     override fun listHooks(repository: ScmProviderRepository, opts: ListOptions): List<Hook> {
         return TGitApiTemplate.execute(repository, apiFactory) { repo, tGitApi ->
             tGitApi.projectApi.getHooks(repo.projectIdOrPath, opts.page, opts.pageSize)
-                    .map { convertHook(it) }
+                    .map { TGitObjectConverter.convertHook(it) }
         }
     }
 
@@ -105,11 +108,11 @@ class TGitRepositoryService(
         if (input.events == null) {
             throw IllegalArgumentException("events can not empty")
         }
-        val tGitProjectHook = convertFromHookInput(input)
+        val tGitProjectHook = TGitObjectConverter.convertFromHookInput(input)
 
         return TGitApiTemplate.execute(repository, apiFactory) { repo, tGitApi ->
             val hook = tGitApi.projectApi.addHook(repo.projectIdOrPath, tGitProjectHook, input.secret)
-            convertHook(hook)
+            TGitObjectConverter.convertHook(hook)
         }
     }
 
@@ -121,11 +124,11 @@ class TGitRepositoryService(
      * @return 更新后的钩子
      */
     override fun updateHook(repository: ScmProviderRepository, hookId: Long, input: HookInput): Hook {
-        val tGitProjectHook = convertFromHookInput(input)
+        val tGitProjectHook = TGitObjectConverter.convertFromHookInput(input)
 
         return TGitApiTemplate.execute(repository, apiFactory) { repo, tGitApi ->
             val hook = tGitApi.projectApi.updateHook(repo.projectIdOrPath, hookId, tGitProjectHook, input.secret)
-            convertHook(hook)
+            TGitObjectConverter.convertHook(hook)
         }
     }
 
@@ -149,7 +152,7 @@ class TGitRepositoryService(
     override fun getHook(repository: ScmProviderRepository, hookId: Long): Hook {
         return TGitApiTemplate.execute(repository, apiFactory) { repo, tGitApi ->
             val hook = tGitApi.projectApi.getHook(repo.projectIdOrPath, hookId)
-            convertHook(hook)
+            TGitObjectConverter.convertHook(hook)
         }
     }
 
@@ -163,7 +166,7 @@ class TGitRepositoryService(
     override fun listStatus(repository: ScmProviderRepository, ref: String, opts: ListOptions): List<Status> {
         return TGitApiTemplate.execute(repository, apiFactory) { repo, tGitApi ->
             tGitApi.commitsApi.getCommitStatuses(repo.projectIdOrPath, ref, opts.page, opts.pageSize)
-                    .map { convertStatus(it) }
+                    .map(TGitObjectConverter::convertStatus)
         }
     }
 
@@ -174,9 +177,16 @@ class TGitRepositoryService(
      * @param input 状态输入参数
      * @return 创建的状态
      */
-    override fun createStatus(repository: ScmProviderRepository, ref: String, input: StatusInput): Status? {
-        return null
-    }
+    override fun createStatus(
+        repository: ScmProviderRepository,
+        ref: String,
+        input: StatusInput
+    ) = Status(
+        state = StatusState.SUCCESS,
+        targetUrl = "",
+        desc = "",
+        context = ""
+    )
 
     private fun canPush(accessLevel: TGitAccessLevel): Boolean {
         return accessLevel.value >= TGitAccessLevel.DEVELOPER.value
@@ -184,86 +194,5 @@ class TGitRepositoryService(
 
     private fun canAdmin(accessLevel: TGitAccessLevel): Boolean {
         return accessLevel.value >= TGitAccessLevel.MASTER.value
-    }
-
-    private fun convertHook(from: TGitProjectHook): Hook {
-        return Hook.builder()
-                .id(from.id)
-                .url(from.url)
-                .active(true)
-                .events(convertEvents(from))
-                .build()
-    }
-
-    private fun convertEvents(from: TGitProjectHook): HookEvents {
-        val builder = HookEvents.builder()
-        if (from.pushEvents) {
-            builder.push(true)
-        }
-        if (from.tagPushEvents) {
-            builder.tag(true)
-        }
-        if (from.mergeRequestsEvents) {
-            builder.pullRequest(true)
-        }
-        if (from.issuesEvents) {
-            builder.issue(true)
-        }
-        if (from.noteEvents) {
-            builder.issueComment(true)
-            builder.pullRequestComment(true)
-        }
-        if (from.reviewEvents) {
-            builder.pullRequestReview(true)
-        }
-        return builder.build()
-    }
-
-    private fun convertFromHookInput(input: HookInput): TGitProjectHook {
-        val builder = TGitProjectHook.builder()
-        builder.url(input.url)
-        val events = input.events
-        if (events.push == true) {
-            builder.pushEvents(true)
-        }
-        if (events.tag == true) {
-            builder.tagPushEvents(true)
-        }
-        if (events.pullRequest == true) {
-            builder.mergeRequestsEvents(true)
-        }
-        if (events.issue == true) {
-            builder.issuesEvents(true)
-        }
-        if (enableNoteEvent(events)) {
-            builder.noteEvents(true)
-        }
-        if (events.pullRequestReview == true) {
-            builder.reviewEvents(true)
-        }
-        return builder.build()
-    }
-
-    private fun enableNoteEvent(events: HookEvents): Boolean {
-        return events.pullRequestComment == true || events.issueComment == true
-    }
-
-    private fun convertStatus(from: TGitCommitStatus): Status {
-        return Status.builder()
-                .state(convertState(from.state))
-                .context(from.context)
-                .desc(from.description)
-                .targetUrl(from.targetUrl)
-                .build()
-    }
-
-    private fun convertState(from: String): StatusState {
-        return when (from) {
-            "pending" -> StatusState.PENDING
-            "success" -> StatusState.SUCCESS
-            "error" -> StatusState.ERROR
-            "failure" -> StatusState.FAILURE
-            else -> StatusState.UNKNOWN
-        }
     }
 }

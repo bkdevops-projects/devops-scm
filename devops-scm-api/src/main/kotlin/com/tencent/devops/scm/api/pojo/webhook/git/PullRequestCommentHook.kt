@@ -13,8 +13,8 @@ data class PullRequestCommentHook(
     override val eventType: String,
     override val comment: Comment,
     override val sender: User,
-    override val extras: Map<String, Any> = emptyMap(),
-    val pullRequest: PullRequest,
+    override var extras: MutableMap<String, Any> = mutableMapOf(),
+    val pullRequest: PullRequest? = null,
     val review: Review? = null
 ) : AbstractCommentHook(
     action = action,

@@ -20,5 +20,5 @@ interface WebhookParser {
      * @param secretToken 签名token
      * @return 验证结果
      */
-    fun verify(request: HookRequest, secretToken: String): Boolean
+    fun verify(request: HookRequest, secretToken: String?): Boolean
 }

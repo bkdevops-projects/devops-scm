@@ -38,7 +38,7 @@ data class PullRequestReviewHook(
     var review: Review,
     var sender: User,
     // 扩展属性,提供者额外补充需要输出的变量
-    var extras: Map<String, Any> = emptyMap()
+    var extras: MutableMap<String, Any> = mutableMapOf()
 ) : Webhook {
 
     companion object {

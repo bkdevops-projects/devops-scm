@@ -21,7 +21,7 @@ data class Review(
     // 是否已关闭
     val closed: Boolean? = null,
     // 评审标题
-    val title: String,
+    var title: String,
     // 评审人列表
     val reviewers: List<User>? = null,
     // 源提交

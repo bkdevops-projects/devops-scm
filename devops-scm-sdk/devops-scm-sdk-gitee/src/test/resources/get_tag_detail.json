@@ -1,0 +1,38 @@
+{
+  "id": 75201,
+  "tag_name": "v1.0.0",
+  "target_commitish": "37275e1dfc088ebe7ef233a2b43655b7ea37a1d4",
+  "prerelease": false,
+  "name": "Enjoy ci~",
+  "body": "点击下载[bkci_linux_server](https://github.com/Tencent/bk-ci/releases/download/v1.0.0/bkci.tar.gz)",
+  "author": {
+    "id": 1572091,
+    "login": "zanyzhao",
+    "name": "zanyzhao",
+    "avatar_url": "https://foruda.gitee.com/avatar/1676977279357183767/1572091_zanyzhao_1578954868.png",
+    "url": "https://gitee.com/api/v5/users/zanyzhao",
+    "html_url": "https://gitee.com/zanyzhao",
+    "remark": "",
+    "followers_url": "https://gitee.com/api/v5/users/zanyzhao/followers",
+    "following_url": "https://gitee.com/api/v5/users/zanyzhao/following_url{/other_user}",
+    "gists_url": "https://gitee.com/api/v5/users/zanyzhao/gists{/gist_id}",
+    "starred_url": "https://gitee.com/api/v5/users/zanyzhao/starred{/owner}{/repo}",
+    "subscriptions_url": "https://gitee.com/api/v5/users/zanyzhao/subscriptions",
+    "organizations_url": "https://gitee.com/api/v5/users/zanyzhao/orgs",
+    "repos_url": "https://gitee.com/api/v5/users/zanyzhao/repos",
+    "events_url": "https://gitee.com/api/v5/users/zanyzhao/events{/privacy}",
+    "received_events_url": "https://gitee.com/api/v5/users/zanyzhao/received_events",
+    "type": "User"
+  },
+  "created_at": "2020-06-30T10:50:18+08:00",
+  "assets": [
+    {
+      "browser_download_url": "https://gitee.com/Tencent-BlueKing/bk-ci/archive/refs/tags/v1.0.0.zip",
+      "name": "v1.0.0.zip"
+    },
+    {
+      "browser_download_url": "https://gitee.com/Tencent-BlueKing/bk-ci/archive/refs/tags/v1.0.0.tar.gz",
+      "name": "v1.0.0.tar.gz"
+    }
+  ]
+}

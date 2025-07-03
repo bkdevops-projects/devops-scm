@@ -111,7 +111,8 @@ signing {
     sign(publishing.publications["mavenJava"])
 }
 
-val shouldPublish = project.the<SourceSetContainer>()["main"].allSource.files.isNotEmpty()
+val shouldPublish = project.the<SourceSetContainer>()["main"].allSource.files.isNotEmpty() ||
+        !project.name.contains("devops-scm-provider-gitee-simple")
 
 tasks.forEach {
     if (it.group == "publish") {

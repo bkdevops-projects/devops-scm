@@ -1,0 +1,14 @@
+{
+  "id": 12345,
+  "url": "https://www.baidu.com",
+  "password": "zhangsan",
+  "result": "",
+  "project_id": 39537743,
+  "result_code": null,
+  "created_at": "2025-04-14T18:09:45+08:00",
+  "push_events": true,
+  "tag_push_events": false,
+  "issues_events": false,
+  "note_events": false,
+  "merge_requests_events": true
+}

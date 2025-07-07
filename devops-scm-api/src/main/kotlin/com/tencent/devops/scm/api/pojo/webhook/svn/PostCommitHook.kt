@@ -22,7 +22,7 @@ data class PostCommitHook(
     val message: String,
     val sender: User,
     override val eventType: String,
-    val extras: Map<String, Any> = emptyMap(),
+    val extras: MutableMap<String, Any> = mutableMapOf(),
     val revision: Long,
     val commitTime: Long,
     val skipCi: Boolean = false

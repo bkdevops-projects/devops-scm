@@ -72,7 +72,7 @@ data class GitPushHook(
     val commits: List<Commit> = emptyList(),
     var changes: List<Change> = emptyList(),
     val totalCommitsCount: Int = 0,
-    val extras: Map<String, Any> = emptyMap(),
+    val extras: MutableMap<String, Any> = mutableMapOf(),
     val outputCommitIndexVar: Boolean = false,
     val skipCi: Boolean = false
 ) : Webhook {

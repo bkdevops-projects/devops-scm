@@ -67,6 +67,7 @@ import java.util.*
 class TGitWebhookParser : WebhookParser {
 
     override fun parse(request: HookRequest): Webhook? {
+        logger.info("try to parse tgit webhook")
         return when (request.headers?.get("X-Event")) {
             "Push Hook" -> parsePushHook(request.body)
             "Tag Push Hook" -> parseTagHook(request.body)

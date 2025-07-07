@@ -1,7 +1,6 @@
 package com.tencent.devops.scm.provider.git.gitee
 
 import com.tencent.devops.scm.api.RepositoryService
-import com.tencent.devops.scm.api.enums.StatusState
 import com.tencent.devops.scm.api.pojo.Hook
 import com.tencent.devops.scm.api.pojo.HookInput
 import com.tencent.devops.scm.api.pojo.ListOptions
@@ -12,7 +11,6 @@ import com.tencent.devops.scm.api.pojo.StatusInput
 import com.tencent.devops.scm.api.pojo.auth.IScmAuth
 import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository
 import com.tencent.devops.scm.api.pojo.repository.ScmServerRepository
-import com.tencent.devops.scm.api.pojo.repository.git.GitScmProviderRepository
 import com.tencent.devops.scm.sdk.gitee.GiteeApiFactory
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeProjectHook
 
@@ -26,10 +24,12 @@ class GiteeRepositoryService(private val apiFactory: GiteeApiFactory) : Reposito
         }
     }
 
-    override fun findPerms(repository: ScmProviderRepository, username: String) = Perm()
+    override fun findPerms(repository: ScmProviderRepository, username: String) :Perm {
+        throw UnsupportedOperationException("gitee not support find perm")
+    }
 
     override fun list(auth: IScmAuth, opts: RepoListOptions): List<ScmServerRepository> {
-        return emptyList()
+        throw UnsupportedOperationException("gitee not support list repo")
     }
 
     override fun listHooks(repository: ScmProviderRepository, opts: ListOptions): List<Hook> {
@@ -99,19 +99,16 @@ class GiteeRepositoryService(private val apiFactory: GiteeApiFactory) : Reposito
         ref: String,
         opts: ListOptions
     ): List<Status> {
-        return emptyList()
+        throw UnsupportedOperationException("gitee not support list status")
     }
 
     override fun createStatus(
         repository: ScmProviderRepository,
         ref: String,
         input: StatusInput
-    ) = Status(
-        state = StatusState.SUCCESS,
-        targetUrl = "",
-        desc = "",
-        context = ""
-    )
+    ) :Status {
+        throw UnsupportedOperationException("gitee not support create status")
+    }
 
     private fun convertFromHookInput(input: HookInput): GiteeProjectHook {
         return GiteeProjectHook.builder()

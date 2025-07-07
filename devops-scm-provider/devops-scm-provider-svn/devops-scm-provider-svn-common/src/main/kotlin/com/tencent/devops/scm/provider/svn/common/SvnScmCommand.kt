@@ -5,7 +5,6 @@ import com.tencent.devops.scm.api.exception.ScmApiException
 import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository
 import com.tencent.devops.scm.api.pojo.repository.svn.SvnScmProviderRepository
 import org.tmatesoft.svn.core.SVNException
-import org.tmatesoft.svn.core.io.SVNRepository
 
 class SvnScmCommand : ScmCommand {
 

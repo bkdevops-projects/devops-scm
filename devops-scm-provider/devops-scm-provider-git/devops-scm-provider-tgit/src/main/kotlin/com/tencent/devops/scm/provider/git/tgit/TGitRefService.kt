@@ -53,7 +53,6 @@ class TGitRefService(
     override fun listBranches(repository: ScmProviderRepository, opts: BranchListOptions): List<Reference> {
         return TGitApiTemplate.execute(repository, apiFactory) { repo, tGitApi ->
             tGitApi.branchesApi.getBranches(repo.projectIdOrPath, opts.search, opts.page, opts.pageSize)
-                    .let { it }
                     .map { TGitObjectConverter.convertBranch(it) }
         }
     }

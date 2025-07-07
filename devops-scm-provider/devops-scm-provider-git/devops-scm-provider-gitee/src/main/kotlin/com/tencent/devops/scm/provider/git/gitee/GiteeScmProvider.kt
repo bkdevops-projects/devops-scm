@@ -38,15 +38,15 @@ class GiteeScmProvider : GitScmProvider {
     }
 
     override fun issues(): IssueService {
-        TODO("Not yet implemented")
+        throw UnsupportedOperationException("gitee not support issue service")
     }
 
     override fun users() : UserService {
-        TODO("Not yet implemented")
+        throw UnsupportedOperationException("gitee not support user service")
     }
 
     override fun files(): FileService {
-        TODO("Not yet implemented")
+        throw UnsupportedOperationException("gitee not support file service")
     }
 
     override fun webhookParser(): WebhookParser {
@@ -58,10 +58,10 @@ class GiteeScmProvider : GitScmProvider {
     }
 
     override fun pullRequests(): PullRequestService {
-        TODO("Not yet implemented")
+        throw UnsupportedOperationException("gitee not support pull requests service")
     }
 
     override fun token(): TokenService {
-        TODO("Not yet implemented")
+        throw UnsupportedOperationException("gitee not support token service")
     }
 }

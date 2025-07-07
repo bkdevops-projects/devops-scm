@@ -10,7 +10,6 @@ import com.tencent.devops.scm.api.pojo.ListOptions
 import com.tencent.devops.scm.api.pojo.Reference
 import com.tencent.devops.scm.api.pojo.ReferenceInput
 import com.tencent.devops.scm.api.pojo.TagListOptions
-import com.tencent.devops.scm.api.pojo.Tree
 import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository
 import com.tencent.devops.scm.api.pojo.repository.svn.SvnScmProviderRepository
 import org.tmatesoft.svn.core.SVNException
@@ -18,7 +17,7 @@ import org.tmatesoft.svn.core.SVNException
 open class SvnRefService : RefService {
 
     override fun createBranch(repository: ScmProviderRepository, input: ReferenceInput) {
-        // 空实现
+        throw UnsupportedOperationException("svn not support create branch")
     }
 
     override fun findBranch(repository: ScmProviderRepository, name: String): Reference {
@@ -42,7 +41,7 @@ open class SvnRefService : RefService {
     }
 
     override fun createTag(repository: ScmProviderRepository, input: ReferenceInput) {
-        // 空实现
+        throw UnsupportedOperationException("svn not support create tag")
     }
 
     override fun findTag(repository: ScmProviderRepository, name: String): Reference {
@@ -50,7 +49,7 @@ open class SvnRefService : RefService {
     }
 
     override fun listTags(repository: ScmProviderRepository, opts: TagListOptions): List<Reference> {
-        return emptyList()
+        throw UnsupportedOperationException("svn not support list tag")
     }
 
     override fun findCommit(repository: ScmProviderRepository, ref: String): Commit {
@@ -58,11 +57,11 @@ open class SvnRefService : RefService {
     }
 
     override fun listCommits(repository: ScmProviderRepository, opts: CommitListOptions): List<Commit> {
-        return emptyList()
+        throw UnsupportedOperationException("svn not support list commit")
     }
 
     override fun listChanges(repository: ScmProviderRepository, ref: String, opts: ListOptions): List<Change> {
-        return emptyList()
+        throw UnsupportedOperationException("svn not support list change")
     }
 
     override fun compareChanges(
@@ -71,6 +70,6 @@ open class SvnRefService : RefService {
         target: String,
         opts: ListOptions
     ): List<Change> {
-        return emptyList()
+        throw UnsupportedOperationException("svn not support compare change")
     }
 }

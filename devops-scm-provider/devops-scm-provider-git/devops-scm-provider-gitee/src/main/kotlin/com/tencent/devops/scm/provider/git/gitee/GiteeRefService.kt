@@ -10,7 +10,6 @@ import com.tencent.devops.scm.api.pojo.Reference
 import com.tencent.devops.scm.api.pojo.ReferenceInput
 import com.tencent.devops.scm.api.pojo.TagListOptions
 import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository
-import com.tencent.devops.scm.api.pojo.repository.git.GitScmProviderRepository
 import com.tencent.devops.scm.sdk.common.enums.SortOrder
 import com.tencent.devops.scm.sdk.gitee.GiteeApiFactory
 import com.tencent.devops.scm.sdk.gitee.enums.GiteeBranchOrderBy
@@ -18,7 +17,7 @@ import com.tencent.devops.scm.sdk.gitee.enums.GiteeBranchOrderBy
 class GiteeRefService(private val apiFactory: GiteeApiFactory) : RefService {
 
     override fun createBranch(repository: ScmProviderRepository, input: ReferenceInput) {
-        // 暂未实现
+        throw UnsupportedOperationException("gitee not support create branch")
     }
 
     override fun findBranch(repository: ScmProviderRepository, name: String): Reference {
@@ -41,7 +40,7 @@ class GiteeRefService(private val apiFactory: GiteeApiFactory) : RefService {
     }
 
     override fun createTag(repository: ScmProviderRepository, input: ReferenceInput) {
-        // 暂未实现
+        throw UnsupportedOperationException("gitee not support create tag")
     }
 
     override fun findTag(repository: ScmProviderRepository, name: String): Reference {
@@ -80,8 +79,7 @@ class GiteeRefService(private val apiFactory: GiteeApiFactory) : RefService {
         repository: ScmProviderRepository,
         opts: CommitListOptions
     ): List<Commit> {
-        // 暂未实现
-        return emptyList()
+        throw UnsupportedOperationException("gitee not support list commit")
     }
 
     override fun listChanges(

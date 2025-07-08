@@ -153,7 +153,9 @@ data class PullRequestHook(
         outputParams[PIPELINE_WEBHOOK_SOURCE_URL] = pullRequest.sourceRepo.httpUrl
         outputParams[PIPELINE_WEBHOOK_TARGET_REPO_NAME] = pullRequest.targetRepo.fullName
         outputParams[PIPELINE_WEBHOOK_TARGET_URL] = pullRequest.targetRepo.httpUrl
-        extras.let { outputParams.putAll(it) }
+        if (extras.isNotEmpty()) {
+            outputParams.putAll(extras)
+        }
         return outputParams
     }
 

@@ -1,5 +1,14 @@
 package com.tencent.devops.scm.api.pojo.webhook.git
 
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_ID
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_IID
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_SOURCE_BRANCH
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_SOURCE_COMMIT
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_SOURCE_PROJECT_ID
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_STATE
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_TARGET_BRANCH
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_TARGET_COMMIT
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_TARGET_PROJECT_ID
 import com.tencent.devops.scm.api.enums.EventAction
 import com.tencent.devops.scm.api.pojo.Comment
 import com.tencent.devops.scm.api.pojo.PullRequest
@@ -33,15 +42,15 @@ data class PullRequestCommentHook(
 
         // 处理review信息
         review?.let {
-            outputs["BK_REPO_GIT_WEBHOOK_REVIEW_STATE"] = it.state?.value ?: ""
-            outputs["BK_REPO_GIT_WEBHOOK_REVIEW_ID"] = it.id
-            outputs["BK_REPO_GIT_WEBHOOK_REVIEW_IID"] = it.iid
-            outputs["BK_REPO_GIT_WEBHOOK_REVIEW_SOURCE_BRANCH"] = it.sourceBranch ?: ""
-            outputs["BK_REPO_GIT_WEBHOOK_REVIEW_SOURCE_PROJECT_ID"] = it.sourceProjectId ?: ""
-            outputs["BK_REPO_GIT_WEBHOOK_REVIEW_SOURCE_COMMIT"] = it.sourceCommit ?: ""
-            outputs["BK_REPO_GIT_WEBHOOK_REVIEW_TARGET_COMMIT"] = it.targetCommit ?: ""
-            outputs["BK_REPO_GIT_WEBHOOK_REVIEW_TARGET_BRANCH"] = it.targetBranch ?: ""
-            outputs["BK_REPO_GIT_WEBHOOK_REVIEW_TARGET_PROJECT_ID"] = it.targetProjectId ?: ""
+            outputs[BK_REPO_GIT_WEBHOOK_REVIEW_STATE] = it.state?.value ?: ""
+            outputs[BK_REPO_GIT_WEBHOOK_REVIEW_ID] = it.id
+            outputs[BK_REPO_GIT_WEBHOOK_REVIEW_IID] = it.iid
+            outputs[BK_REPO_GIT_WEBHOOK_REVIEW_SOURCE_BRANCH] = it.sourceBranch ?: ""
+            outputs[BK_REPO_GIT_WEBHOOK_REVIEW_SOURCE_PROJECT_ID] = it.sourceProjectId ?: ""
+            outputs[BK_REPO_GIT_WEBHOOK_REVIEW_SOURCE_COMMIT] = it.sourceCommit ?: ""
+            outputs[BK_REPO_GIT_WEBHOOK_REVIEW_TARGET_COMMIT] = it.targetCommit ?: ""
+            outputs[BK_REPO_GIT_WEBHOOK_REVIEW_TARGET_BRANCH] = it.targetBranch ?: ""
+            outputs[BK_REPO_GIT_WEBHOOK_REVIEW_TARGET_PROJECT_ID] = it.targetProjectId ?: ""
         }
 
         if (extras.isNotEmpty()) {

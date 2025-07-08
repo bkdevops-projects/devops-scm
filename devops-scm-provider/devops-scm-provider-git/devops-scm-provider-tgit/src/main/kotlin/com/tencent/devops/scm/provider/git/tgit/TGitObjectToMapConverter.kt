@@ -69,6 +69,7 @@ object TGitObjectToMapConverter {
             }
 
             // 基本MR信息
+            // 目前BASE_REF和HEAD_REF分别代表目标分支和源分支
             params.putMultipleKeys(
                 mr.sourceBranch ?: "",
                 setOf(
@@ -219,6 +220,17 @@ object TGitObjectToMapConverter {
             )
             params[PIPELINE_GIT_MR_PROPOSER] = mergeRequestEvent.user.username
             params[PIPELINE_GIT_MR_URL] = attr.url ?: ""
+            params[PIPELINE_WEBHOOK_SOURCE_PROJECT_ID] = attr.sourceProjectId?.toString() ?: ""
+            params[PIPELINE_WEBHOOK_TARGET_PROJECT_ID] = attr.targetProjectId?.toString() ?: ""
+            val simpleDateFormat = SimpleDateFormat(DateFormatConstants.ISO_8601).apply {
+                timeZone = TimeZone.getTimeZone("UTC")
+            }
+            attr.createdAt?.let {
+                params[BK_REPO_GIT_WEBHOOK_MR_CREATE_TIME] = simpleDateFormat.format(it)
+            }
+            attr.updatedAt?.let {
+                params[BK_REPO_GIT_WEBHOOK_MR_UPDATE_TIMESTAMP] = simpleDateFormat.format(it)
+            }
         }
         return params
     }

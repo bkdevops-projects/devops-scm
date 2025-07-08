@@ -190,18 +190,6 @@ class TGitWebhookEnricher(private val apiFactory: TGitApiFactory) : WebhookEnric
         }
 
         extras.putAll(defaultBranchVars)
-        // 目前BASE_REF和HEAD_REF分别代表目标分支和源分支
-        extras[PIPELINE_GIT_BASE_REF] = extras[BK_REPO_GIT_WEBHOOK_MR_TARGET_BRANCH] as String
-        extras[PIPELINE_GIT_HEAD_REF] = extras[BK_REPO_GIT_WEBHOOK_MR_SOURCE_BRANCH] as String
-        webhook.pullRequest?.number?.toLong()?.let { mrNum ->
-            extras.putAll(
-                fillTapdWorkItemsVar(
-                    repository,
-                    TGitTapdWorkType.MR,
-                    mrNum
-                )
-            )
-        }
     }
 
     private fun fillPullRequestVars(

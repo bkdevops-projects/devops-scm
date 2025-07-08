@@ -91,6 +91,7 @@ data class GitTagHook(
         outputParams[PIPELINE_GIT_EVENT] = if (action == EventAction.DELETE) "delete" else "tag_push"
         outputParams[PIPELINE_GIT_EVENT_URL] = ref.linkUrl
         outputParams[PIPELINE_GIT_ACTION] = action.value
+        outputParams[PIPELINE_START_WEBHOOK_USER_ID] = sender.name
 
         if (extras.isNotEmpty()) {
             outputParams.putAll(extras)

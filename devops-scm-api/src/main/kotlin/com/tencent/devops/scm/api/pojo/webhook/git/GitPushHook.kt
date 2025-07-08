@@ -144,7 +144,9 @@ data class GitPushHook(
         outputCommitIndexVar.takeIf { it }?.let {
             outputParams.putAll(GitUtils.getOutputCommitIndexVar(commits))
         }
-
+        if (extras.isNotEmpty()) {
+            outputParams.putAll(extras)
+        }
         return outputParams
     }
 

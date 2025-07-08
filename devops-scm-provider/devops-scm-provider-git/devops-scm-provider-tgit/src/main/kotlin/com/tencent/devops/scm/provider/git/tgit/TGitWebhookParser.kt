@@ -323,7 +323,7 @@ class TGitWebhookParser : WebhookParser {
         val state = when (sourceState) {
             "approving" -> ReviewState.APPROVING
             "approved" -> ReviewState.APPROVED
-            "changes_requested" -> ReviewState.CHANGES_REQUESTED
+            "change_required" -> ReviewState.CHANGE_REQUIRED
             "change_denied" -> ReviewState.CHANGE_DENIED
             "close" -> ReviewState.UNKNOWN
             else -> ReviewState.UNKNOWN

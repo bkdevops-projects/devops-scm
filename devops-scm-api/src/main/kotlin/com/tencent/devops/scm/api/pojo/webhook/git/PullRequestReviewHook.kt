@@ -91,7 +91,7 @@ data class PullRequestReviewHook(
     private fun getI18Code(state: ReviewState?): String = when (state) {
         ReviewState.APPROVING -> GIT_REVIEW_APPROVING_EVENT_DESC
         ReviewState.APPROVED -> GIT_REVIEW_APPROVED_EVENT_DESC
-        ReviewState.CHANGES_REQUESTED -> GIT_REVIEW_CHANGE_REQUIRED_EVENT_DESC
+        ReviewState.CHANGE_REQUIRED -> GIT_REVIEW_CHANGE_REQUIRED_EVENT_DESC
         ReviewState.CHANGE_DENIED -> GIT_REVIEW_CHANGE_DENIED_EVENT_DESC
         ReviewState.CLOSED -> GIT_REVIEW_CLOSED_EVENT_DESC
         else -> ""

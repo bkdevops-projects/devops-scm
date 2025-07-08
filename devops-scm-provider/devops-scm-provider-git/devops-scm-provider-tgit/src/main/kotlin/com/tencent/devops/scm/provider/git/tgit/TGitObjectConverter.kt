@@ -503,7 +503,7 @@ object TGitObjectConverter {
             TGitReviewState.APPROVING -> ReviewState.APPROVING
             TGitReviewState.APPROVED -> ReviewState.APPROVED
             TGitReviewState.CHANGE_DENIED -> ReviewState.CHANGE_DENIED
-            TGitReviewState.CHANGE_REQUIRED -> ReviewState.CHANGES_REQUESTED
+            TGitReviewState.CHANGE_REQUIRED -> ReviewState.CHANGE_REQUIRED
             TGitReviewState.EMPTY -> ReviewState.EMPTY
             TGitReviewState.CLOSED -> ReviewState.CLOSED
             else -> ReviewState.UNKNOWN

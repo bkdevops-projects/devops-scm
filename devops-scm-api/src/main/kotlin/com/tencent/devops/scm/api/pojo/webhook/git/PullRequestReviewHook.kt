@@ -72,7 +72,7 @@ data class PullRequestReviewHook(
         outputParams[PIPELINE_GIT_REPO_URL] = repo.httpUrl
         outputParams[PIPELINE_GIT_EVENT] = "review"
         (pullRequest?.title ?: review.title).let {
-            if (it.isBlank()) {
+            if (it.isNotBlank()) {
                 outputParams[PIPELINE_WEBHOOK_COMMIT_MESSAGE] = it
             }
         }

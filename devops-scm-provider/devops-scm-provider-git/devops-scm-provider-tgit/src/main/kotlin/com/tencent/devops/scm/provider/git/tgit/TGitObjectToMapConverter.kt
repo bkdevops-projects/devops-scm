@@ -226,10 +226,22 @@ object TGitObjectToMapConverter {
                 timeZone = TimeZone.getTimeZone("UTC")
             }
             attr.createdAt?.let {
-                params[BK_REPO_GIT_WEBHOOK_MR_CREATE_TIME] = simpleDateFormat.format(it)
+                params.putMultipleKeys(
+                    simpleDateFormat.format(it),
+                    setOf(
+                        BK_REPO_GIT_WEBHOOK_MR_CREATE_TIMESTAMP,
+                        BK_REPO_GIT_WEBHOOK_MR_CREATE_TIME
+                    )
+                )
             }
             attr.updatedAt?.let {
-                params[BK_REPO_GIT_WEBHOOK_MR_UPDATE_TIMESTAMP] = simpleDateFormat.format(it)
+                params.putMultipleKeys(
+                    simpleDateFormat.format(it),
+                    setOf(
+                        BK_REPO_GIT_WEBHOOK_MR_UPDATE_TIMESTAMP,
+                        BK_REPO_GIT_WEBHOOK_MR_UPDATE_TIME
+                    )
+                )
             }
         }
         return params

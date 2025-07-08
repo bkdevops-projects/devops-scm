@@ -1,6 +1,7 @@
 package com.tencent.devops.scm.provider.git.tgit
 
 import com.tencent.devops.scm.api.WebhookParser
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_HOOK_MR_ID
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_MANUAL_UNLOCK
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_ISSUE_STATE
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_PUSH_ACTION_KIND
@@ -21,6 +22,7 @@ import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_BEFORE
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_COMMIT_AUTHOR
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_COMMIT_MESSAGE
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_ACTION
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_URL
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_TAG_FROM
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_TAG_MESSAGE
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_START_WEBHOOK_USER_ID
@@ -51,6 +53,7 @@ import com.tencent.devops.scm.sdk.common.util.DateUtils
 import com.tencent.devops.scm.sdk.common.util.UrlConverter
 import com.tencent.devops.scm.sdk.tgit.enums.TGitNoteableType
 import com.tencent.devops.scm.sdk.tgit.enums.TGitPushOperationKind
+import com.tencent.devops.scm.sdk.tgit.enums.TGitReviewableType
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitIssueEvent
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitMergeRequestEvent
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitNoteEvent
@@ -345,12 +348,7 @@ class TGitWebhookParser : WebhookParser {
             eventType = TGitEventType.REVIEW.name,
             review = review,
             sender = sender,
-            extras = fillReviewExtra(src).apply {
-                if (src.reviewableType != "merge_request") {
-                    this[BK_REPO_GIT_WEBHOOK_REVIEW_STATE] = src.state
-                    this[BK_REPO_GIT_WEBHOOK_REVIEW_OWNER] = src.author?.username ?: ""
-                }
-            },
+            extras = fillReviewExtra(src),
             pullRequest = if (src.reviewableType == "merge_request") {
                 // 此处仅pull_request_id 在enrichHook有用，其他参数均为默认值
                 PullRequest(
@@ -487,6 +485,8 @@ class TGitWebhookParser : WebhookParser {
 
         private fun fillReviewExtra(src: TGitReviewEvent): MutableMap<String, Any> {
             val params = mutableMapOf<String, Any>()
+            params[BK_REPO_GIT_WEBHOOK_REVIEW_STATE] = src.state
+            params[BK_REPO_GIT_WEBHOOK_REVIEW_OWNER] = src.author?.username ?: ""
             params[BK_REPO_GIT_WEBHOOK_REVIEW_REVIEWABLE_ID] = src.reviewableId
             params[BK_REPO_GIT_WEBHOOK_REVIEW_REVIEWABLE_TYPE] = src.reviewableType
             params[BK_REPO_GIT_MANUAL_UNLOCK] = false
@@ -506,6 +506,12 @@ class TGitWebhookParser : WebhookParser {
             params[BK_REPO_GIT_WEBHOOK_REVIEW_APPROVING_REVIEWERS] = approvingReviewers.joinToString(",")
             params[BK_REPO_GIT_WEBHOOK_REVIEW_APPROVED_REVIEWERS] = approvedReviewers.joinToString(",")
             params[PIPELINE_START_WEBHOOK_USER_ID] = src.author?.username ?: ""
+            when(src.reviewableType) {
+                TGitReviewableType.MERGE_REQUEST.toValue() -> {
+                    params[BK_HOOK_MR_ID] = src.reviewableId
+                    params[PIPELINE_GIT_MR_URL] = "${src.repository.homepage ?: ""}/merge_requests/${src.iid}"
+                }
+            }
             return params
         }
 

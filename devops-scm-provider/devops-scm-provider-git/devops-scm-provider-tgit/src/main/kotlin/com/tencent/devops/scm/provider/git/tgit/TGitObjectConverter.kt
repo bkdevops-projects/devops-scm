@@ -368,8 +368,8 @@ object TGitObjectConverter {
             link = issuesUrl.ifBlank { url },
             closed = state == "closed",
             author = author,
-            created = DateUtils.convertDateToLocalDateTime(createAt),
-            updated = DateUtils.convertDateToLocalDateTime(updateAt),
+            created = DateUtils.convertDateToLocalDateTime(createdAt),
+            updated = DateUtils.convertDateToLocalDateTime(updatedAt),
             milestoneId = milestoneId,
             state = state
         )

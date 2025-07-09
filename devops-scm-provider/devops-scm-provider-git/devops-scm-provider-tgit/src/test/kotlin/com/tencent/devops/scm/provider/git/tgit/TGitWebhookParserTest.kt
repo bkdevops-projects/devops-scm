@@ -13,7 +13,10 @@ import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REF
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_REPO_URL
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_SHA_SHORT
 import com.tencent.devops.scm.api.pojo.HookRequest
+import com.tencent.devops.scm.api.pojo.webhook.git.CommitCommentHook
 import com.tencent.devops.scm.api.pojo.webhook.git.GitPushHook
+import com.tencent.devops.scm.api.pojo.webhook.git.IssueCommentHook
+import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestCommentHook
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestHook
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Disabled
@@ -145,5 +148,33 @@ class TGitWebhookParserTest {
 
         val webhook = webhookParser.parse(request) as PullRequestHook
         println(webhook)
+    }
+
+    @Test
+    fun commitNote() {
+        val eventFiles = mapOf(
+            "tgit_commit_note_event.json" to CommitCommentHook::class,
+            "tgit_review_note_event.json" to PullRequestCommentHook::class,
+            "tgit_issue_note_event.json" to IssueCommentHook::class
+        )
+
+        val headers = mapOf(
+            "X-Event" to "Note Hook",
+            "X-Event-Type" to "note",
+            "X-Source-Type" to "Project"
+        )
+        eventFiles.forEach {(fileName, cls) ->
+            val filePath = this::class.java.classLoader.getResource(fileName)?.file
+                ?: throw IllegalStateException("资源文件[$fileName]未找到")
+            val payload = File(filePath).readText(Charsets.UTF_8)
+
+            val request = HookRequest(
+                headers = headers,
+                body = payload
+            )
+
+            val webhook = cls.java.cast(webhookParser.parse(request))
+            println(webhook)
+        }
     }
 }

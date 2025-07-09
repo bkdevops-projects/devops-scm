@@ -46,14 +46,18 @@ abstract class AbstractCommentHook(
 
     override fun repository(): GitScmServerRepository = repo
 
-    override val eventDesc = ScmI18Variable(
-        code = GIT_NOTE_EVENT_DESC,
-        params = listOf(
-            comment.link,
-            comment.id.toString(),
-            sender.name
+    override val eventDesc: ScmI18Variable
+        get() = ScmI18Variable(
+            code = GIT_NOTE_EVENT_DESC,
+            params = listOf(
+                comment.link,
+                comment.id.toString(),
+                sender.name
+            )
         )
-    )
+
+    override val userName: String
+        get() = sender.name
 
     override fun outputs(): Map<String, Any> {
         val outputParams = mutableMapOf<String, Any>()

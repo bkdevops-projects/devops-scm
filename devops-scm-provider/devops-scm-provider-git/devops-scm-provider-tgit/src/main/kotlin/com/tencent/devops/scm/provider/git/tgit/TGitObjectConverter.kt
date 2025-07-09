@@ -174,7 +174,7 @@ object TGitObjectConverter {
             number = eventMergeRequest.iid,
             title = eventMergeRequest.title,
             body = description,
-            link = eventMergeRequest.url,
+            link = "${target.webUrl}/merge_requests/${eventMergeRequest.iid}",
             sha = eventMergeRequest.lastCommit.id,
             targetRepo = target,
             sourceRepo = source,
@@ -355,13 +355,17 @@ object TGitObjectConverter {
     }
 
     /*========================================issue====================================================*/
-    fun convertIssue(author: User, objectAttributes: TGitEventIssue) = with(objectAttributes) {
+    fun convertIssue(
+        author: User,
+        objectAttributes: TGitEventIssue,
+        issuesUrl: String = ""
+    ) = with(objectAttributes) {
         Issue(
             id = id,
             number = iid,
             title = title,
             body = description,
-            link = url,
+            link = issuesUrl.ifBlank { url },
             closed = state == "closed",
             author = author,
             created = DateUtils.convertDateToLocalDateTime(createAt),

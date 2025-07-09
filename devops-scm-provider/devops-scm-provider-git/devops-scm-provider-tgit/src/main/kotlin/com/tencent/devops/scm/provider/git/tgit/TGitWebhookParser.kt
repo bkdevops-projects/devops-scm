@@ -261,7 +261,7 @@ class TGitWebhookParser : WebhookParser {
         val extra = fillNoteExtra(src).toMutableMap()
         return when (objectAttributes.noteableType) {
             TGitNoteableType.ISSUE -> {
-                val issue = TGitObjectConverter.convertIssue(user, src.issue)
+                val issue = TGitObjectConverter.convertIssue(user, src.issue, objectAttributes.url)
                 IssueCommentHook(
                     eventType = TGitEventType.NOTE.name,
                     issue = issue,

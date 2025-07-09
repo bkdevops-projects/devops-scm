@@ -46,8 +46,6 @@ abstract class AbstractCommentHook(
 
     override fun repository(): GitScmServerRepository = repo
 
-    override val userName = sender.name
-
     override val eventDesc = ScmI18Variable(
         code = GIT_NOTE_EVENT_DESC,
         params = listOf(

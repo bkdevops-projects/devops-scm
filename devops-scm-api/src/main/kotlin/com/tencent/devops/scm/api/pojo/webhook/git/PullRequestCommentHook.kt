@@ -37,6 +37,8 @@ data class PullRequestCommentHook(
         const val CLASS_TYPE = "issue_comment"
     }
 
+    override val userName = sender.name
+
     override fun outputs(): Map<String, Any> {
         val outputs = super.outputs().toMutableMap()
 

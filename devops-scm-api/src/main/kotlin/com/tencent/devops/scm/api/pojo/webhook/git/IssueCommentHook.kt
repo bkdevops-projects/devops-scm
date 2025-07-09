@@ -34,6 +34,8 @@ data class IssueCommentHook(
         const val CLASS_TYPE = "issue_comment"
     }
 
+    override val userName = sender.name
+
     override fun outputs(): Map<String, Any> {
         val outputs = super.outputs().toMutableMap()
         outputs[BK_REPO_GIT_WEBHOOK_ISSUE_TITLE] = issue.title

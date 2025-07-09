@@ -249,7 +249,11 @@ class TGitWebhookParser : WebhookParser {
             fullName = repositoryUrl.fullName,
             httpUrl = httpUrl,
             webUrl = tGitRepo.homepage,
-            sshUrl = tGitRepo.gitSshUrl.ifBlank { UrlConverter.gitHttp2Ssh(httpUrl) }
+            sshUrl = if (tGitRepo.gitSshUrl.isNullOrBlank()) {
+                UrlConverter.gitHttp2Ssh(httpUrl)
+            } else {
+                tGitRepo.gitSshUrl
+            }
         )
 
         val user = TGitObjectConverter.convertUser(src.user)

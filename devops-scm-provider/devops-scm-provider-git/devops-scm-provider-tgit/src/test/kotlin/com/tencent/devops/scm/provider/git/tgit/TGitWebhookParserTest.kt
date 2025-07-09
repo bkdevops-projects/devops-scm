@@ -175,6 +175,7 @@ class TGitWebhookParserTest {
 
             val webhook = cls.java.cast(webhookParser.parse(request))
             println(webhook)
+            println(webhook.outputs())
         }
     }
 }

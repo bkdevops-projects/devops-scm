@@ -19,7 +19,6 @@ import com.tencent.devops.scm.api.pojo.webhook.git.IssueCommentHook
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestCommentHook
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestHook
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.io.File
 
@@ -172,10 +171,11 @@ class TGitWebhookParserTest {
                 headers = headers,
                 body = payload
             )
-
+            println("========================================================================")
             val webhook = cls.java.cast(webhookParser.parse(request))
-            println(webhook)
-            println(webhook.outputs())
+            webhook.outputs().forEach { t, u ->
+                println("${cls.java.simpleName}|$t=$u")
+            }
         }
     }
 }

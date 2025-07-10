@@ -2,6 +2,7 @@ package com.tencent.devops.scm.provider.git.gitee
 
 import com.tencent.devops.scm.api.enums.EventAction
 import com.tencent.devops.scm.api.pojo.HookRequest
+import com.tencent.devops.scm.api.pojo.webhook.git.GitPushHook
 import com.tencent.devops.scm.api.pojo.webhook.git.PullRequestHook
 import java.io.File
 import java.io.IOException
@@ -35,5 +36,28 @@ class GiteeWebhookParserTest : AbstractGiteeServiceTest() {
         val webhook = webhookParser.parse(request) as PullRequestHook
         Assertions.assertEquals(1, webhook.pullRequest.number)
         Assertions.assertEquals(EventAction.OPEN, webhook.action)
+    }
+
+
+    @Test
+    fun testGitPushHook() {
+        val filePath = this::class.java.classLoader
+                .getResource("push_webhook.json")
+                ?.file ?: throw IOException("push_webhook.json")
+        val payload = File(filePath).readText(Charsets.UTF_8)
+
+        val headers = HashMap<String, String>().apply {
+            put("X-Gitee-Event", "Push Hook")
+        }
+
+        val request = HookRequest(
+            headers = headers,
+            body = payload
+        )
+
+        val webhook = webhookParser.parse(request) as GitPushHook
+        webhook.outputs().forEach { t, u ->
+            println("${GitPushHook::class.simpleName}|$t=$u")
+        }
     }
 }

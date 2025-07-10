@@ -102,8 +102,10 @@ class GiteeWebhookParser : WebhookParser {
             author = GiteeObjectConverter.convertAuthor(sourcePullRequest.user),
             created = DateUtils.convertDateToLocalDateTime(sourcePullRequest.createdAt),
             updated = DateUtils.convertDateToLocalDateTime(sourcePullRequest.updatedAt),
-            labels = sourcePullRequest.labels.map { it.name },
-            milestone = GiteeObjectConverter.convertMilestone(sourcePullRequest.milestone),
+            labels = sourcePullRequest.labels?.map { it.name },
+            milestone = sourcePullRequest.milestone?.let {
+                GiteeObjectConverter.convertMilestone(it)
+            },
             assignee = sourcePullRequest.assignees.map { GiteeObjectConverter.convertAuthor(it) },
             baseCommit = sourcePullRequest.base.sha
         )

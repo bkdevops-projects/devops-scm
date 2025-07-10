@@ -1,6 +1,7 @@
 package com.tencent.devops.scm.provider.git.tgit
 
 import com.tencent.devops.scm.api.constant.DateFormatConstants
+import com.tencent.devops.scm.api.constant.WebhookOutputCode
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_HOOK_MR_COMMITTER
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_HOOK_MR_ID
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_MR_ASSIGNEE
@@ -29,6 +30,7 @@ import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_STATE
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_BASE_REF
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_HEAD_REF
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_ACTION
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_DESC
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_ID
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_IID
@@ -44,6 +46,7 @@ import com.tencent.devops.scm.api.pojo.repository.git.GitScmServerRepository
 import com.tencent.devops.scm.provider.git.utils.CollectionUtils.putMultipleKeys
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitMergeRequest
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitReview
+import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventMergeRequest
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitMergeRequestEvent
 import org.apache.commons.lang3.StringUtils
 import java.text.SimpleDateFormat
@@ -69,7 +72,7 @@ object TGitObjectToMapConverter {
             }
 
             // 基本MR信息
-            // 目前BASE_REF和HEAD_REF分别代表目标分支和源分支
+            // 目前HEAD_REF和BASE_REF分别代表目标分支和源分支
             params.putMultipleKeys(
                 mr.sourceBranch ?: "",
                 setOf(
@@ -246,4 +249,22 @@ object TGitObjectToMapConverter {
         }
         return params
     }
+
+    /**
+     * 获取 merge request 基础触发参数
+     */
+    fun convertMergeRequestEvent(
+        scmServerRepository: GitScmServerRepository,
+        eventMergeRequest: TGitEventMergeRequest
+    ): Map<String, Any> {
+        with(eventMergeRequest) {
+            val params = mutableMapOf<String, Any>()
+            params[PIPELINE_GIT_MR_ACTION] = action ?: ""
+            params[BK_HOOK_MR_ID] = id ?: ""
+            params[PIPELINE_GIT_MR_URL] = url ?: getMergeRequestUrl(scmServerRepository.webUrl, iid)
+            return params
+        }
+    }
+
+    fun getMergeRequestUrl(homeUrl: String, iid: Int) = "$homeUrl/merge_requests/$iid"
 }

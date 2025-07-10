@@ -25,6 +25,7 @@ public class TSvnPostCommitEvent {
     private Long userId;
     @JsonProperty("project_id")
     private Long projectId;
+    @JsonProperty("commitTime")
     private Long commitTime;
     private List<String> paths;
     private List<TSvnEventFile> files;

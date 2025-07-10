@@ -289,13 +289,17 @@ class TGitWebhookParser : WebhookParser {
             TGitNoteableType.REVIEW -> {
                 if (src.mergeRequest != null) {
                     val pullRequest = TGitObjectConverter.convertPullRequest(user, src.mergeRequest)
+                    extra.putAll(
+                        TGitObjectToMapConverter.convertMergeRequestEvent(repo, src.mergeRequest)
+                    )
                     PullRequestCommentHook(
                         eventType = TGitEventType.NOTE.name,
                         pullRequest = pullRequest,
                         action = EventAction.CREATE,
                         comment = comment,
                         repo = repo,
-                        sender = user
+                        sender = user,
+                        extras = extra
                     )
                 } else if (src.review != null) {
                     val review = TGitObjectConverter.convertReview(src.review)
@@ -305,7 +309,8 @@ class TGitWebhookParser : WebhookParser {
                         action = EventAction.CREATE,
                         comment = comment,
                         repo = repo,
-                        sender = user
+                        sender = user,
+                        extras = extra
                     )
                 } else {
                     null

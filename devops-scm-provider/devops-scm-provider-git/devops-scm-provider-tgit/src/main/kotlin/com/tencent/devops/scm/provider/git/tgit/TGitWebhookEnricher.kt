@@ -174,6 +174,9 @@ class TGitWebhookEnricher(private val apiFactory: TGitApiFactory) : WebhookEnric
                     webhook.repo
                 )
             )
+            // 历史遗留问题, Review事件HEAD_REF和BASE_REF分别代表[源分支]和[目标分支], 谨慎修改！！！
+            extras[PIPELINE_GIT_HEAD_REF] = extras[BK_REPO_GIT_WEBHOOK_MR_SOURCE_BRANCH] ?: ""
+            extras[PIPELINE_GIT_BASE_REF] = extras[BK_REPO_GIT_WEBHOOK_MR_TARGET_BRANCH] ?: ""
         } else {
             TGitApiTemplate.execute(repository, apiFactory) { _, tGitApi ->
                 val review = reviewHook.review

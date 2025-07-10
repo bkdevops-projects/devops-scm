@@ -168,12 +168,7 @@ class TGitWebhookParser : WebhookParser {
             else -> EventAction.EDIT
         }
 
-        val extras = HashMap<String, Any>().apply {
-            put(BK_REPO_GIT_MANUAL_UNLOCK, src.manualUnlock)
-            put(PIPELINE_GIT_MR_ACTION, objectAttributes.action)
-            put(PIPELINE_GIT_ACTION, objectAttributes.action)
-            putAll(TGitObjectToMapConverter.convertMergeRequestEvent(src))
-        }
+        val extras = TGitObjectToMapConverter.convertMergeRequestEvent(src)
 
         val srcTarget = objectAttributes.target
         val targetRepositoryUrl = GitRepositoryUrl(srcTarget.httpUrl)

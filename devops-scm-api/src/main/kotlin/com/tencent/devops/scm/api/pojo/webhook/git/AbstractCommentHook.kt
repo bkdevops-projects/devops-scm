@@ -7,6 +7,7 @@ import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_CREATED_AT
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_ID
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_NOTEABLE_TYPE
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_PROJECT_ID
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_UPDATED_AT
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_URL
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_EVENT
@@ -73,6 +74,7 @@ abstract class AbstractCommentHook(
 
         outputParams[BK_REPO_GIT_WEBHOOK_NOTE_AUTHOR_ID] = sender.id
         outputParams[BK_REPO_GIT_WEBHOOK_NOTE_ID] = comment.id
+        outputParams[BK_REPO_GIT_WEBHOOK_NOTE_PROJECT_ID] = repo.id
         outputParams[PIPELINE_WEBHOOK_NOTE_ID] = comment.id
         outputParams[BK_REPO_GIT_WEBHOOK_NOTE_NOTEABLE_TYPE] = comment.type
         outputParams[BK_REPO_GIT_WEBHOOK_NOTE_URL] = comment.link

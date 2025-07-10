@@ -1,9 +1,9 @@
 package com.tencent.devops.scm.provider.git.tgit
 
 import com.tencent.devops.scm.api.constant.DateFormatConstants
-import com.tencent.devops.scm.api.constant.WebhookOutputCode
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_HOOK_MR_COMMITTER
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_HOOK_MR_ID
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_MANUAL_UNLOCK
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_MR_ASSIGNEE
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_MR_AUTHOR
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_MR_BASE_COMMIT
@@ -28,6 +28,7 @@ import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_IID
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_OWNER
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_STATE
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_ACTION
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_BASE_REF
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_HEAD_REF
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_ACTION
@@ -50,13 +51,14 @@ import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventMergeRequest
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitMergeRequestEvent
 import org.apache.commons.lang3.StringUtils
 import java.text.SimpleDateFormat
-import java.util.TimeZone
 
 /**
  * TGitObject 转换成 Map
  * 根据API查询结果，组装Webhook参数
  */
 object TGitObjectToMapConverter {
+
+    private val simpleDateFormat = SimpleDateFormat(DateFormatConstants.ISO_8601)
 
     /**
      * 获取merge request 相关触发参数
@@ -67,10 +69,6 @@ object TGitObjectToMapConverter {
     ): Map<String, Any> {
         val params = mutableMapOf<String, Any>()
         mergeRequest?.let { mr ->
-            val simpleDateFormat = SimpleDateFormat(DateFormatConstants.ISO_8601).apply {
-                timeZone = TimeZone.getTimeZone("UTC")
-            }
-
             // 基本MR信息
             // 目前HEAD_REF和BASE_REF分别代表目标分支和源分支
             params.putMultipleKeys(
@@ -180,9 +178,12 @@ object TGitObjectToMapConverter {
     /**
      * 获取 merge request 基础触发参数
      */
-    fun convertMergeRequestEvent(mergeRequestEvent: TGitMergeRequestEvent): Map<String, Any> {
+    fun convertMergeRequestEvent(mergeRequestEvent: TGitMergeRequestEvent): MutableMap<String, Any> {
         val params = mutableMapOf<String, Any>()
         mergeRequestEvent.objectAttributes?.let { attr ->
+            params[BK_REPO_GIT_MANUAL_UNLOCK] = mergeRequestEvent.manualUnlock
+            params[PIPELINE_GIT_MR_ACTION] = attr.action
+            params[PIPELINE_GIT_ACTION] = attr.action
             params.putMultipleKeys(
                 attr.title ?: "",
                 setOf(
@@ -225,26 +226,13 @@ object TGitObjectToMapConverter {
             params[PIPELINE_GIT_MR_URL] = attr.url ?: ""
             params[PIPELINE_WEBHOOK_SOURCE_PROJECT_ID] = attr.sourceProjectId?.toString() ?: ""
             params[PIPELINE_WEBHOOK_TARGET_PROJECT_ID] = attr.targetProjectId?.toString() ?: ""
-            val simpleDateFormat = SimpleDateFormat(DateFormatConstants.ISO_8601).apply {
-                timeZone = TimeZone.getTimeZone("UTC")
-            }
             attr.createdAt?.let {
-                params.putMultipleKeys(
-                    simpleDateFormat.format(it),
-                    setOf(
-                        BK_REPO_GIT_WEBHOOK_MR_CREATE_TIMESTAMP,
-                        BK_REPO_GIT_WEBHOOK_MR_CREATE_TIME
-                    )
-                )
+                params[BK_REPO_GIT_WEBHOOK_MR_CREATE_TIMESTAMP] = it.time
+                params[BK_REPO_GIT_WEBHOOK_MR_CREATE_TIME] = simpleDateFormat.format(it)
             }
             attr.updatedAt?.let {
-                params.putMultipleKeys(
-                    simpleDateFormat.format(it),
-                    setOf(
-                        BK_REPO_GIT_WEBHOOK_MR_UPDATE_TIMESTAMP,
-                        BK_REPO_GIT_WEBHOOK_MR_UPDATE_TIME
-                    )
-                )
+                params[BK_REPO_GIT_WEBHOOK_MR_UPDATE_TIMESTAMP] = it.time
+                params[BK_REPO_GIT_WEBHOOK_MR_UPDATE_TIME] = simpleDateFormat.format(it)
             }
         }
         return params

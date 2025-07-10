@@ -218,6 +218,15 @@ object GiteeObjectConverter {
         )
     }
 
+    fun convertUser(user: GiteeEventAuthor) = with(user) {
+        User(
+            id = id,
+            name = name,
+            email = email,
+            username = username
+        )
+    }
+
     /*========================================compare====================================================*/
     fun convertCompare(commitCompare: GiteeCommitCompare) = with(commitCompare) {
         files.map {

@@ -33,7 +33,7 @@ public class GiteePushHook {
     @JsonProperty("commits_more_than_ten")
     private Boolean commitsMoreThanTen;
     private Boolean deleted;
-    private GiteeBaseUser sender;
+    private GiteeEventAuthor sender;
     private Long userId;
     private Long hookId;
     private List<GiteeEventCommit> commits;

@@ -51,6 +51,7 @@ import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventMergeRequest
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitMergeRequestEvent
 import org.apache.commons.lang3.StringUtils
 import java.text.SimpleDateFormat
+import java.util.TimeZone
 
 /**
  * TGitObject 转换成 Map
@@ -58,7 +59,9 @@ import java.text.SimpleDateFormat
  */
 object TGitObjectToMapConverter {
 
-    private val simpleDateFormat = SimpleDateFormat(DateFormatConstants.ISO_8601)
+    private val simpleDateFormat = SimpleDateFormat(DateFormatConstants.ISO_8601).apply {
+        timeZone = TimeZone.getTimeZone("UTC")
+    }
 
     /**
      * 获取merge request 相关触发参数

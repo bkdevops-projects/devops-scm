@@ -1,0 +1,67 @@
+package com.tencent.devops.scm.provider.git.gitee
+
+import com.tencent.devops.scm.api.FileService
+import com.tencent.devops.scm.api.IssueService
+import com.tencent.devops.scm.api.PullRequestService
+import com.tencent.devops.scm.api.RefService
+import com.tencent.devops.scm.api.RepositoryService
+import com.tencent.devops.scm.api.TokenService
+import com.tencent.devops.scm.api.UserService
+import com.tencent.devops.scm.api.WebhookEnricher
+import com.tencent.devops.scm.api.WebhookParser
+import com.tencent.devops.scm.provider.git.command.GitScmProvider
+import com.tencent.devops.scm.sdk.common.GitOauth2ClientProperties
+import com.tencent.devops.scm.sdk.common.connector.ScmConnector
+import com.tencent.devops.scm.sdk.gitee.GiteeApiFactory
+
+class GiteeScmProvider : GitScmProvider {
+    private val apiFactory: GiteeApiFactory
+
+    constructor(apiUrl: String, connector: ScmConnector) : this(GiteeApiFactory(apiUrl, connector))
+
+    constructor(
+        apiUrl: String,
+        connector: ScmConnector,
+        properties: GitOauth2ClientProperties
+    ) : this(apiUrl, connector)
+
+    constructor(apiFactory: GiteeApiFactory) {
+        this.apiFactory = apiFactory
+    }
+
+    override fun repositories(): RepositoryService {
+        return GiteeRepositoryService(apiFactory)
+    }
+
+    override fun refs(): RefService {
+        return GiteeRefService(apiFactory)
+    }
+
+    override fun issues(): IssueService {
+        throw UnsupportedOperationException("gitee not support issue service")
+    }
+
+    override fun users() : UserService {
+        throw UnsupportedOperationException("gitee not support user service")
+    }
+
+    override fun files(): FileService {
+        throw UnsupportedOperationException("gitee not support file service")
+    }
+
+    override fun webhookParser(): WebhookParser {
+        return GiteeWebhookParser()
+    }
+
+    override fun webhookEnricher(): WebhookEnricher {
+        return GiteeWebhookEnricher(apiFactory)
+    }
+
+    override fun pullRequests(): PullRequestService {
+        throw UnsupportedOperationException("gitee not support pull requests service")
+    }
+
+    override fun token(): TokenService {
+        throw UnsupportedOperationException("gitee not support token service")
+    }
+}

@@ -1,14 +1,11 @@
 package com.tencent.devops.scm.api.pojo.webhook.git
 
-import com.tencent.devops.scm.api.constant.DateFormatConstants
 import com.tencent.devops.scm.api.constant.WebhookI18Code.GIT_NOTE_EVENT_DESC
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_AUTHOR_ID
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_COMMENT
-import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_CREATED_AT
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_ID
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_NOTEABLE_TYPE
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_PROJECT_ID
-import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_UPDATED_AT
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_URL
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_EVENT
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_EVENT_URL
@@ -30,10 +27,6 @@ import com.tencent.devops.scm.api.pojo.ScmI18Variable
 import com.tencent.devops.scm.api.pojo.User
 import com.tencent.devops.scm.api.pojo.repository.git.GitScmServerRepository
 import com.tencent.devops.scm.api.pojo.webhook.Webhook
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 /**
  * 抽象评论钩子基类
@@ -78,12 +71,6 @@ abstract class AbstractCommentHook(
         outputParams[PIPELINE_WEBHOOK_NOTE_ID] = comment.id
         outputParams[BK_REPO_GIT_WEBHOOK_NOTE_NOTEABLE_TYPE] = comment.type
         outputParams[BK_REPO_GIT_WEBHOOK_NOTE_URL] = comment.link
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
-        val zoneId = ZoneId.systemDefault()
-        outputParams[BK_REPO_GIT_WEBHOOK_NOTE_CREATED_AT] =
-            comment.created.atZone(zoneId).format(formatter)
-        outputParams[BK_REPO_GIT_WEBHOOK_NOTE_UPDATED_AT] =
-            (comment.updated ?: LocalDateTime.now()).atZone(zoneId).format(formatter)
         outputParams[PIPELINE_GIT_EVENT] = "note"
         outputParams[PIPELINE_GIT_EVENT_URL] = comment.link
         outputParams[PIPELINE_GIT_REPO_ID] = repo.id

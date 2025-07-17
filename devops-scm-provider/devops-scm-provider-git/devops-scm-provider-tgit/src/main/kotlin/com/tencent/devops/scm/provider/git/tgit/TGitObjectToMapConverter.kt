@@ -24,12 +24,16 @@ import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_MR_TITLE
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_MR_UPDATE_TIME
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_MR_UPDATE_TIMESTAMP
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_CREATED_AT
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_NOTE_UPDATED_AT
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_ID
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_IID
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_OWNER
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.BK_REPO_GIT_WEBHOOK_REVIEW_STATE
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_ACTION
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_BASE_REF
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_BEFORE_SHA
+import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_BEFORE_SHA_SHORT
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_HEAD_REF
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_ACTION
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_DESC
@@ -49,6 +53,7 @@ import com.tencent.devops.scm.sdk.tgit.pojo.TGitMergeRequest
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitReview
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventMergeRequest
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitMergeRequestEvent
+import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitNoteEvent
 import org.apache.commons.lang3.StringUtils
 import java.text.SimpleDateFormat
 import java.util.TimeZone
@@ -253,6 +258,21 @@ object TGitObjectToMapConverter {
             params[PIPELINE_GIT_MR_ACTION] = action ?: ""
             params[BK_HOOK_MR_ID] = id ?: ""
             params[PIPELINE_GIT_MR_URL] = url ?: getMergeRequestUrl(scmServerRepository.webUrl, iid)
+            return params
+        }
+    }
+
+    fun convertNoteEvent(
+        src: TGitNoteEvent
+    ): MutableMap<String, Any> {
+        with(src.objectAttributes) {
+            val params = mutableMapOf<String, Any>()
+            params[BK_REPO_GIT_MANUAL_UNLOCK] = false
+            params[PIPELINE_GIT_BEFORE_SHA] = "----------"
+            params[PIPELINE_GIT_BEFORE_SHA_SHORT] = "----------"
+            params[PIPELINE_GIT_MR_ACTION] = action
+            params[BK_REPO_GIT_WEBHOOK_NOTE_CREATED_AT] = simpleDateFormat.format(createdAt)
+            params[BK_REPO_GIT_WEBHOOK_NOTE_UPDATED_AT] = simpleDateFormat.format(updatedAt)
             return params
         }
     }

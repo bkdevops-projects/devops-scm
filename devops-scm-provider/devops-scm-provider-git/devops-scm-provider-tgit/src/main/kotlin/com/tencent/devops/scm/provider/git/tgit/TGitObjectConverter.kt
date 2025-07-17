@@ -53,7 +53,6 @@ import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitEventRepository
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitNoteEvent
 
 import org.apache.commons.lang3.StringUtils
-import java.time.LocalDateTime
 
 @SuppressWarnings("TooManyFunctions", "LongMethod")
 object TGitObjectConverter {
@@ -431,6 +430,16 @@ object TGitObjectConverter {
                 email = email
             )
         }
+    }
+
+    fun convertUser(src: TGitUser, attr: TGitNoteEvent.ObjectAttributes) = with(src) {
+        User(
+            id = id ?: attr.authorId ?: 0,
+            username = username,
+            name = name,
+            avatar = avatarUrl,
+            email = email
+        )
     }
 
     /*========================================comment====================================================*/

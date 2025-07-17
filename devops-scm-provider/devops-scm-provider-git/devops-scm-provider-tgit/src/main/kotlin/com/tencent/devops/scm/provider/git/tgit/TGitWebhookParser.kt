@@ -21,7 +21,6 @@ import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_BEFORE
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_BEFORE_SHA_SHORT
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_COMMIT_AUTHOR
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_COMMIT_MESSAGE
-import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_ACTION
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_MR_URL
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_TAG_FROM
 import com.tencent.devops.scm.api.constant.WebhookOutputCode.PIPELINE_GIT_TAG_MESSAGE
@@ -62,7 +61,6 @@ import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitReviewEvent
 import com.tencent.devops.scm.sdk.tgit.pojo.webhook.TGitTagPushEvent
 import com.tencent.devops.scm.sdk.tgit.util.TGitJsonUtil
 import org.slf4j.LoggerFactory
-import java.util.*
 
 /**
  * TGit Webhook 解析器实现类
@@ -251,9 +249,9 @@ class TGitWebhookParser : WebhookParser {
             }
         )
 
-        val user = TGitObjectConverter.convertUser(src.user)
+        val user = TGitObjectConverter.convertUser(src.user, src.objectAttributes)
         val comment = TGitObjectConverter.convertComment(src.objectAttributes, user)
-        val extra = fillNoteExtra(src).toMutableMap()
+        val extra = TGitObjectToMapConverter.convertNoteEvent(src)
         return when (objectAttributes.noteableType) {
             TGitNoteableType.ISSUE -> {
                 val issue = TGitObjectConverter.convertIssue(user, src.issue, objectAttributes.url)
@@ -516,15 +514,6 @@ class TGitWebhookParser : WebhookParser {
                     params[PIPELINE_GIT_MR_URL] = "${src.repository.homepage ?: ""}/merge_requests/${src.iid}"
                 }
             }
-            return params
-        }
-
-        private fun fillNoteExtra(src: TGitNoteEvent): Map<String, Any> {
-            val params = mutableMapOf<String, Any>()
-            params[BK_REPO_GIT_MANUAL_UNLOCK] = false
-            params[PIPELINE_GIT_BEFORE_SHA] = "----------"
-            params[PIPELINE_GIT_BEFORE_SHA_SHORT] = "----------"
-            params[PIPELINE_GIT_MR_ACTION] = src.objectAttributes.action
             return params
         }
 

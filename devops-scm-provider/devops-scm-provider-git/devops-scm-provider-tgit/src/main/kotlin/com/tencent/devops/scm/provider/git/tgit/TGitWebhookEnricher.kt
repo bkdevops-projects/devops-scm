@@ -145,6 +145,9 @@ class TGitWebhookEnricher(private val apiFactory: TGitApiFactory) : WebhookEnric
                         (webhook as PullRequestCommentHook).repo
                     )
                 )
+                // 历史遗留变量问题，谨慎修改
+                extras[PIPELINE_GIT_HEAD_REF] = commentHook.pullRequest?.sourceRef?.name ?: ""
+                extras[PIPELINE_GIT_BASE_REF] = commentHook.pullRequest?.targetRef?.name ?: ""
             }
 
         }

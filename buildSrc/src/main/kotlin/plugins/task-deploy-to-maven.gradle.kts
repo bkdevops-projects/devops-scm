@@ -24,6 +24,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+import util.MavenUtil
 import java.net.URI
 
 plugins {
@@ -105,13 +106,24 @@ publishing {
             }
         }
     }
+    repositories {
+        maven {
+            name = "nexus3"
+            url = URI(MavenUtil.getUrl(project))
+            credentials {
+                username = MavenUtil.getUserName(project)
+                password = MavenUtil.getPassword(project)
+            }
+        }
+    }
 }
 
 signing {
     sign(publishing.publications["mavenJava"])
 }
 
-val shouldPublish = project.the<SourceSetContainer>()["main"].allSource.files.isNotEmpty()
+val shouldPublish = project.the<SourceSetContainer>()["main"].allSource.files.isNotEmpty() ||
+        !project.name.contains("devops-scm-provider-gitee-simple")
 
 tasks.forEach {
     if (it.group == "publish") {

@@ -5,10 +5,12 @@ import com.tencent.devops.scm.sdk.common.Requester;
 import com.tencent.devops.scm.sdk.common.ScmHttpMethod;
 import com.tencent.devops.scm.sdk.common.UriTemplate;
 import com.tencent.devops.scm.sdk.common.util.MapBuilder;
+import com.tencent.devops.scm.sdk.tgit.enums.TGitTapdWorkType;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitMember;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitNamespace;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitProject;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitProjectHook;
+import com.tencent.devops.scm.sdk.tgit.pojo.TGitTapdWorkItem;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Arrays;
@@ -23,6 +25,7 @@ public class TGitProjectApi extends AbstractTGitApi {
     private static final String PROJECT_HOOK_ID_URI_PATTERN = "projects/:id/hooks/:hook_id";
     private static final String PROJECT_ID_MEMBERS_PATTERN = "projects/:id/members";
     private static final String PROJECT_ID_MEMBERS_ALL_PATTERN = "projects/:id/members/all";
+    private static final String PROJECT_ID_TAPD_WORK_ITEMS_PATTERN = "projects/:id/tapd_workitems";
 
     public TGitProjectApi(TGitApi tGitApi) {
         super(tGitApi);
@@ -323,5 +326,30 @@ public class TGitProjectApi extends AbstractTGitApi {
             }
         }
         return null;
+    }
+
+    public List<TGitTapdWorkItem> getTapdWrorkItems(
+            Object projectIdOrPath,
+            TGitTapdWorkType type,
+            Long iid,
+            Integer page,
+            Integer perPage
+    ) {
+        String repoId = getProjectIdOrPath(projectIdOrPath);
+        TGitTapdWorkItem[] data = tGitApi.createRequest()
+                .method(ScmHttpMethod.GET)
+                .withUrlPath(
+                        PROJECT_ID_TAPD_WORK_ITEMS_PATTERN,
+                        MapBuilder.<String, String>newBuilder()
+                                .add("id", repoId)
+                                .build()
+                )
+                .withRepoId(repoId)
+                .with("type", type.toValue())
+                .with("iid", iid)
+                .with(PAGE_PARAM, page)
+                .with(PER_PAGE_PARAM, perPage)
+                .fetch(TGitTapdWorkItem[].class);
+        return Arrays.asList(data);
     }
 }

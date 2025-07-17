@@ -1,0 +1,43 @@
+{
+  "object_kind": "post_commit",
+  "operation_kind": "update",
+  "action_kind": "svn client commit",
+  "user_name": "zhangsan",
+  "user_id": 52767,
+  "user_email": "zhangsan@tencent.com",
+  "project_id": 106699,
+  "repository": {
+    "name": "svn_repo",
+    "description": "devops 合作版工蜂调试项目",
+    "homepage": "https://git.code.tencent.com/zhangsan_group/svn_repo",
+    "svn_http_url": "https://svn.code.tencent.com/zhangsan_group/svn_repo",
+    "svn_ssh_url": "svn+ssh://svn.code.tencent.com/zhangsan_group/svn_repo",
+    "url": "svn+ssh://svn.code.tencent.com/zhangsan_group/svn_repo",
+    "visibility_level": 0
+  },
+  "timestamp": "2025-07-10T02:28:07+0000",
+  "revision": 9,
+  "message": "feat：平台管理-代码源管理 #11379 支持TSVN代码库触发",
+  "files": [
+    {
+      "type": "U",
+      "file": "branches/devops_trigger_demo/a/a_1/a_1.txt",
+      "directory": false,
+      "isFile": true,
+      "size": -1,
+      "insertions": 0,
+      "deletions": 0
+    }
+  ],
+  "paths": [
+    "branches/devops_trigger_demo/a/a_1/"
+  ],
+  "total_files_count": 1,
+  "create_and_update": null,
+  "push_options": {},
+  "push_timestamp": "2025-07-10T02:28:09+0000",
+  "userName": "zhangsan",
+  "rep_name": "zhangsan_group/svn_repo",
+  "log": "feat：平台管理-代码源管理 #11379 支持TSVN代码库触发",
+  "commitTime": 1752114487000
+}

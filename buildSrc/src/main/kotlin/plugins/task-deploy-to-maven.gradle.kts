@@ -24,6 +24,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+import util.MavenUtil
 import java.net.URI
 
 plugins {
@@ -102,6 +103,16 @@ publishing {
                     connection.set("scm:git:https://github.com/bkdevops-projects/devops-scm.git")
                     developerConnection.set("scm:git:git@github.com:bkdevops-projects/devops-scm.git")
                 }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "nexus3"
+            url = URI(MavenUtil.getUrl(project))
+            credentials {
+                username = MavenUtil.getUserName(project)
+                password = MavenUtil.getPassword(project)
             }
         }
     }

@@ -5,33 +5,16 @@
 参考：[项目结构介绍](./PROJECT_STRUCTURE.md)
 
 ## 1.指定服务提供者标识
-````java
+````kotlin
 /**
  * 源码管理平台提供者
  */
-public enum ScmProviderCodes {
-    TGIT("tgit"),
-    TSVN("tsvn"),
-    GITHUB("github"),
-    GITLAB("gitlab"),
-    // 增加Gitee提供者标识
-    GITEE("gitee"),
-    ;
-    public final String value;
-
-    ScmProviderCodes(String value) {
-        this.value = value;
-    }
-
-    @JsonValue
-    public String toValue() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
+enum class ScmProviderCodes(val value: String) {
+  TGIT("tgit"),
+  TSVN("tsvn"),
+  GITHUB("github"),
+  GITLAB("gitlab"),
+  GITEE("gitee");
 }
 ````
 
@@ -43,14 +26,6 @@ public enum ScmProviderCodes {
 
 ### 2.1 新建module
 增加 devops-scm-provider-gitee-simple 模块，基于[devops-scm-provider/devops-scm-provider-git]目录右键 'New' -> 'Module'
-
-### 2.2 增加授权适配器
-
-新建 GiteeTokenAuthProvider 类，用于实现 HTTP 授权认证接口，其中授权信息位于request header中
-
-````java
-
-````
 
 ### 2.2 增加授权适配器
 为保障系统安全性，调用Gitee服务端API接口需进行身份认证。现针对Gitee社区版平台开发了授权提供者模块，当前版本支持以下两种授权机制：
@@ -68,46 +43,36 @@ public enum ScmProviderCodes {
 
 蓝盾凭证实体类参考： com.tencent.devops.scm.api.pojo.auth.IScmAuth
 
-````java
-package com.tencent.devops.scm.provider.gitee.simple.auth;
+````kotlin
+package com.tencent.devops.scm.provider.gitee.simple.auth
 
-import com.gitee.sdk.gitee5j.ApiClient;
-import com.gitee.sdk.gitee5j.auth.OAuth;
-import com.tencent.devops.scm.api.pojo.auth.AccessTokenScmAuth;
-import com.tencent.devops.scm.api.pojo.auth.IScmAuth;
-import com.tencent.devops.scm.api.pojo.auth.PersonalAccessTokenScmAuth;
-import com.tencent.devops.scm.api.pojo.auth.TokenSshPrivateKeyScmAuth;
-import com.tencent.devops.scm.api.pojo.auth.TokenUserPassScmAuth;
-import lombok.NonNull;
+import com.gitee.sdk.gitee5j.ApiClient
+import com.gitee.sdk.gitee5j.auth.OAuth
+import com.tencent.devops.scm.api.pojo.auth.AccessTokenScmAuth
+import com.tencent.devops.scm.api.pojo.auth.IScmAuth
+import com.tencent.devops.scm.api.pojo.auth.PersonalAccessTokenScmAuth
+import com.tencent.devops.scm.api.pojo.auth.TokenSshPrivateKeyScmAuth
+import com.tencent.devops.scm.api.pojo.auth.TokenUserPassScmAuth
 
-public class GiteeTokenAuthProviderAdapter {
+class GiteeTokenAuthProviderAdapter(private val apiClient: ApiClient) {
 
-  private static final String AUTH_TYPE_OAUTH = "OAuth2";
-
-  @NonNull
-  private ApiClient apiClient;
-
-  private GiteeTokenAuthProviderAdapter(ApiClient apiClient) {
-    this.apiClient = apiClient;
+  companion object {
+    private const val AUTH_TYPE_OAUTH = "OAuth2"
   }
 
-  public void withAuth(IScmAuth auth) {
-    OAuth oAuth = (OAuth) apiClient.getAuthentication(AUTH_TYPE_OAUTH);
-    String token = "";
-    if (auth instanceof AccessTokenScmAuth) {
-      token = ((AccessTokenScmAuth) auth).getAccessToken();
-    } else if (auth instanceof PersonalAccessTokenScmAuth) {
-      token = ((PersonalAccessTokenScmAuth) auth).getPersonalAccessToken();
-    } else if (auth instanceof TokenUserPassScmAuth) {
-      token = ((TokenUserPassScmAuth) auth).getToken();
-    } else if (auth instanceof TokenSshPrivateKeyScmAuth) {
-      token = ((TokenSshPrivateKeyScmAuth) auth).getToken();
-    } else {
-      throw new UnsupportedOperationException(String.format("gitAuth(%s) is not support", auth));
+  fun withAuth(auth: IScmAuth) {
+    val oAuth = apiClient.getAuthentication(AUTH_TYPE_OAUTH) as OAuth
+    val token = when (auth) {
+      is AccessTokenScmAuth -> auth.accessToken
+      is PersonalAccessTokenScmAuth -> auth.personalAccessToken
+      is TokenUserPassScmAuth -> auth.token
+      is TokenSshPrivateKeyScmAuth -> auth.token
+            else -> throw UnsupportedOperationException("gitAuth($auth) is not support")
     }
-    oAuth.setAccessToken(token);
+    oAuth.accessToken = token
   }
 }
+
 ````
 
 ### 2.3 增加实体类转化工具类
@@ -124,87 +89,111 @@ public class GiteeTokenAuthProviderAdapter {
 
 ### 2.4 业务服务实现
 在 [devops-scm-provider-gitee-simple] 模块下新建功能服务类实现 [devops-scm-api] 下的服务接口, 此处以 [仓库分支] 为例，实现RefService接口
-````java
-package com.tencent.devops.scm.provider.git.gitee;
+````kotlin
+package com.tencent.devops.scm.provider.gitee.simple
 
-import com.tencent.devops.scm.api.RefService;
-import com.tencent.devops.scm.api.pojo.BranchListOptions;
-import com.tencent.devops.scm.api.pojo.Change;
-import com.tencent.devops.scm.api.pojo.Commit;
-import com.tencent.devops.scm.api.pojo.CommitListOptions;
-import com.tencent.devops.scm.api.pojo.ListOptions;
-import com.tencent.devops.scm.api.pojo.Reference;
-import com.tencent.devops.scm.api.pojo.ReferenceInput;
-import com.tencent.devops.scm.api.pojo.TagListOptions;
-import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository;
-import com.tencent.devops.scm.api.pojo.repository.git.GitScmProviderRepository;
-import com.tencent.devops.scm.provider.git.gitee.auth.GiteeTokenAuthProviderAdapter;
-import com.tencent.devops.scm.sdk.common.connector.okhttp3.OkHttpScmConnector;
-import com.tencent.devops.scm.sdk.gitee.GiteeApi;
-import com.tencent.devops.scm.sdk.gitee.GiteeBranchesApi;
-import com.tencent.devops.scm.sdk.gitee.auth.GiteeTokenAuthProvider;
-import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBranch;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import okhttp3.OkHttpClient;
-import okhttp3.OkHttpClient.Builder;
+import com.gitee.sdk.gitee5j.ApiException
+import com.gitee.sdk.gitee5j.api.RepositoriesApi
+import com.gitee.sdk.gitee5j.model.Branch
+import com.gitee.sdk.gitee5j.model.CompleteBranch
+import com.tencent.devops.scm.api.RefService
+import com.tencent.devops.scm.api.pojo.BranchListOptions
+import com.tencent.devops.scm.api.pojo.Change
+import com.tencent.devops.scm.api.pojo.Commit
+import com.tencent.devops.scm.api.pojo.CommitListOptions
+import com.tencent.devops.scm.api.pojo.ListOptions
+import com.tencent.devops.scm.api.pojo.Reference
+import com.tencent.devops.scm.api.pojo.ReferenceInput
+import com.tencent.devops.scm.api.pojo.TagListOptions
+import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository
+import java.util.stream.Collectors
 
-public class GiteeRefService implements RefService {
+class GiteeRefService(private val giteeApiFactory: GiteeApiClientFactory) : RefService {
 
-  @Override
-  public Reference findBranch(ScmProviderRepository repository, String name) {
-    // 创建客户端
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    GitScmProviderRepository gitScmProviderRepository = (GitScmProviderRepository) repository;
-    // 绑定授权信信息
-    new GiteeTokenAuthProviderAdapter(defaultClient).withAuth(gitScmProviderRepository.getAuth());
-    RepositoriesApi repositoriesApi = new RepositoriesApi(defaultClient);
-    // 仓库全名称(owner/repo)
-    Pair<String, String> repoFullName = GiteeRepoInfoUtils.convertRepoName(
-            gitScmProviderRepository.getProjectIdOrPath()
-    );
-    try {
-      CompleteBranch branches = repositoriesApi.getReposOwnerRepoBranchesBranchWithHttpInfo(
-              repoFullName.getLeft(),
-              repoFullName.getRight(),
-              name
-      ).getData();
-      // 结果转化
-      return GiteeObjectConverter.convertBranches(branches);
-    } catch (ApiException e) {
-      throw new RuntimeException(e);
+  override fun createBranch(repository: ScmProviderRepository, input: ReferenceInput) {
+    throw UnsupportedOperationException("gitee template not support create branch")
+  }
+
+  override fun findBranch(repository: ScmProviderRepository, name: String): Reference {
+    return GiteeApiTemplate.execute(
+            repository,
+            giteeApiFactory
+    ) { repoName, client ->
+            val repositoriesApi = RepositoriesApi(client)
+      val completeBranch: CompleteBranch
+      try {
+        completeBranch = repositoriesApi.getReposOwnerRepoBranchesBranchWithHttpInfo(
+                repoName.first,
+                repoName.second,
+                name
+        ).data
+      } catch (e: ApiException) {
+        throw RuntimeException(e)
+      }
+      GiteeObjectConverter.convertBranches(completeBranch)
     }
   }
 
-  @Override
-  public List<Reference> listBranches(ScmProviderRepository repository, BranchListOptions opts) {
-    // 创建客户端
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    GitScmProviderRepository gitScmProviderRepository = (GitScmProviderRepository) repository;
-    // 绑定授权信信息
-    new GiteeTokenAuthProviderAdapter(defaultClient).withAuth(gitScmProviderRepository.getAuth());
-    RepositoriesApi repositoriesApi = new RepositoriesApi(defaultClient);
-    // 仓库全名称(owner/repo)
-    Pair<String, String> repoFullName = GiteeRepoInfoUtils.convertRepoName(
-            gitScmProviderRepository.getProjectIdOrPath()
-    );
-    try {
-      List<Branch> branches = repositoriesApi.getReposOwnerRepoBranchesWithHttpInfo(
-              repoFullName.getLeft(),
-              repoFullName.getRight(),
-              null,
-              null,
-              opts.getPage(),
-              opts.getPageSize()
-      ).getData();
+  override fun listBranches(repository: ScmProviderRepository, opts: BranchListOptions): List<Reference> {
+    return GiteeApiTemplate.execute(
+            repository,
+            giteeApiFactory
+    ) { repoName, client ->
+            val repositoriesApi = RepositoriesApi(client)
+      val branches: List<Branch>
+      try {
+        branches = repositoriesApi.getReposOwnerRepoBranchesWithHttpInfo(
+                repoName.first,
+                repoName.second,
+                null,
+                null,
+                opts.page,
+                opts.pageSize
+        ).data
+      } catch (e: ApiException) {
+        throw RuntimeException(e)
+      }
       // 结果转化
-      return branches.stream().map(GiteeObjectConverter::convertBranches).collect(Collectors.toList());
-    } catch (ApiException e) {
-      throw new RuntimeException(e);
+      branches.stream()
+              .map { branch: Branch -> GiteeObjectConverter.convertBranches(branch) }
+                .collect(Collectors.toList())
     }
+  }
+
+  override fun createTag(repository: ScmProviderRepository, input: ReferenceInput) {
+    throw UnsupportedOperationException("gitee template not support create tag")
+  }
+
+  override fun findTag(repository: ScmProviderRepository, name: String): Reference {
+    throw UnsupportedOperationException("gitee template not support find tag")
+  }
+
+  override fun listTags(repository: ScmProviderRepository, opts: TagListOptions): List<Reference> {
+    throw UnsupportedOperationException("gitee template not support list tag")
+  }
+
+  override fun findCommit(repository: ScmProviderRepository, ref: String): Commit {
+    throw UnsupportedOperationException("gitee template not support find commit")
+  }
+
+  override fun listCommits(repository: ScmProviderRepository, opts: CommitListOptions): List<Commit> {
+    throw UnsupportedOperationException("gitee template not support list commit")
+  }
+
+  override fun listChanges(repository: ScmProviderRepository, ref: String, opts: ListOptions): List<Change> {
+    throw UnsupportedOperationException("gitee template not support list change")
+  }
+
+  override fun compareChanges(
+          repository: ScmProviderRepository,
+          source: String,
+          target: String,
+          opts: ListOptions
+    ): List<Change> {
+    throw UnsupportedOperationException("gitee template not support compare changes")
   }
 }
+
 ````
 
 ### 2.5 优化代码，适配不同服务域名
@@ -215,11 +204,11 @@ public class GiteeRefService implements RefService {
 
 调整后的结果：
 
-[GiteeApiClientFactory](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-gitee-simple/src/main/java/com/tencent/devops/scm/provider/gitee/simple/GiteeApiClientFactory.java)
+[GiteeApiClientFactory](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-gitee-simple/src/main/kotlin/com/tencent/devops/scm/provider/gitee/simple/GiteeApiClientFactory.kt)
 
-[GiteeApiTemplate](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-gitee-simple/src/main/java/com/tencent/devops/scm/provider/gitee/simple/GiteeApiTemplate.java)
+[GiteeApiTemplate](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-gitee-simple/src/main/kotlin/com/tencent/devops/scm/provider/gitee/simple/GiteeApiTemplate.kt)
 
-[优化后的 GiteeRefService](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-gitee-simple/src/main/java/com/tencent/devops/scm/provider/gitee/simple/GiteeRefService.java)
+[优化后的 GiteeRefService](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-gitee-simple/src/main/kotlin/com/tencent/devops/scm/provider/gitee/simple/GiteeRefService.kt)
 
 ### 2.6 Webhook支持
 ### 2.7 Webhook支持
@@ -258,12 +247,12 @@ webhook实体类下级实体类命名规则：GiteeEvent{要素名}
 
 #### 2.7.3 解析webhook
 在 [devops-scm-provider-gitee] 模块下增加webhook解析器和增强器，分别实现两个接口
-- [WebhookParser](../devops-scm-api/src/main/java/com/tencent/devops/scm/api/WebhookParser.java) : webhook解析器，主要用于校验webhook有效性，同时根据不同的webhook 事件组装对应的[Webhook](../devops-scm-api/src/main/java/com/tencent/devops/scm/api/pojo/webhook/Webhook.java)实体类
-- [WebhookEnricher](../devops-scm-api/src/main/java/com/tencent/devops/scm/api/WebhookEnricher.java)：webhook增强器，由于webhook元数据中的信息可能不足以补全[Webhook](../devops-scm-api/src/main/java/com/tencent/devops/scm/api/pojo/webhook/Webhook.java)实体类内的字段，需要额外调用服务端API才能补充，补充操作可在enrich方法内实现
+- [WebhookParser](../devops-scm-api/src/main/kotlin/com/tencent/devops/scm/api/WebhookParser.kt) : webhook解析器，主要用于校验webhook有效性，同时根据不同的webhook 事件组装对应的[Webhook](../devops-scm-api/src/main/java/com/tencent/devops/scm/api/pojo/webhook/Webhook.java)实体类
+- [WebhookEnricher](../devops-scm-api/src/main/kotlin/com/tencent/devops/scm/api/WebhookEnricher.kt)：webhook增强器，由于webhook元数据中的信息可能不足以补全[Webhook](../devops-scm-api/src/main/java/com/tencent/devops/scm/api/pojo/webhook/Webhook.java)实体类内的字段，需要额外调用服务端API才能补充，补充操作可在enrich方法内实现
 
 参考：
-- [TGitWebhookEnricher](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-tgit/src/main/java/com/tencent/devops/scm/provider/git/tgit/TGitWebhookEnricher.java)
-- [TGitWebhookParser](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-tgit/src/main/java/com/tencent/devops/scm/provider/git/tgit/TGitWebhookParser.java)
+- [TGitWebhookEnricher](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-tgit/src/main/kotlin/com/tencent/devops/scm/provider/git/tgit/TGitWebhookEnricher.kt)
+- [TGitWebhookParser](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-tgit/src/main/kotlin/com/tencent/devops/scm/provider/git/tgit/TGitWebhookParser.kt)
 
 #### 2.7.4 服务挂载
 以上功能完成后，为了便于后续集成 spring-boot 以及同时也对service类进行统一管控，可以对相关service类以及webhook解析类
@@ -271,9 +260,9 @@ webhook实体类下级实体类命名规则：GiteeEvent{要素名}
 
 参考：
 
-[TGitScmProvider](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-tgit/src/main/java/com/tencent/devops/scm/provider/git/tgit/TGitScmProvider.java)
+[TGitScmProvider](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-tgit/src/main/kotlin/com/tencent/devops/scm/provider/git/tgit/TGitScmProvider.kt)
 
-[GiteeScmProvider](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-gitee-simple/src/main/java/com/tencent/devops/scm/provider/gitee/simple/GiteeScmProvider.java)
+[GiteeScmProvider](../devops-scm-provider/devops-scm-provider-git/devops-scm-provider-gitee-simple/src/main/kotlin/com/tencent/devops/scm/provider/gitee/simple/GiteeScmProvider.kt)
 ## 3. spring-boot自动装配
 本项目支持集成到第三方spring-boot项目中，核心代码位于[devops-scm-spring-boot-starter](../devops-scm-spring-boot-starter)模块，主要包含两块内容
 - manager

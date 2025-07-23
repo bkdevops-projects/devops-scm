@@ -8,6 +8,5 @@ enum class ScmProviderCodes(val value: String) {
     TSVN("tsvn"),
     GITHUB("github"),
     GITLAB("gitlab"),
-    GITEE("gitee"),
-    ;
+    GITEE("gitee");
 }

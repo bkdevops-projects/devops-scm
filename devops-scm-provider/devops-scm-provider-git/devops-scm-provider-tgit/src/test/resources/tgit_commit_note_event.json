@@ -1,0 +1,46 @@
+{
+  "object_kind": "note",
+  "user": {
+    "name": "zhangsan",
+    "username": "zhangsan",
+    "avatar_url": null
+  },
+  "project_id": 1079856,
+  "repository": {
+    "name": "private_repo",
+    "url": "git@git.code.tencent.com:zhangsan/private_repo.git",
+    "description": "",
+    "homepage": "http://git.code.tencent.com/zhangsan/private_repo"
+  },
+  "object_attributes": {
+    "id": 107315029,
+    "note": "zhangsan",
+    "noteable_type": "Commit",
+    "author_id": 286464,
+    "project_id": 1079856,
+    "created_at": "2025-07-09T04:22:49+0000",
+    "updated_at": "2025-07-09T04:22:49+0000",
+    "attachment": null,
+    "file_path": null,
+    "start_object_id": null,
+    "target_object_id": null,
+    "review_state": null,
+    "line_code": null,
+    "commit_id": "3afbcf6da7da8279c7e686139ffca8274ac10687",
+    "noteable_id": "null",
+    "system": false,
+    "st_diff": {},
+    "url": "http://git.code.tencent.com/zhangsan/private_repo/commit/3afbcf6da7da8279c7e686139ffca8274ac10687#note_107315029",
+    "action": "create"
+  },
+  "commit": {
+    "id": "3afbcf6da7da8279c7e686139ffca8274ac10687",
+    "message": "add submodule\n",
+    "timestamp": "2024-11-12T07:53:32+0000",
+    "url": "http://git.code.tencent.com/zhangsan/private_repo/commit/3afbcf6da7da8279c7e686139ffca8274ac10687",
+    "author": {
+      "name": "zhangsan",
+      "email": "zhangsan@163.com"
+    }
+  }
+}

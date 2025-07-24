@@ -1,0 +1,508 @@
+[
+  {
+    "name": "dependabot/go_modules/src/agent/agent/github.com/containerd/containerd-1.6.38",
+    "commit": {
+      "sha": "0b015a312998fb5f370438f367b609846a658c06",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/0b015a312998fb5f370438f367b609846a658c06",
+      "commit": {
+        "author": {
+          "name": "dependabot[bot]",
+          "date": "2025-03-18T08:18:58+08:00",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2025-03-18T08:18:58+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "build(deps): bump github.com/containerd/containerd in /src/agent/agent"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/dependabot/go_modules/src/agent/agent/github.com/containerd/containerd-1.6.38/protection"
+  },
+  {
+    "name": "dependabot/go_modules/src/backend/dispatch-k8s-manager/golang.org/x/net-0.36.0",
+    "commit": {
+      "sha": "8e7e855311b4ab12a28b586d564ea3aee90d1531",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/8e7e855311b4ab12a28b586d564ea3aee90d1531",
+      "commit": {
+        "author": {
+          "name": "dependabot[bot]",
+          "date": "2025-03-13T08:30:10+08:00",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2025-03-13T08:30:10+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "build(deps): bump golang.org/x/net in /src/backend/dispatch-k8s-manager"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/dependabot/go_modules/src/backend/dispatch-k8s-manager/golang.org/x/net-0.36.0/protection"
+  },
+  {
+    "name": "dependabot/npm_and_yarn/src/frontend/babel/runtime-7.26.10",
+    "commit": {
+      "sha": "9da1fe2d8ff9205ba8103bfa089ff93c6474b304",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/9da1fe2d8ff9205ba8103bfa089ff93c6474b304",
+      "commit": {
+        "author": {
+          "name": "dependabot[bot]",
+          "date": "2025-03-18T16:25:36+08:00",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2025-03-18T16:25:36+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "build(deps-dev): bump @babel/runtime in /src/frontend"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/dependabot/npm_and_yarn/src/frontend/babel/runtime-7.26.10/protection"
+  },
+  {
+    "name": "dependabot/npm_and_yarn/src/frontend/devops-manage/axios-1.8.2",
+    "commit": {
+      "sha": "279508e976efd438c39042c6030a2c62cde81818",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/279508e976efd438c39042c6030a2c62cde81818",
+      "commit": {
+        "author": {
+          "name": "dependabot[bot]",
+          "date": "2025-03-18T16:24:44+08:00",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2025-03-18T16:24:44+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "build(deps): bump axios in /src/frontend/devops-manage"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/dependabot/npm_and_yarn/src/frontend/devops-manage/axios-1.8.2/protection"
+  },
+  {
+    "name": "dependabot/npm_and_yarn/src/frontend/devops-nav/axios-1.8.2",
+    "commit": {
+      "sha": "6f4c00d35c6fda1975f2d0e77537ed1ba16dccb0",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/6f4c00d35c6fda1975f2d0e77537ed1ba16dccb0",
+      "commit": {
+        "author": {
+          "name": "dependabot[bot]",
+          "date": "2025-03-18T16:25:47+08:00",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2025-03-18T16:25:47+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "build(deps): bump axios from 0.28.0 to 1.8.2 in /src/frontend/devops-nav"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/dependabot/npm_and_yarn/src/frontend/devops-nav/axios-1.8.2/protection"
+  },
+  {
+    "name": "dependabot/npm_and_yarn/src/frontend/vue-i18n-9.14.3",
+    "commit": {
+      "sha": "78a2c7d09d1c65054eaf6f554f12f413d90c7361",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/78a2c7d09d1c65054eaf6f554f12f413d90c7361",
+      "commit": {
+        "author": {
+          "name": "dependabot[bot]",
+          "date": "2025-03-08T00:09:44+08:00",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2025-03-08T00:09:44+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "build(deps): bump vue-i18n from 9.1.10 to 9.14.3 in /src/frontend"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/dependabot/npm_and_yarn/src/frontend/vue-i18n-9.14.3/protection"
+  },
+  {
+    "name": "issue-11573",
+    "commit": {
+      "sha": "e0c538ab31eacf39e3f5891512096b3288b2de52",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/e0c538ab31eacf39e3f5891512096b3288b2de52",
+      "commit": {
+        "author": {
+          "name": "ruotiantang",
+          "date": "2025-03-24T15:41:26+08:00",
+          "email": "ruotiantang@tencent.com"
+        },
+        "committer": {
+          "name": "ruotiantang",
+          "date": "2025-03-24T15:41:26+08:00",
+          "email": "ruotiantang@tencent.com"
+        },
+        "message": "Agent错误的异常抛出 #11573"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/issue-11573/protection"
+  },
+  {
+    "name": "issue-11580",
+    "commit": {
+      "sha": "71b41457dbd6bcbc3b5a762b83900ebc69851ad9",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/71b41457dbd6bcbc3b5a762b83900ebc69851ad9",
+      "commit": {
+        "author": {
+          "name": "ruotiantang",
+          "date": "2025-03-25T20:28:14+08:00",
+          "email": "ruotiantang@tencent.com"
+        },
+        "committer": {
+          "name": "ruotiantang",
+          "date": "2025-03-25T20:28:14+08:00",
+          "email": "ruotiantang@tencent.com"
+        },
+        "message": "Agent请求超时时间优化 #11580"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/issue-11580/protection"
+  },
+  {
+    "name": "master",
+    "commit": {
+      "sha": "fe5e36cb8443eb0dcb45d84438b8ffb5ed977c26",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/fe5e36cb8443eb0dcb45d84438b8ffb5ed977c26",
+      "commit": {
+        "author": {
+          "name": "mingshewhe",
+          "date": "2025-03-28T15:34:00+08:00",
+          "email": "mingshewhe@tencent.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2025-03-28T15:34:00+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "Merge pull request #11593 from TencentBlueKing/revert-11587-issue-11584"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/master/protection"
+  },
+  {
+    "name": "release-1.11",
+    "commit": {
+      "sha": "a8e1898504cb9477e50523d3f9917a0be0cc9826",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/a8e1898504cb9477e50523d3f9917a0be0cc9826",
+      "commit": {
+        "author": {
+          "name": "irwinsun",
+          "date": "2023-05-16T18:30:56+08:00",
+          "email": "irwinsun@tencent.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2023-05-16T18:30:56+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "Merge pull request #8817 from sawyersong2/feat_8811_1.11"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/release-1.11/protection"
+  },
+  {
+    "name": "release-1.14",
+    "commit": {
+      "sha": "aea6ca7b886255be83d9499636e799955b23fb30",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/aea6ca7b886255be83d9499636e799955b23fb30",
+      "commit": {
+        "author": {
+          "name": "irwinsun",
+          "date": "2024-01-02T12:10:25+08:00",
+          "email": "irwinsun@tencent.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2024-01-02T12:10:25+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "Merge pull request #9887 from TencentBlueKing/master"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/release-1.14/protection"
+  },
+  {
+    "name": "release-1.2",
+    "commit": {
+      "sha": "7dcca23c12383c18d4b1710c42fe97adb44c7c8b",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/7dcca23c12383c18d4b1710c42fe97adb44c7c8b",
+      "commit": {
+        "author": {
+          "name": "irwinsun",
+          "date": "2020-12-17T21:49:34+08:00",
+          "email": "irwinsun@tencent.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2020-12-17T21:49:34+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "Merge pull request #3310 from mingshewhe/bug_3288_1.2"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/release-1.2/protection"
+  },
+  {
+    "name": "release-1.3",
+    "commit": {
+      "sha": "810c84a8396b9909871c3dd571901af2322ebcbc",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/810c84a8396b9909871c3dd571901af2322ebcbc",
+      "commit": {
+        "author": {
+          "name": "irwinsun",
+          "date": "2021-08-10T11:49:05+08:00",
+          "email": "irwinsun@tencent.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2021-08-10T11:49:05+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "Merge pull request #4903 from irwinsun/issue_3006_rel1.3"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/release-1.3/protection"
+  },
+  {
+    "name": "release-1.5",
+    "commit": {
+      "sha": "dfb54d8f48ff3e25ae45b63e048cbc3efebdbf66",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/dfb54d8f48ff3e25ae45b63e048cbc3efebdbf66",
+      "commit": {
+        "author": {
+          "name": "irwinsun",
+          "date": "2022-03-22T11:26:53+08:00",
+          "email": "irwinsun@tencent.com"
+        },
+        "committer": {
+          "name": "irwinsun",
+          "date": "2022-03-22T12:33:15+08:00",
+          "email": "irwinsun@tencent.com"
+        },
+        "message": "fix: openapi Element 的动态子类加载不全 #6387"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/release-1.5/protection"
+  },
+  {
+    "name": "release-1.7",
+    "commit": {
+      "sha": "fd0a949e8fa9d65d77e869ea99c88c0eceb882f1",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/fd0a949e8fa9d65d77e869ea99c88c0eceb882f1",
+      "commit": {
+        "author": {
+          "name": "irwinsun",
+          "date": "2022-11-24T11:33:01+08:00",
+          "email": "irwinsun@tencent.com"
+        },
+        "committer": {
+          "name": "irwinsun",
+          "date": "2022-11-24T11:33:01+08:00",
+          "email": "irwinsun@tencent.com"
+        },
+        "message": "fix: Agent 的偶现非错误的提示日志以及日志记录时间错误(v1.7~v1.8) #8035"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/release-1.7/protection"
+  },
+  {
+    "name": "release-1.8",
+    "commit": {
+      "sha": "da018c0b315e4da5baa476ce8f876985f1abef4e",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/da018c0b315e4da5baa476ce8f876985f1abef4e",
+      "commit": {
+        "author": {
+          "name": "mingshewhe",
+          "date": "2024-07-02T14:46:33+08:00",
+          "email": "mingshewhe@tencent.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2024-07-02T14:46:33+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "Merge pull request #10595 from mingshewhe/bug_v1.8.5"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/release-1.8/protection"
+  },
+  {
+    "name": "release-1.9",
+    "commit": {
+      "sha": "16842065984cf824c07c805fb627f1c5c0cafbfb",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/16842065984cf824c07c805fb627f1c5c0cafbfb",
+      "commit": {
+        "author": {
+          "name": "bkci-bot",
+          "date": "2023-02-24T11:19:44+08:00",
+          "email": "64278246+bkci-bot@users.noreply.github.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2023-02-24T11:19:44+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "Merge pull request #8210 from stubenhuang/issue-single-ipv6-8110"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/release-1.9/protection"
+  },
+  {
+    "name": "release-2.0",
+    "commit": {
+      "sha": "8230e0b0ea68a22001f2c7726fc3808712bf5652",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/8230e0b0ea68a22001f2c7726fc3808712bf5652",
+      "commit": {
+        "author": {
+          "name": "mingshewhe",
+          "date": "2024-10-29T18:04:40+08:00",
+          "email": "mingshewhe@tencent.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2024-10-29T18:04:40+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "Merge pull request #11156 from TencentBlueKing/changelog/v2.0.5"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/release-2.0/protection"
+  },
+  {
+    "name": "release-2.1",
+    "commit": {
+      "sha": "b7ba55e06b83b95aa342029010d13b7fde1e3854",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/b7ba55e06b83b95aa342029010d13b7fde1e3854",
+      "commit": {
+        "author": {
+          "name": "irwinsun",
+          "date": "2024-10-18T09:40:00+08:00",
+          "email": "irwinsun@tencent.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2024-10-18T09:40:00+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "Merge pull request #11091 from TencentBlueKing/changelog/v2.1.4"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/release-2.1/protection"
+  },
+  {
+    "name": "release-3.0",
+    "commit": {
+      "sha": "94d96336935096211ea77944ca9a85f63dfac9bc",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/94d96336935096211ea77944ca9a85f63dfac9bc",
+      "commit": {
+        "author": {
+          "name": "mingshewhe",
+          "date": "2025-02-12T17:48:49+08:00",
+          "email": "mingshewhe@tencent.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2025-02-12T17:48:49+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "Merge pull request #11452 from TencentBlueKing/changelog/v3.0.13"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/release-3.0/protection"
+  },
+  {
+    "name": "release-3.1",
+    "commit": {
+      "sha": "f24701e5bf06d0482e5ae02047fe5502c743c78b",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/f24701e5bf06d0482e5ae02047fe5502c743c78b",
+      "commit": {
+        "author": {
+          "name": "mingshewhe",
+          "date": "2025-01-09T16:30:36+08:00",
+          "email": "mingshewhe@tencent.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2025-01-09T16:30:36+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "Merge pull request #11395 from mingshewhe/changelog/v3.1.0"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/release-3.1/protection"
+  },
+  {
+    "name": "release-3.2",
+    "commit": {
+      "sha": "73caf3164ffadedae4d0f37d545083cea78b72f2",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/73caf3164ffadedae4d0f37d545083cea78b72f2",
+      "commit": {
+        "author": {
+          "name": "bkci-bot",
+          "date": "2025-03-27T16:43:07+08:00",
+          "email": "devops@tencent.com"
+        },
+        "committer": {
+          "name": "bkci-bot",
+          "date": "2025-03-27T16:43:07+08:00",
+          "email": "devops@tencent.com"
+        },
+        "message": "CHANGELOG: Update directory for v3.2.0 release"
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/release-3.2/protection"
+  },
+  {
+    "name": "revert-11587-issue-11584",
+    "commit": {
+      "sha": "1770f5eb96af6254733179e83437f49e94cee154",
+      "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/commits/1770f5eb96af6254733179e83437f49e94cee154",
+      "commit": {
+        "author": {
+          "name": "stuben",
+          "date": "2025-03-28T14:43:46+08:00",
+          "email": "380996643@qq.com"
+        },
+        "committer": {
+          "name": "GitHub",
+          "date": "2025-03-28T14:43:46+08:00",
+          "email": "noreply@github.com"
+        },
+        "message": "Revert \"feat: 让mq在程序启动的时候正常初始化 #11584\""
+      }
+    },
+    "protected": false,
+    "protection_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/branches/revert-11587-issue-11584/protection"
+  }
+]

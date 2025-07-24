@@ -1,0 +1,14 @@
+{
+  "id": 12345,
+  "url": "https://gitee.com",
+  "password": "zhangsan",
+  "result": "{\"status\":0,\"data\":true}",
+  "project_id": 12345,
+  "result_code": 200,
+  "created_at": "2025-04-09T12:24:50+08:00",
+  "push_events": true,
+  "tag_push_events": false,
+  "issues_events": false,
+  "note_events": false,
+  "merge_requests_events": false
+}

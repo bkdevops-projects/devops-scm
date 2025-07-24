@@ -102,3 +102,10 @@ subprojects {
         configFile = file("${rootDir}/config/checkstyle/tencent_checkstyle.xml")
     }
 }
+
+// gitee 演示项目仅供参考，不参与打包等任务
+project("devops-scm-provider:devops-scm-provider-git:devops-scm-provider-gitee-simple") {
+    tasks.all {
+        enabled = false
+    }
+}

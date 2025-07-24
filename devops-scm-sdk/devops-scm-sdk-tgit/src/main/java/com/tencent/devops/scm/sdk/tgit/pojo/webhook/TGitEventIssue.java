@@ -19,8 +19,8 @@ public class TGitEventIssue {
     private Long authorId;
     private Long projectId;
 
-    private Date createAt;
-    private Date updateAt;
+    private Date createdAt;
+    private Date updatedAt;
     private Integer position;
     @JsonProperty("milestone_id")
     String milestoneId;

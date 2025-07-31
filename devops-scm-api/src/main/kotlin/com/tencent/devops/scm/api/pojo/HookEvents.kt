@@ -1,5 +1,6 @@
 package com.tencent.devops.scm.api.pojo
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.tencent.devops.scm.api.enums.ScmEventType
 
 data class HookEvents(
@@ -31,6 +32,7 @@ data class HookEvents(
     /**
      * 获取启用的事件类型
      */
+    @JsonIgnore
     fun getEnabledEvents(): List<String> = mutableListOf<String>().apply {
         if (issue == true) add(ScmEventType.ISSUE.value)
         if (issueComment == true) add(ScmEventType.ISSUE_COMMENT.value)

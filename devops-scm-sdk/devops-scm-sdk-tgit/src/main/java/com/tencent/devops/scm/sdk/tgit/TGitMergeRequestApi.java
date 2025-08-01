@@ -170,7 +170,7 @@ public class TGitMergeRequestApi extends AbstractTGitApi {
                                 .add("merge_request_id", mergeRequestId.toString())
                                 .build()
                 )
-                .with(repoId)
+                .withRepoId(repoId)
                 .fetch(TGitMergeRequest.class);
     }
 

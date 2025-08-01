@@ -292,7 +292,7 @@ public class TGitProjectApi extends AbstractTGitApi {
                 .withRepoId(repoId)
                 .with(PAGE_PARAM, page)
                 .with(PER_PAGE_PARAM, perPage)
-                .with(query, query)
+                .with("query", query)
                 .fetch(TGitMember[].class);
         return Arrays.asList(data);
     }
@@ -310,7 +310,7 @@ public class TGitProjectApi extends AbstractTGitApi {
                 .withRepoId(repoId)
                 .with(PAGE_PARAM, page)
                 .with(PER_PAGE_PARAM, perPage)
-                .with(query, query)
+                .with("query", query)
                 .fetch(TGitMember[].class);
         return Arrays.asList(data);
     }

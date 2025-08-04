@@ -3,7 +3,6 @@ package com.tencent.devops.scm.provider.git.gitee
 import com.tencent.devops.scm.api.pojo.auth.IScmAuth
 import com.tencent.devops.scm.api.pojo.repository.git.GitScmProviderRepository
 import com.tencent.devops.scm.provider.common.GitScmApiTemplate
-import com.tencent.devops.scm.provider.common.ScmApiTemplate
 import com.tencent.devops.scm.provider.git.gitee.auth.GiteeTokenAuthProviderAdapter
 import com.tencent.devops.scm.sdk.gitee.GiteeApi
 import com.tencent.devops.scm.sdk.gitee.GiteeApiException

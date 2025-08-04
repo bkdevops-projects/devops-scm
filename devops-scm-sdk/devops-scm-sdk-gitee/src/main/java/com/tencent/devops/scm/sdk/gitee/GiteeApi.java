@@ -23,6 +23,7 @@ public class GiteeApi {
     private volatile GiteeCommitApi commitApi;
     private volatile GiteeTagApi tagApi;
     private volatile GiteeUserApi userApi;
+    private volatile GiteeCheckRunApi checkRunApi;
 
 
     public GiteeApi(GiteeApiClient client) {
@@ -112,5 +113,16 @@ public class GiteeApi {
             }
         }
         return userApi;
+    }
+
+    public GiteeCheckRunApi getCheckRunApi() {
+        if (checkRunApi == null) {
+            synchronized (this) {
+                if (checkRunApi == null) {
+                    checkRunApi = new GiteeCheckRunApi(this);
+                }
+            }
+        }
+        return checkRunApi;
     }
 }

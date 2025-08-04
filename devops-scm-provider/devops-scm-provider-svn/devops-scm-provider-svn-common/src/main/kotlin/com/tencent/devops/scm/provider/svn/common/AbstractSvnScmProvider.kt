@@ -1,5 +1,6 @@
 package com.tencent.devops.scm.provider.svn.common
 
+import com.tencent.devops.scm.api.CheckRunService
 import com.tencent.devops.scm.api.FileService
 import com.tencent.devops.scm.api.IssueService
 import com.tencent.devops.scm.api.PullRequestService
@@ -42,5 +43,9 @@ abstract class AbstractSvnScmProvider : ScmProvider {
 
     override fun command(): ScmCommand {
         return SvnScmCommand()
+    }
+
+    override fun checkRun(): CheckRunService {
+        throw UnsupportedOperationException("svn not support check run service")
     }
 }

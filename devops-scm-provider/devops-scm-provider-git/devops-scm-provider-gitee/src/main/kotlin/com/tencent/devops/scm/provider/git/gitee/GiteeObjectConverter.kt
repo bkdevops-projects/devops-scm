@@ -1,8 +1,12 @@
 package com.tencent.devops.scm.provider.git.gitee
 
 import com.tencent.devops.scm.api.constant.DateFormatConstants
+import com.tencent.devops.scm.api.enums.CheckRunConclusion
+import com.tencent.devops.scm.api.enums.CheckRunStatus
 import com.tencent.devops.scm.api.enums.EventAction
 import com.tencent.devops.scm.api.pojo.Change
+import com.tencent.devops.scm.api.pojo.CheckRun
+import com.tencent.devops.scm.api.pojo.CheckRunInput
 import com.tencent.devops.scm.api.pojo.Commit
 import com.tencent.devops.scm.api.pojo.Hook
 import com.tencent.devops.scm.api.pojo.HookEvents
@@ -13,8 +17,12 @@ import com.tencent.devops.scm.api.pojo.User
 import com.tencent.devops.scm.api.pojo.repository.git.GitScmServerRepository
 import com.tencent.devops.scm.provider.git.gitee.enums.GiteeActionDesc
 import com.tencent.devops.scm.sdk.common.util.DateUtils
+import com.tencent.devops.scm.sdk.gitee.enums.GiteeCheckRunConclusion
+import com.tencent.devops.scm.sdk.gitee.enums.GiteeCheckRunStatus
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBaseUser
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeBranch
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeCheckRun
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeCheckRunOutput
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeCommitCompare
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeCommitDetail
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteePullRequestDiff
@@ -271,5 +279,77 @@ object GiteeObjectConverter {
             issueComment = noteEvents,
             pullRequestComment = noteEvents
         )
+    }
+
+    /*========================================check-run====================================================*/
+    fun convertCheckRunInput(checkRun: CheckRunInput) = with(checkRun) {
+        GiteeCheckRun.builder()
+                .id(id)
+                .name(name)
+                .headSha(ref)
+                .detailsUrl(detailsUrl)
+                .startedAt(DateUtils.convertLocalDateTimeToDate(startedAt))
+                .status(GiteeCheckRunStatus.IN_PROGRESS)
+                .output(
+                    GiteeCheckRunOutput.builder()
+                            .text(output?.text)
+                            .summary(output?.summary)
+                            .title(output?.title)
+                            .build()
+                )
+                .status(convertCheckRunStatus(status))
+                .conclusion(convertCheckRunConclusion(conclusion))
+                .pullRequestId(pullRequestId)
+                .completedAt(DateUtils.convertLocalDateTimeToDate(completedAt))
+                .build()
+    }
+
+    fun convertCheckRun(checkRun: GiteeCheckRun) = with(checkRun) {
+        CheckRun(
+            id = id,
+            name = name,
+            status = convertCheckRunStatus(status),
+            conclusion = convertCheckRunConclusion(conclusion),
+            detail = output?.text,
+            summary = output?.summary,
+            detailsUrl = detailsUrl
+        )
+    }
+
+    private fun convertCheckRunStatus(status: CheckRunStatus) = when (status) {
+        CheckRunStatus.COMPLETED -> GiteeCheckRunStatus.COMPLETED
+        CheckRunStatus.IN_PROGRESS -> GiteeCheckRunStatus.IN_PROGRESS
+        else -> GiteeCheckRunStatus.QUEUED
+    }
+
+    private fun convertCheckRunConclusion(conclusion: CheckRunConclusion?) = conclusion?.let {
+        when (conclusion) {
+            CheckRunConclusion.SUCCESS -> GiteeCheckRunConclusion.SUCCESS
+            CheckRunConclusion.FAILURE -> GiteeCheckRunConclusion.FAILURE
+            CheckRunConclusion.CANCELLED -> GiteeCheckRunConclusion.CANCELLED
+            CheckRunConclusion.TIMED_OUT -> GiteeCheckRunConclusion.TIMED_OUT
+            CheckRunConclusion.SKIPPED -> GiteeCheckRunConclusion.SKIPPED
+            CheckRunConclusion.ACTION_REQUIRED -> GiteeCheckRunConclusion.ACTION_REQUIRED
+            else -> GiteeCheckRunConclusion.NEUTRAL
+        }
+    }
+
+    private fun convertCheckRunStatus(status: GiteeCheckRunStatus) = when (status) {
+        GiteeCheckRunStatus.COMPLETED -> CheckRunStatus.COMPLETED
+        GiteeCheckRunStatus.IN_PROGRESS -> CheckRunStatus.IN_PROGRESS
+        GiteeCheckRunStatus.QUEUED -> CheckRunStatus.QUEUED
+        else -> CheckRunStatus.UNKNOWN
+    }
+
+    private fun convertCheckRunConclusion(conclusion: GiteeCheckRunConclusion?) = conclusion?.let {
+        when (conclusion) {
+            GiteeCheckRunConclusion.SUCCESS -> CheckRunConclusion.SUCCESS
+            GiteeCheckRunConclusion.FAILURE -> CheckRunConclusion.FAILURE
+            GiteeCheckRunConclusion.CANCELLED -> CheckRunConclusion.CANCELLED
+            GiteeCheckRunConclusion.TIMED_OUT -> CheckRunConclusion.TIMED_OUT
+            GiteeCheckRunConclusion.SKIPPED -> CheckRunConclusion.SKIPPED
+            GiteeCheckRunConclusion.ACTION_REQUIRED -> CheckRunConclusion.ACTION_REQUIRED
+            else -> CheckRunConclusion.UNKNOWN
+        }
     }
 }

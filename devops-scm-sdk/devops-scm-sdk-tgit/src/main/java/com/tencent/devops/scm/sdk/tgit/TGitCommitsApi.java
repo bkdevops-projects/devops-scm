@@ -3,7 +3,7 @@ package com.tencent.devops.scm.sdk.tgit;
 import com.tencent.devops.scm.sdk.common.ScmHttpMethod;
 import com.tencent.devops.scm.sdk.common.util.MapBuilder;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitCommit;
-import com.tencent.devops.scm.sdk.tgit.pojo.TGitCommitStatus;
+import com.tencent.devops.scm.sdk.tgit.pojo.TGitCheckRun;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitDiff;
 import java.util.Arrays;
 import java.util.Date;
@@ -103,7 +103,7 @@ public class TGitCommitsApi extends AbstractTGitApi {
         return Arrays.asList(data);
     }
 
-    public List<TGitCommitStatus> getCommitStatuses(
+    public List<TGitCheckRun> getCommitStatuses(
             Object projectIdOrPath,
             String sha,
             Integer page,
@@ -117,7 +117,7 @@ public class TGitCommitsApi extends AbstractTGitApi {
             throw new IllegalArgumentException("sha cannot be null");
         }
         String repoId = getProjectIdOrPath(projectIdOrPath);
-        TGitCommitStatus[] data = tGitApi.createRequest()
+        TGitCheckRun[] data = tGitApi.createRequest()
                 .method(ScmHttpMethod.GET)
                 .withUrlPath(
                         COMMITS_STATUSES_URI_PATTERN,
@@ -129,40 +129,9 @@ public class TGitCommitsApi extends AbstractTGitApi {
                 .withRepoId(repoId)
                 .with(PAGE_PARAM, page)
                 .with(PER_PAGE_PARAM, perPage)
-                .fetch(TGitCommitStatus[].class);
+                .fetch(TGitCheckRun[].class);
         return Arrays.asList(data);
     }
 
-    public TGitCommitStatus addCommitStatus(
-            Object projectIdOrPath,
-            String sha,
-            TGitCommitStatus status
-    ) {
-        String repoId = getProjectIdOrPath(projectIdOrPath);
-        if (projectIdOrPath == null) {
-            throw new IllegalArgumentException("projectIdOrPath cannot be null");
-        }
 
-        if (sha == null || sha.trim().isEmpty()) {
-            throw new IllegalArgumentException("sha cannot be null");
-        }
-        return tGitApi.createRequest()
-                .method(ScmHttpMethod.POST)
-                .withUrlPath(
-                        COMMITS_STATUSES_URI_PATTERN,
-                        MapBuilder.<String, String>newBuilder()
-                                .add("id", repoId)
-                                .add("sha", urlEncode(sha))
-                                .build()
-                )
-                .withRepoId(repoId)
-                .with("state", status.getState())
-                .with("target_url", status.getTargetUrl())
-                .with("description", status.getDescription())
-                .with("context", status.getContext())
-                .with("detail", status.getDetail())
-                .with("block", status.getBlock())
-                .with("target_branches", status.getTargetBranches())
-                .fetch(TGitCommitStatus.class);
-    }
 }

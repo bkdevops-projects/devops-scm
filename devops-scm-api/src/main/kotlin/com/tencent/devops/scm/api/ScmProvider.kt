@@ -53,4 +53,6 @@ interface ScmProvider {
      * 获取命令行操作服务
      */
     fun command(): ScmCommand
+
+    fun checkRun(): CheckRunService
 }

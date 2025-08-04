@@ -1,5 +1,6 @@
 package com.tencent.devops.scm.provider.git.gitee
 
+import com.tencent.devops.scm.api.CheckRunService
 import com.tencent.devops.scm.api.FileService
 import com.tencent.devops.scm.api.IssueService
 import com.tencent.devops.scm.api.PullRequestService
@@ -35,6 +36,10 @@ class GiteeScmProvider : GitScmProvider {
 
     override fun repositories(): RepositoryService {
         return GiteeRepositoryService(apiFactory)
+    }
+
+    override fun checkRun(): CheckRunService {
+        return GiteeCheckRunService(apiFactory)
     }
 
     override fun refs(): RefService {

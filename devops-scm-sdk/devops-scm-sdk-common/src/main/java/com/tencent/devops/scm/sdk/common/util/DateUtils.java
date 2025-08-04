@@ -28,4 +28,11 @@ public class DateUtils {
             throw new BaseScmApiException(e.getMessage());
         }
     }
+
+    public static Date convertLocalDateTimeToDate(LocalDateTime localDateTime) {
+        if (localDateTime == null) {
+            return null;
+        }
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
 }

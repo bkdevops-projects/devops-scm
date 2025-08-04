@@ -22,6 +22,7 @@ public class TGitApi {
     private volatile TGitNotesApi notesApi;
     private volatile TGitReviewApi reviewApi;
     private volatile TGitUserApi userApi;
+    private volatile TGitCheckRunApi checkRunApi;
 
     public TGitApi(String apiUrl, ScmConnector connector, HttpAuthProvider authorizationProvider) {
         if (authorizationProvider instanceof TGitUserPassAuthProvider) {
@@ -159,5 +160,16 @@ public class TGitApi {
             }
         }
         return userApi;
+    }
+
+    public TGitCheckRunApi getCheckRunApi() {
+        if (checkRunApi == null) {
+            synchronized (this) {
+                if (checkRunApi == null) {
+                    checkRunApi = new TGitCheckRunApi(this);
+                }
+            }
+        }
+        return checkRunApi;
     }
 }

@@ -12,6 +12,8 @@ import com.tencent.devops.scm.api.pojo.auth.IScmAuth
 import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository
 import com.tencent.devops.scm.api.pojo.repository.ScmServerRepository
 import com.tencent.devops.scm.sdk.gitee.GiteeApiFactory
+import com.tencent.devops.scm.sdk.gitee.enums.ProjectAffiliation
+import com.tencent.devops.scm.sdk.gitee.enums.ProjectVisibility
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeProjectHook
 
 class GiteeRepositoryService(private val apiFactory: GiteeApiFactory) : RepositoryService {
@@ -29,7 +31,17 @@ class GiteeRepositoryService(private val apiFactory: GiteeApiFactory) : Reposito
     }
 
     override fun list(auth: IScmAuth, opts: RepoListOptions): List<ScmServerRepository> {
-        throw UnsupportedOperationException("gitee not support list repo")
+        return GiteeApiTemplate.execute(auth, apiFactory) { giteeApi ->
+            val projectApi = giteeApi.getProjectApi()
+            val projectApiHooks = projectApi.getProjects(
+                arrayOf(ProjectAffiliation.OWNER, ProjectAffiliation.COLLABORATOR),
+                ProjectVisibility.ALL,
+                opts.repoName,
+                opts.page,
+                opts.pageSize
+            )
+            projectApiHooks.map { GiteeObjectConverter.convertRepository(it) }
+        }
     }
 
     override fun listHooks(repository: ScmProviderRepository, opts: ListOptions): List<Hook> {

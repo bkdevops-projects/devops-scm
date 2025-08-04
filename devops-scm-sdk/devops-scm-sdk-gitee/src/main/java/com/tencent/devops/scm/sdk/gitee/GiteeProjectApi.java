@@ -2,15 +2,20 @@ package com.tencent.devops.scm.sdk.gitee;
 
 import com.tencent.devops.scm.sdk.common.ScmHttpMethod;
 import com.tencent.devops.scm.sdk.common.util.MapBuilder;
+import com.tencent.devops.scm.sdk.gitee.enums.ProjectAffiliation;
+import com.tencent.devops.scm.sdk.gitee.enums.ProjectVisibility;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeProjectHook;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeRepositoryDetail;
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeWebhookConfig;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 
 public class GiteeProjectApi extends AbstractGiteeApi {
 
-    private static final String REPOSITORY_URI_PATTERN = "repos/:id";
+    private static final String REPOSITORY_URI_PATTERN = "user/repos";
+    private static final String REPOSITORY_ID_URI_PATTERN = "repos/:id";
     private static final String REPOSITORY_HOOK_URI_PATTERN = "repos/:id/hooks";
     private static final String REPOSITORY_HOOK_ID_URI_PATTERN = "repos/:id/hooks/:hook_id";
 
@@ -28,7 +33,7 @@ public class GiteeProjectApi extends AbstractGiteeApi {
         GiteeRepositoryDetail repository = giteeApi.createRequest()
                 .method(ScmHttpMethod.GET)
                 .withUrlPath(
-                        REPOSITORY_URI_PATTERN,
+                        REPOSITORY_ID_URI_PATTERN,
                         MapBuilder.<String, String>newBuilder()
                                 .add("id", repoId)
                                 .build()
@@ -36,6 +41,33 @@ public class GiteeProjectApi extends AbstractGiteeApi {
                 .withRepoId(repoId)
                 .fetch(GiteeRepositoryDetail.class);
         return repository;
+    }
+
+    /**
+     * 列出授权用户的所有仓库
+     *
+     */
+    public List<GiteeRepositoryDetail> getProjects(
+            ProjectAffiliation[] affiliationList,
+            ProjectVisibility visibility,
+            String search,
+            Integer page,
+            Integer perPage
+    ) {
+        GiteeRepositoryDetail[] repoList = giteeApi.createRequest()
+                .method(ScmHttpMethod.GET)
+                .withUrlPath(REPOSITORY_URI_PATTERN)
+                .with(
+                        "affiliation",
+                        affiliationList == null ? null : Arrays.stream(affiliationList)
+                                .map(ProjectAffiliation::getValue).collect(Collectors.joining(","))
+                )
+                .with("visibility", visibility.getValue())
+                .with("q", search)
+                .with(PAGE_PARAM, page)
+                .with(PER_PAGE_PARAM, perPage == null ? DEFAULT_PER_PAGE : perPage)
+                .fetch(GiteeRepositoryDetail[].class);
+        return Arrays.asList(repoList);
     }
 
 

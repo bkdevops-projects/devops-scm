@@ -13,9 +13,11 @@ import com.tencent.devops.scm.provider.git.command.GitScmProvider
 import com.tencent.devops.scm.sdk.common.GitOauth2ClientProperties
 import com.tencent.devops.scm.sdk.common.connector.ScmConnector
 import com.tencent.devops.scm.sdk.gitee.GiteeApiFactory
+import com.tencent.devops.scm.sdk.gitee.GiteeOauth2Api
 
 class GiteeScmProvider : GitScmProvider {
     private val apiFactory: GiteeApiFactory
+    private var oauth2Api: GiteeOauth2Api? = null
 
     constructor(apiUrl: String, connector: ScmConnector) : this(GiteeApiFactory(apiUrl, connector))
 
@@ -23,7 +25,9 @@ class GiteeScmProvider : GitScmProvider {
         apiUrl: String,
         connector: ScmConnector,
         properties: GitOauth2ClientProperties
-    ) : this(apiUrl, connector)
+    ) : this(apiUrl, connector) {
+        this.oauth2Api = GiteeOauth2Api(properties, connector)
+    }
 
     constructor(apiFactory: GiteeApiFactory) {
         this.apiFactory = apiFactory
@@ -42,7 +46,7 @@ class GiteeScmProvider : GitScmProvider {
     }
 
     override fun users() : UserService {
-        throw UnsupportedOperationException("gitee not support user service")
+        return GiteeUserService(apiFactory)
     }
 
     override fun files(): FileService {
@@ -62,6 +66,6 @@ class GiteeScmProvider : GitScmProvider {
     }
 
     override fun token(): TokenService {
-        throw UnsupportedOperationException("gitee not support token service")
+        return oauth2Api?.let { GiteeTokenService(it) } ?: throw IllegalStateException("OAuth2 API not initialized")
     }
 }

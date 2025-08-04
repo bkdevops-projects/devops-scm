@@ -21,6 +21,7 @@ import com.tencent.devops.scm.sdk.gitee.pojo.GiteePullRequestDiff
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeRepositoryDetail
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeTag
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeTagDetail
+import com.tencent.devops.scm.sdk.gitee.pojo.GiteeUserInfo
 import com.tencent.devops.scm.sdk.gitee.pojo.GiteeWebhookConfig
 import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteeEventAuthor
 import com.tencent.devops.scm.sdk.gitee.pojo.webhook.GiteeEventCommit
@@ -214,7 +215,7 @@ object GiteeObjectConverter {
             id = id,
             name = name,
             email = email,
-            username = ""
+            username = user.name
         )
     }
 
@@ -224,6 +225,15 @@ object GiteeObjectConverter {
             name = name,
             email = email,
             username = username
+        )
+    }
+
+    fun convertUser(user: GiteeUserInfo) = with(user) {
+        User(
+            id = id,
+            name = name,
+            email = email,
+            username = user.login
         )
     }
 

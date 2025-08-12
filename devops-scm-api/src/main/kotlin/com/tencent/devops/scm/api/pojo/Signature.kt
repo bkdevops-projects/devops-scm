@@ -7,7 +7,7 @@ data class Signature(
     // 提交者名称
     val name: String,
     // 提交者邮箱
-    val email: String,
+    val email: String? = null,
     // 提交者头像
     val avatar: String? = null
 )

@@ -34,6 +34,11 @@
 - bug: 修复sdk方法传参异常 #31 [链接](https://github.com/bkdevops-projects/devops-scm/issues/31)
 
 # v1.1.2
-## 2025-07-31
+## 2025-08-12
 ### 新增
 - feat: Gitee支持OAuth授权 #33 [链接](https://github.com/bkdevops-projects/devops-scm/issues/33)
+
+# v1.1.3
+## 2025-08-12
+### 修复
+- bug: 修复Signature的email可为空 #38 [链接](https://github.com/bkdevops-projects/devops-scm/issues/38)

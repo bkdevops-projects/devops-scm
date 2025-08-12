@@ -87,7 +87,7 @@ data class PullRequestHook(
     override fun repository() = repo
 
     override val userName: String
-        get() = sender.name
+        get() = sender.username
 
     override val eventDesc: ScmI18Variable
         get() = ScmI18Variable(
@@ -95,7 +95,7 @@ data class PullRequestHook(
             params = listOf(
                 pullRequest.link,
                 pullRequest.number.toString(),
-                sender.name
+                userName
             )
         )
 

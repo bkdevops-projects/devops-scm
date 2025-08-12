@@ -83,7 +83,7 @@ data class GitPushHook(
 
     override fun repository() = repo
 
-    override val userName = sender.name
+    override val userName = sender.username
 
     override val eventDesc = ScmI18Variable(
         code = getI18Code(),
@@ -91,7 +91,7 @@ data class GitPushHook(
             GitUtils.trimRef(ref),
             link,
             commit?.sha?.let { GitUtils.getShortSha(it) } ?: "",
-            sender.name
+            userName
         )
     )
 
@@ -100,13 +100,13 @@ data class GitPushHook(
         // 通用变量
 
         outputParams[PIPELINE_REPO_NAME] = repo.fullName
-        outputParams[PIPELINE_START_WEBHOOK_USER_ID] = sender.name
+        outputParams[PIPELINE_START_WEBHOOK_USER_ID] = sender.username
         outputParams[PIPELINE_WEBHOOK_EVENT_TYPE] = eventType
 
         outputParams[PIPELINE_WEBHOOK_BRANCH] = ref
 
         // 传统变量
-        outputParams[BK_REPO_GIT_WEBHOOK_PUSH_USERNAME] = sender.name
+        outputParams[BK_REPO_GIT_WEBHOOK_PUSH_USERNAME] = sender.username
         outputParams[BK_REPO_GIT_WEBHOOK_PUSH_BEFORE_COMMIT] = before
         outputParams[BK_REPO_GIT_WEBHOOK_PUSH_AFTER_COMMIT] = after
         outputParams[BK_REPO_GIT_WEBHOOK_PUSH_TOTAL_COMMIT] = totalCommitsCount

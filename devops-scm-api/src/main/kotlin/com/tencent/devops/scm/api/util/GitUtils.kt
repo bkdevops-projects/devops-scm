@@ -89,24 +89,27 @@ object GitUtils {
 
             var count = 0
 
-            gitCommit.added.forEachIndexed { innerIndex, file ->
-                if (count <= MAX_VARIABLE_COUNT) {
+            run {
+                gitCommit.added.forEachIndexed { innerIndex, file ->
                     startParams["$BK_REPO_GIT_WEBHOOK_PUSH_ADD_FILE_PREFIX${curIndex}_${innerIndex + 1}"] = file
                     count++
+                    if (count > MAX_VARIABLE_COUNT) return@run
                 }
             }
 
-            gitCommit.modified.forEachIndexed { innerIndex, file ->
-                if (count <= MAX_VARIABLE_COUNT) {
+            run {
+                gitCommit.modified.forEachIndexed { innerIndex, file ->
                     startParams["$BK_REPO_GIT_WEBHOOK_PUSH_MODIFY_FILE_PREFIX${curIndex}_${innerIndex + 1}"] = file
                     count++
+                    if (count > MAX_VARIABLE_COUNT) return@run
                 }
             }
 
-            gitCommit.removed.forEachIndexed { innerIndex, file ->
-                if (count <= MAX_VARIABLE_COUNT) {
+            run {
+                gitCommit.removed.forEachIndexed { innerIndex, file ->
                     startParams["$BK_REPO_GIT_WEBHOOK_PUSH_DELETE_FILE_PREFIX${curIndex}_${innerIndex + 1}"] = file
                     count++
+                    if (count > MAX_VARIABLE_COUNT) return@run
                 }
             }
         }

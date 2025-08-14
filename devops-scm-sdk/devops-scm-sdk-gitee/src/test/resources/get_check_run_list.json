@@ -1,0 +1,59 @@
+[
+  {
+    "id": 23033639,
+    "head_sha": "ddeaf249973c6ea9e02747f642680d05812fd80d",
+    "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/check-runs/23033639",
+    "html_url": "https://gitee.com/Tencent-BlueKing/bk-ci/run?id=23033639",
+    "details_url": "https://gitee.com/zhangsan",
+    "status": "completed",
+    "conclusion": "neutral",
+    "started_at": "2025-08-05T17:34:37+08:00",
+    "completed_at": "2025-08-05T17:37:14+08:00",
+    "output": {
+      "title": "devops-scm-gitee-check#output#title",
+      "summary": "devops-scm-gitee-check#output#summary",
+      "text": "devops-scm-gitee-check#output#text",
+      "annotations_count": 0,
+      "annotations_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/check-runs/23033639/annotations"
+    },
+    "name": "devops-scm-gitee-check#name#2"
+  },
+  {
+    "id": 23033722,
+    "head_sha": "ddeaf249973c6ea9e02747f642680d05812fd80d",
+    "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/check-runs/23033722",
+    "html_url": "https://gitee.com/Tencent-BlueKing/bk-ci/run?id=23033722",
+    "details_url": "https://gitee.com/zhangsan",
+    "status": "completed",
+    "conclusion": "neutral",
+    "started_at": "2025-08-01T10:00:00+08:00",
+    "completed_at": "2025-08-05T17:36:09+08:00",
+    "output": {
+      "title": "devops-scm-gitee-check-output-title",
+      "summary": "devops-scm-gitee-check-output-summary",
+      "text": null,
+      "annotations_count": 0,
+      "annotations_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/check-runs/23033722/annotations"
+    },
+    "name": "zhangsan#test#2"
+  },
+  {
+    "id": 23033638,
+    "head_sha": "ddeaf249973c6ea9e02747f642680d05812fd80d",
+    "url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/check-runs/23033638",
+    "html_url": "https://gitee.com/Tencent-BlueKing/bk-ci/run?id=23033638",
+    "details_url": "https://gitee.com/zhangsan",
+    "status": "completed",
+    "conclusion": "neutral",
+    "started_at": "2025-08-05T17:34:37+08:00",
+    "completed_at": "2025-08-05T17:34:38+08:00",
+    "output": {
+      "title": "devops-scm-gitee-check#output#title",
+      "summary": "devops-scm-gitee-check#output#summary",
+      "text": "devops-scm-gitee-check#output#text",
+      "annotations_count": 0,
+      "annotations_url": "https://gitee.com/api/v5/repos/Tencent-BlueKing/bk-ci/check-runs/23033638/annotations"
+    },
+    "name": "devops-scm-gitee-check#name#1"
+  }
+]

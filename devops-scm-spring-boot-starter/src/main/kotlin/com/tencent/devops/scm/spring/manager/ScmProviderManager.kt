@@ -1,5 +1,6 @@
 package com.tencent.devops.scm.spring.manager
 
+import com.tencent.devops.scm.api.CheckRunService
 import com.tencent.devops.scm.api.FileService
 import com.tencent.devops.scm.api.IssueService
 import com.tencent.devops.scm.api.PullRequestService
@@ -54,4 +55,7 @@ class ScmProviderManager(
 
     fun command(properties: ScmProviderProperties): ScmCommand = 
         build(properties).command()
+
+    fun checkRun(properties: ScmProviderProperties): CheckRunService =
+        build(properties).checkRun()
 }

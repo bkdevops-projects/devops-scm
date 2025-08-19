@@ -197,12 +197,12 @@ object TGitObjectConverter {
     ): PullRequest {
         val base = Reference(
             name = from.targetBranch,
-            sha = from.targetCommit
+            sha = from.targetCommit ?: ""
         )
 
         val head = Reference(
             name = from.sourceBranch,
-            sha = from.sourceCommit
+            sha = from.sourceCommit ?: ""
         )
 
         val targetRepositoryUrl = GitRepositoryUrl(targetProject.httpsUrlToRepo)
@@ -257,9 +257,9 @@ object TGitObjectConverter {
             closed = from.state != "opened",
             merged = from.state == "merged",
             author = convertUser(from.author),
-            created = DateUtils.convertDateToLocalDateTime(from.createdAt),
-            updated = DateUtils.convertDateToLocalDateTime(from.updatedAt),
-            milestone = convertMilestone(from.milestone),
+            created = from.createdAt?.let { DateUtils.convertDateToLocalDateTime(it) },
+            updated = from.updatedAt?.let { DateUtils.convertDateToLocalDateTime(it) },
+            milestone = from.milestone?.let { convertMilestone(it) },
             baseCommit = from.baseCommit,
             labels = from.labels,
             assignee = assignees,

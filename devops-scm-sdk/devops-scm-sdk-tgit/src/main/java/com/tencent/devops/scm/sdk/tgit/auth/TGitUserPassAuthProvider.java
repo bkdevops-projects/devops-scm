@@ -5,6 +5,7 @@ import com.tencent.devops.scm.sdk.tgit.TGitSessionApi;
 import com.tencent.devops.scm.sdk.tgit.TGitApi;
 import com.tencent.devops.scm.sdk.tgit.TGitConstants;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitSession;
+import java.util.Optional;
 
 /**
  * 通过用户名密码授权
@@ -29,6 +30,8 @@ public class TGitUserPassAuthProvider implements TGitAuthProvider {
     public void authorization(ScmRequest.Builder<?> builder) {
         TGitSessionApi sessionApi = new TGitSessionApi(tGitApi);
         TGitSession session = sessionApi.getSession(username, password);
-        builder.setHeader(TGitConstants.PRIVATE_TOKEN_HEADER, session.getPrivateToken());
+        builder.setHeader(TGitConstants.PRIVATE_TOKEN_HEADER, Optional.ofNullable(session)
+                .map(TGitSession::getPrivateToken)
+                .orElse(""));
     }
 }

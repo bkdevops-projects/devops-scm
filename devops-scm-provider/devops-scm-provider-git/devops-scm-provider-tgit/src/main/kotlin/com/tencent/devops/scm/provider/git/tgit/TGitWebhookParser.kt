@@ -476,7 +476,7 @@ class TGitWebhookParser : WebhookParser {
             }
             params[PIPELINE_GIT_BEFORE_SHA] = src.before
             params[PIPELINE_GIT_BEFORE_SHA_SHORT] = GitUtils.getShortSha(src.before)
-            params[PIPELINE_GIT_TAG_MESSAGE] = src.message
+            params[PIPELINE_GIT_TAG_MESSAGE] = src.message ?: ""
             src.commits.firstOrNull()?.let { lastCommit ->
                 params[PIPELINE_GIT_COMMIT_AUTHOR] = lastCommit.author.name
                 params[PIPELINE_GIT_COMMIT_MESSAGE] = lastCommit.message

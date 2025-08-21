@@ -1,5 +1,7 @@
 package com.tencent.devops.scm.sdk.tgit;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -8,6 +10,7 @@ import com.tencent.devops.scm.sdk.tgit.pojo.TGitAuthor;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitDiff;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitMergeRequest;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitMergeRequestFilter;
+import com.tencent.devops.scm.sdk.tgit.pojo.TGitMergeRequestParams;
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitMilestone;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -46,6 +49,10 @@ public class TGitMergeRequestApiTest extends AbstractTGitTest {
         when(mergeRequestApi.getMergeRequests(TEST_PROJECT_NAME, TGitMergeRequestState.OPENED))
                 .thenReturn(
                         read("list_merge_request_opened.json", new TypeReference<List<TGitMergeRequest>>() {
+                        }));
+        when(mergeRequestApi.createMergeRequest(anyString(), any()))
+                .thenReturn(
+                        read("create_merge_request.json", new TypeReference<TGitMergeRequest>() {
                         }));
     }
 
@@ -99,6 +106,24 @@ public class TGitMergeRequestApiTest extends AbstractTGitTest {
         Assertions.assertFalse(diff1.getCollapse());
         Assertions.assertEquals(15, diff1.getAdditions());
         Assertions.assertEquals(1, diff1.getDeletions());
+    }
+
+    @Test
+    public void createMergeRequest() {
+        TGitMergeRequestParams requestParams = TGitMergeRequestParams.builder()
+                .sourceBranch("feat_101")
+                .targetBranch("master")
+                .title("devops触发调试")
+                .description("description")
+                .build();
+        TGitMergeRequest mergeRequest = mergeRequestApi.createMergeRequest(
+                TEST_PROJECT_NAME,
+                requestParams
+        );
+        Assertions.assertEquals(requestParams.getTitle(), mergeRequest.getTitle());
+        Assertions.assertEquals(requestParams.getSourceBranch(), mergeRequest.getSourceBranch());
+        Assertions.assertEquals(requestParams.getTargetBranch(), mergeRequest.getTargetBranch());
+        Assertions.assertEquals(requestParams.getDescription(), mergeRequest.getDescription());
     }
 
     private static void assertMergeRequest(TGitMergeRequest mergeRequest) {

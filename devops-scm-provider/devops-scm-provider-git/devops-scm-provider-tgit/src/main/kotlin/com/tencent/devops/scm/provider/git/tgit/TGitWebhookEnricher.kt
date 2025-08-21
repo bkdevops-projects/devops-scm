@@ -84,7 +84,7 @@ class TGitWebhookEnricher(private val apiFactory: TGitApiFactory) : WebhookEnric
                     )
 
             mergeRequest?.let {
-                pullRequestHook.changes = it.files.map(TGitObjectConverter::convertChange)
+                pullRequestHook.changes = it.files?.map(TGitObjectConverter::convertChange) ?: listOf()
             }
             // 根据完整的MR/Review信息填充变量
             pullRequestHook.extras.putAll(
@@ -317,7 +317,7 @@ class TGitWebhookEnricher(private val apiFactory: TGitApiFactory) : WebhookEnric
                 tagName
             )
             tag?.let {
-                extra[PIPELINE_GIT_TAG_DESC] = it.description
+                extra[PIPELINE_GIT_TAG_DESC] = it.description ?: ""
             }
         }
         return extra

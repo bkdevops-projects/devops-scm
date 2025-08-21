@@ -270,9 +270,11 @@ object TGitObjectToMapConverter {
             params[BK_REPO_GIT_MANUAL_UNLOCK] = false
             params[PIPELINE_GIT_BEFORE_SHA] = "----------"
             params[PIPELINE_GIT_BEFORE_SHA_SHORT] = "----------"
-            params[PIPELINE_GIT_MR_ACTION] = action
             params[BK_REPO_GIT_WEBHOOK_NOTE_CREATED_AT] = simpleDateFormat.format(createdAt)
             params[BK_REPO_GIT_WEBHOOK_NOTE_UPDATED_AT] = simpleDateFormat.format(updatedAt)
+            src.mergeRequest?.let {
+                params[PIPELINE_GIT_MR_ACTION] = it.action ?: ""
+            }
             return params
         }
     }

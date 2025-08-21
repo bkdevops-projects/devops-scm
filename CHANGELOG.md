@@ -42,3 +42,8 @@
 ## 2025-08-12
 ### 修复
 - bug: 修复Signature的email可为空 #38 [链接](https://github.com/bkdevops-projects/devops-scm/issues/38)
+
+# v1.1.4
+## 2025-08-21
+### 修复
+- bug: 修复创建TGIT 创建MR失败 #40 [链接](https://github.com/bkdevops-projects/devops-scm/issues/40)

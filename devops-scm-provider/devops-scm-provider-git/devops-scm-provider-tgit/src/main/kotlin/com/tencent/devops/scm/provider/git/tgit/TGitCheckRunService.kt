@@ -15,6 +15,14 @@ class TGitCheckRunService(
 
     override fun create(repository: ScmProviderRepository, input: CheckRunInput): CheckRun {
         return TGitApiTemplate.execute(repository, apiFactory) { repo, tGitApi ->
+            // TGIT 报表数据以评论形式上报
+            if (input.output?.text.isNullOrBlank()) {
+                tGitApi.notesApi.createMergeRequestNote(
+                    repo.projectIdOrPath,
+                    input.pullRequestId,
+                    input.output?.text
+                )
+            }
             val checkRun = tGitApi.checkRunApi.create(
                 repo.projectIdOrPath,
                 input.ref,
@@ -29,7 +37,7 @@ class TGitCheckRunService(
                             )
                             .targetUrl(it.detailsUrl)
                             .context(it.name)
-                            .detail(it.output?.text)
+                            .detail(null)
                             .description(it.output?.summary)
                             .block(it.block)
                             .targetBranches(it.targetBranches ?: listOf(TGitCheckRun.ALL_BRANCH_FLAG))

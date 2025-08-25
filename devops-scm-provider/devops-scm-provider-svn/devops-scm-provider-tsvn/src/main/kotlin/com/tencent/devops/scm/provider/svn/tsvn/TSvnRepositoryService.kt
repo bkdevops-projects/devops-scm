@@ -6,8 +6,8 @@ import com.tencent.devops.scm.api.pojo.HookInput
 import com.tencent.devops.scm.api.pojo.ListOptions
 import com.tencent.devops.scm.api.pojo.Perm
 import com.tencent.devops.scm.api.pojo.RepoListOptions
-import com.tencent.devops.scm.api.pojo.Status
-import com.tencent.devops.scm.api.pojo.StatusInput
+import com.tencent.devops.scm.api.pojo.CheckRun
+import com.tencent.devops.scm.api.pojo.CheckRunInput
 import com.tencent.devops.scm.api.pojo.auth.IScmAuth
 import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository
 import com.tencent.devops.scm.api.pojo.repository.ScmServerRepository
@@ -82,14 +82,6 @@ class TSvnRepositoryService(private val apiFactory: TSvnApiFactory) : Repository
                 hookId
             )
         }
-    }
-
-    override fun listStatus(repository: ScmProviderRepository, ref: String, opts: ListOptions): List<Status> {
-        throw UnsupportedOperationException("tsvn not support get status list")
-    }
-
-    override fun createStatus(repository: ScmProviderRepository, ref: String, input: StatusInput): Status {
-        throw UnsupportedOperationException("tsvn not support create status")
     }
 
     private fun convertFromHookInput(input: HookInput) = with(input) {

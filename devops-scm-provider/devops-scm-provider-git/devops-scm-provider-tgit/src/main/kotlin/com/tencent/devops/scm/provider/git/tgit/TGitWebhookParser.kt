@@ -528,9 +528,9 @@ class TGitWebhookParser : WebhookParser {
                     }
                     ref.startsWith("refs/for/") -> {
                         logger.info("Git web hook is pre-push event|branchName=$ref")
-                        false
+                        true
                     }
-                    else -> true
+                    else -> false
                 }
             }
         }

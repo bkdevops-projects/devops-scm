@@ -9,8 +9,6 @@ import com.tencent.devops.scm.api.pojo.HookInput
 import com.tencent.devops.scm.api.pojo.ListOptions
 import com.tencent.devops.scm.api.pojo.Perm
 import com.tencent.devops.scm.api.pojo.RepoListOptions
-import com.tencent.devops.scm.api.pojo.Status
-import com.tencent.devops.scm.api.pojo.StatusInput
 import com.tencent.devops.scm.api.pojo.auth.IScmAuth
 import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository
 import com.tencent.devops.scm.api.pojo.repository.ScmServerRepository
@@ -67,21 +65,5 @@ class GiteeRepositoryService(private val giteeApiFactory: GiteeApiClientFactory)
 
     override fun deleteHook(repository: ScmProviderRepository, hookId: Long) {
         throw UnsupportedOperationException("gitee template not support delete hook")
-    }
-
-    override fun listStatus(
-        repository: ScmProviderRepository,
-        ref: String,
-        opts: ListOptions
-    ): List<Status> {
-        throw UnsupportedOperationException("gitee template not support list status")
-    }
-
-    override fun createStatus(
-        repository: ScmProviderRepository,
-        ref: String,
-        input: StatusInput
-    ): Status {
-        throw UnsupportedOperationException("gitee template not support create status")
     }
 }

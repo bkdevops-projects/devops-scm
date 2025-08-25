@@ -1,8 +1,9 @@
 package com.tencent.devops.scm.provider.git.tgit
 
+import com.tencent.devops.scm.api.enums.CheckRunConclusion
+import com.tencent.devops.scm.api.enums.CheckRunStatus
 import com.tencent.devops.scm.api.enums.ContentKind
 import com.tencent.devops.scm.api.enums.ReviewState
-import com.tencent.devops.scm.api.enums.StatusState
 import com.tencent.devops.scm.api.enums.Visibility
 import com.tencent.devops.scm.api.pojo.Change
 import com.tencent.devops.scm.api.pojo.Comment
@@ -17,13 +18,14 @@ import com.tencent.devops.scm.api.pojo.PullRequest
 import com.tencent.devops.scm.api.pojo.Reference
 import com.tencent.devops.scm.api.pojo.Review
 import com.tencent.devops.scm.api.pojo.Signature
-import com.tencent.devops.scm.api.pojo.Status
+import com.tencent.devops.scm.api.pojo.CheckRun
 import com.tencent.devops.scm.api.pojo.Tree
 import com.tencent.devops.scm.api.pojo.User
 import com.tencent.devops.scm.api.pojo.repository.git.GitRepositoryUrl
 import com.tencent.devops.scm.api.pojo.repository.git.GitScmServerRepository
 import com.tencent.devops.scm.sdk.common.util.DateUtils
 import com.tencent.devops.scm.sdk.common.util.UrlConverter
+import com.tencent.devops.scm.sdk.tgit.enums.TGitCheckRunState
 import com.tencent.devops.scm.sdk.tgit.enums.TGitIssueState
 import com.tencent.devops.scm.sdk.tgit.enums.TGitReviewState
 import com.tencent.devops.scm.sdk.tgit.enums.TGitVisibility
@@ -31,7 +33,7 @@ import com.tencent.devops.scm.sdk.tgit.pojo.TGitAssignee
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitAuthor
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitBranch
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitCommit
-import com.tencent.devops.scm.sdk.tgit.pojo.TGitCommitStatus
+import com.tencent.devops.scm.sdk.tgit.pojo.TGitCheckRun
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitDiff
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitIssue
 import com.tencent.devops.scm.sdk.tgit.pojo.TGitMergeRequest
@@ -334,23 +336,45 @@ object TGitObjectConverter {
         )
     }
 
-    fun convertStatus(from: TGitCommitStatus) = with(from) {
-        Status(
-            state = convertState(state),
-            context = context,
-            desc = description,
-            targetUrl = targetUrl
+    fun convertCheckRun(from: TGitCheckRun) = with(from) {
+        val (status, conclusion) = convertState(state)
+        CheckRun(
+            id = 0L,
+            status = status,
+            name = context,
+            summary = description,
+            detailsUrl = targetUrl,
+            conclusion = conclusion,
+            detail = detail
         )
     }
 
-    fun convertState(from: String): StatusState {
-        return when (from) {
-            "pending" -> StatusState.PENDING
-            "success" -> StatusState.SUCCESS
-            "error" -> StatusState.ERROR
-            "failure" -> StatusState.FAILURE
-            else -> StatusState.UNKNOWN
+    private fun convertState(from: String) = when (from) {
+        TGitCheckRunState.PENDING.toValue() -> Pair(CheckRunStatus.IN_PROGRESS, null)
+        TGitCheckRunState.SUCCESS.toValue() -> Pair(CheckRunStatus.COMPLETED, CheckRunConclusion.SUCCESS)
+        else -> Pair(CheckRunStatus.COMPLETED, CheckRunConclusion.FAILURE)
+    }
+
+    fun convertCheckRunState(
+        status: CheckRunStatus,
+        conclusion: CheckRunConclusion?
+    ) = when (status) {
+        CheckRunStatus.IN_PROGRESS, CheckRunStatus.QUEUED -> {
+            TGitCheckRunState.PENDING
         }
+
+        CheckRunStatus.COMPLETED -> {
+            if (conclusion == null) {
+                throw IllegalArgumentException("conclusion cannot be null when status is COMPLETED")
+            }
+            if (conclusion == CheckRunConclusion.SUCCESS) {
+                TGitCheckRunState.SUCCESS
+            } else {
+                TGitCheckRunState.FAILURE
+            }
+        }
+
+        else -> throw IllegalArgumentException("unknown check run status $status")
     }
 
     /*========================================issue====================================================*/

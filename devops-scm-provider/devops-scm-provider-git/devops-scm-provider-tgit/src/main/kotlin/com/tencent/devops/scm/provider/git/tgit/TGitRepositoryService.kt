@@ -1,12 +1,9 @@
 import com.tencent.devops.scm.api.RepositoryService
-import com.tencent.devops.scm.api.enums.StatusState
 import com.tencent.devops.scm.api.pojo.Hook
 import com.tencent.devops.scm.api.pojo.HookInput
 import com.tencent.devops.scm.api.pojo.ListOptions
 import com.tencent.devops.scm.api.pojo.Perm
 import com.tencent.devops.scm.api.pojo.RepoListOptions
-import com.tencent.devops.scm.api.pojo.Status
-import com.tencent.devops.scm.api.pojo.StatusInput
 import com.tencent.devops.scm.api.pojo.auth.IScmAuth
 import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository
 import com.tencent.devops.scm.api.pojo.repository.ScmServerRepository
@@ -155,38 +152,6 @@ class TGitRepositoryService(
             TGitObjectConverter.convertHook(hook)
         }
     }
-
-    /**
-     * 获取状态列表
-     * @param repository 代码仓库信息
-     * @param ref 引用
-     * @param opts 列表查询选项
-     * @return 状态列表
-     */
-    override fun listStatus(repository: ScmProviderRepository, ref: String, opts: ListOptions): List<Status> {
-        return TGitApiTemplate.execute(repository, apiFactory) { repo, tGitApi ->
-            tGitApi.commitsApi.getCommitStatuses(repo.projectIdOrPath, ref, opts.page, opts.pageSize)
-                    .map(TGitObjectConverter::convertStatus)
-        }
-    }
-
-    /**
-     * 创建状态
-     * @param repository 代码仓库信息
-     * @param ref 引用
-     * @param input 状态输入参数
-     * @return 创建的状态
-     */
-    override fun createStatus(
-        repository: ScmProviderRepository,
-        ref: String,
-        input: StatusInput
-    ) = Status(
-        state = StatusState.SUCCESS,
-        targetUrl = "",
-        desc = "",
-        context = ""
-    )
 
     private fun canPush(accessLevel: TGitAccessLevel): Boolean {
         return accessLevel.value >= TGitAccessLevel.DEVELOPER.value

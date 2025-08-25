@@ -1,6 +1,7 @@
 package com.tencent.devops.scm.provider.git.tgit
 
 import TGitRepositoryService
+import com.tencent.devops.scm.api.CheckRunService
 import com.tencent.devops.scm.api.FileService
 import com.tencent.devops.scm.api.IssueService
 import com.tencent.devops.scm.api.PullRequestService
@@ -58,6 +59,10 @@ class TGitScmProvider : GitScmProvider {
 
     override fun repositories(): RepositoryService {
         return TGitRepositoryService(apiFactory)
+    }
+
+    override fun checkRun(): CheckRunService {
+        return TGitCheckRunService(apiFactory)
     }
 
     override fun refs(): RefService {

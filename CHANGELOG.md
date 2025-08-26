@@ -47,3 +47,8 @@
 ## 2025-08-21
 ### 修复
 - bug: 修复创建TGIT 创建MR失败 #40 [链接](https://github.com/bkdevops-projects/devops-scm/issues/40)
+
+# v1.1.5
+## 2025-08-26
+### 新增
+- feat: Gitee 支持 check-run #35 [链接](https://github.com/bkdevops-projects/devops-scm/issues/35)

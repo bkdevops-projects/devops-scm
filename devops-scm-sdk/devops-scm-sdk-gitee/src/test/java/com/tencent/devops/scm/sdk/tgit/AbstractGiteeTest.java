@@ -21,7 +21,7 @@ import org.mockito.Mockito;
  */
 public class AbstractGiteeTest {
     // 测试仓库
-    protected static final String TEST_PROJECT_NAME = "Tencent-BlueKing/bk-ci";
+    protected static final String TEST_PROJECT_NAME = "hejieehe/private_repo";
     // 测试分支名
     protected static final String TEST_DEFAULT_BRANCH = "master";
     // [环境变量KEY]接口地址

@@ -5,8 +5,6 @@ import com.tencent.devops.scm.api.pojo.HookInput
 import com.tencent.devops.scm.api.pojo.ListOptions
 import com.tencent.devops.scm.api.pojo.Perm
 import com.tencent.devops.scm.api.pojo.RepoListOptions
-import com.tencent.devops.scm.api.pojo.Status
-import com.tencent.devops.scm.api.pojo.StatusInput
 import com.tencent.devops.scm.api.pojo.auth.IScmAuth
 import com.tencent.devops.scm.api.pojo.repository.ScmProviderRepository
 import com.tencent.devops.scm.api.pojo.repository.ScmServerRepository
@@ -77,22 +75,4 @@ interface RepositoryService {
      * @param hookId 钩子ID
      */
     fun deleteHook(repository: ScmProviderRepository, hookId: Long)
-
-    /**
-     * 列出状态信息
-     * @param repository 代码库信息
-     * @param ref 引用
-     * @param opts 列表查询选项
-     * @return 状态列表
-     */
-    fun listStatus(repository: ScmProviderRepository, ref: String, opts: ListOptions): List<Status>
-
-    /**
-     * 创建状态信息
-     * @param repository 代码库信息
-     * @param ref 引用
-     * @param input 状态输入参数
-     * @return 创建的状态
-     */
-    fun createStatus(repository: ScmProviderRepository, ref: String, input: StatusInput): Status
 }

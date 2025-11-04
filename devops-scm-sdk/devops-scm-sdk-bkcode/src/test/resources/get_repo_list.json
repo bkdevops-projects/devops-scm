@@ -1,0 +1,46 @@
+{
+  "data": {
+    "count": 1,
+    "page": 1,
+    "pageSize": 10,
+    "totalPages": 1,
+    "records": [
+      {
+        "id": 11,
+        "tenantId": "default",
+        "groupId": 9,
+        "name": "devops_trigger",
+        "displayName": "devops_trigger",
+        "path": "hejieehe/devops_trigger",
+        "displayPath": "hejieehe/devops_trigger",
+        "desc": "",
+        "repoType": "PRIVATE",
+        "initialized": true,
+        "createTime": "2025-11-04 09:54:55",
+        "updateTime": "2025-11-04 10:06:24",
+        "creator": {
+          "id": "1d515e15d83972adb785c3551a010bca",
+          "username": "zhangsan",
+          "displayName": "zhangsan",
+          "email": "zhangsan@tencent.com",
+          "tenantId": "default",
+          "admin": false,
+          "locale": "zh-cn",
+          "createTime": "2025-11-04 09:53:40"
+        },
+        "updater": {
+          "id": "01e37622ab90437b99f4892df65deb18",
+          "username": "admin",
+          "displayName": "admin",
+          "email": "admin@bkcode.com",
+          "tenantId": "default",
+          "admin": true,
+          "locale": "zh",
+          "createTime": "2025-10-15 11:37:36"
+        },
+        "followed": false,
+        "mrCount": 0
+      }
+    ]
+  }
+}

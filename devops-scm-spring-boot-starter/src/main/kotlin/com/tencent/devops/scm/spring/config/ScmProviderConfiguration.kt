@@ -1,5 +1,6 @@
 package com.tencent.devops.scm.spring.config
 
+import com.tencent.devops.scm.spring.manager.BkCodeScmProviderFactory
 import com.tencent.devops.scm.spring.manager.GiteeScmProviderFactory
 import com.tencent.devops.scm.spring.manager.ScmConnectorFactory
 import com.tencent.devops.scm.spring.manager.ScmProviderFactory
@@ -28,4 +29,8 @@ class ScmProviderConfiguration {
     @Bean
     @ConditionalOnMissingBean(GiteeScmProviderFactory::class)
     fun giteeScmProviderFactory(connectorFactory: ScmConnectorFactory) = GiteeScmProviderFactory(connectorFactory)
+
+    @Bean
+    @ConditionalOnMissingBean(BkCodeScmProviderFactory::class)
+    fun bkCodeScmProviderFactory(connectorFactory: ScmConnectorFactory) = BkCodeScmProviderFactory(connectorFactory)
 }

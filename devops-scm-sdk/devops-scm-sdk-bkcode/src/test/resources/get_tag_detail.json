@@ -1,0 +1,41 @@
+{
+  "data": {
+    "name": "v1.0.0",
+    "message": "First stable release",
+    "desc": "Release version 1.0.0",
+    "commit": {
+      "id": "7eaa451cdfd155338f113f1bb2d57527f34fc657",
+      "author": {
+        "name": "zhangsan",
+        "email": "zhangsan@tencent.com",
+        "authoredDate": "2025-09-25 16:30:23"
+      },
+      "committer": {
+        "name": "zhangsan",
+        "email": "zhangsan@tencent.com",
+        "committedDate": "2025-09-25 16:30:23"
+      },
+      "title": "init repo",
+      "message": "init repo\n",
+      "parents": [
+        "82709e7a3073b5b1e9b5b523fd3bc319a1c4d8c2"
+      ]
+    },
+    "author": {
+      "name": "zhangsan",
+      "email": "zhangsan@tencent.com",
+      "authoredDate": "2025-11-04 11:04:10"
+    },
+    "createTime": "2025-11-04 11:04:11",
+    "creator": {
+      "id": "1d515e15d83972adb785c3551a010bca",
+      "username": "zhangsan",
+      "displayName": "zhangsan",
+      "email": "zhangsan@tencent.com",
+      "tenantId": "default",
+      "admin": false,
+      "locale": "zh-cn",
+      "createTime": "2025-11-04 09:53:40"
+    }
+  }
+}

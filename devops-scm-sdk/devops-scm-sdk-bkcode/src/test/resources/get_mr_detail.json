@@ -1,0 +1,189 @@
+{
+  "data": {
+    "id": 5,
+    "code": 2,
+    "targetRepoId": 11,
+    "sourceRepoId": 11,
+    "targetBranch": "main",
+    "sourceBranch": "feat_0",
+    "baseCommitId": "7eaa451cdfd155338f113f1bb2d57527f34fc657",
+    "headCommitId": "e98fb11ac3d6215c6d7385327a5b4763f7a89ea6",
+    "title": "feat: 支持bkCode代码源 #42",
+    "description": "<p><span style=\"color: rgb(8, 30, 64); background-color: rgb(245, 247, 249); font-size: 14px;\">feat: 支持bkCode代码源 #42</span></p>",
+    "status": "CLOSED",
+    "mergeStrategy": "NO_FAST_FORWARD",
+    "isConflicted": false,
+    "isBranchDeleted": false,
+    "mergedBy": null,
+    "mergedAt": null,
+    "closedBy": {
+      "id": "01e37622ab90437b99f4892df65deb18",
+      "username": "admin",
+      "displayName": "admin",
+      "email": "admin@bkcode.com",
+      "tenantId": "default",
+      "admin": true,
+      "locale": "zh",
+      "createTime": "2025-10-15 11:37:36"
+    },
+    "closedAt": null,
+    "creator": {
+      "id": "1d515e15d83972adb785c3551a010bca",
+      "username": "hejieehe",
+      "displayName": "hejieehe",
+      "email": "hejieehe@tencent.com",
+      "tenantId": "default",
+      "admin": false,
+      "locale": "zh-cn",
+      "createTime": "2025-11-04 09:53:40"
+    },
+    "createTime": "2025-11-07T19:53:38",
+    "updater": {
+      "id": "01e37622ab90437b99f4892df65deb18",
+      "username": "admin",
+      "displayName": "admin",
+      "email": "admin@bkcode.com",
+      "tenantId": "default",
+      "admin": true,
+      "locale": "zh",
+      "createTime": "2025-10-15 11:37:36"
+    },
+    "updateTime": "2025-11-11T19:37:39",
+    "labels": [
+      {
+        "id": 1,
+        "name": "devops_1",
+        "color": "#979771",
+        "creator": {
+          "id": "1d515e15d83972adb785c3551a010bca",
+          "username": "hejieehe",
+          "displayName": "hejieehe",
+          "email": "hejieehe@tencent.com",
+          "tenantId": "default",
+          "admin": false,
+          "locale": "zh-cn",
+          "createTime": "2025-11-04 09:53:40",
+          "userType": "HUMAN"
+        },
+        "createTime": "2025-11-07 18:49:07",
+        "updater": {
+          "id": "1d515e15d83972adb785c3551a010bca",
+          "username": "hejieehe",
+          "displayName": "hejieehe",
+          "email": "hejieehe@tencent.com",
+          "tenantId": "default",
+          "admin": false,
+          "locale": "zh-cn",
+          "createTime": "2025-11-04 09:53:40",
+          "userType": "HUMAN"
+        },
+        "updateTime": "2025-11-07 18:49:07"
+      },
+      {
+        "id": 2,
+        "name": "devops_2",
+        "color": "#484C7F",
+        "creator": {
+          "id": "1d515e15d83972adb785c3551a010bca",
+          "username": "hejieehe",
+          "displayName": "hejieehe",
+          "email": "hejieehe@tencent.com",
+          "tenantId": "default",
+          "admin": false,
+          "locale": "zh-cn",
+          "createTime": "2025-11-04 09:53:40",
+          "userType": "HUMAN"
+        },
+        "createTime": "2025-11-07 18:49:13",
+        "updater": {
+          "id": "1d515e15d83972adb785c3551a010bca",
+          "username": "hejieehe",
+          "displayName": "hejieehe",
+          "email": "hejieehe@tencent.com",
+          "tenantId": "default",
+          "admin": false,
+          "locale": "zh-cn",
+          "createTime": "2025-11-04 09:53:40",
+          "userType": "HUMAN"
+        },
+        "updateTime": "2025-11-07 18:49:13"
+      }
+    ],
+    "followers": [
+      {
+        "id": "01e37622ab90437b99f4892df65deb18",
+        "username": "admin",
+        "displayName": "admin",
+        "email": "admin@bkcode.com",
+        "tenantId": "default",
+        "admin": true,
+        "locale": "zh",
+        "createTime": "2025-10-15 11:37:36"
+      },
+      {
+        "id": "1d515e15d83972adb785c3551a010bca",
+        "username": "hejieehe",
+        "displayName": "hejieehe",
+        "email": "hejieehe@tencent.com",
+        "tenantId": "default",
+        "admin": false,
+        "locale": "zh-cn",
+        "createTime": "2025-11-04 09:53:40"
+      }
+    ],
+    "reviewers": [
+      {
+        "id": 2,
+        "mergeRequestId": 5,
+        "reviewer": {
+          "id": "01e37622ab90437b99f4892df65deb18",
+          "username": "admin",
+          "displayName": "admin",
+          "email": "admin@bkcode.com",
+          "tenantId": "default",
+          "admin": true,
+          "locale": "zh",
+          "createTime": "2025-10-15 11:37:36"
+        },
+        "status": "APPROVED",
+        "isRequired": false,
+        "reviewedAt": "2025-11-11 17:42:26",
+        "reviewComment": "<p><span style=\"color: rgb(8, 30, 64); background-color: rgb(255, 255, 255); font-size: 12px;\">允许合并</span></p>",
+        "createTime": "2025-11-07 19:53:38"
+      }
+    ],
+    "ruleApproval": [
+      {
+        "ruleId": 2,
+        "ruleName": "AT_LEAST_ONE_APPROVED",
+        "approvalRequired": 1,
+        "approvalPassed": 1,
+        "approvalList": [
+          {
+            "id": 1,
+            "mergeRequestId": 5,
+            "userId": "01e37622ab90437b99f4892df65deb18",
+            "user": {
+              "id": "01e37622ab90437b99f4892df65deb18",
+              "username": "admin",
+              "displayName": "admin",
+              "email": "admin@bkcode.com",
+              "tenantId": "default",
+              "admin": true,
+              "locale": "zh",
+              "createTime": "2025-10-15 11:37:36"
+            },
+            "approvalStatus": "APPROVED",
+            "approvalType": "MANUAL",
+            "approvalRuleId": 2,
+            "approvalComment": "<p><span style=\"color: rgb(8, 30, 64); background-color: rgb(255, 255, 255); font-size: 12px;\">允许合并</span></p>",
+            "createTime": "2025-11-11T17:41:34"
+          }
+        ]
+      }
+    ],
+    "notSatisfiedReview": false,
+    "mergeStatus": "CAN_BE_MERGED",
+    "lastPushCommitId": "e98fb11ac3d6215c6d7385327a5b4763f7a89ea6"
+  }
+}

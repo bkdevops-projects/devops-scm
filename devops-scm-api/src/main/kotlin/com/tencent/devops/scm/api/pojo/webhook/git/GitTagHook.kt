@@ -51,7 +51,7 @@ data class GitTagHook(
 
     override fun repository(): GitScmServerRepository = repo
 
-    override val userName = sender.name
+    override val userName = sender.username
 
     override val eventDesc = ScmI18Variable(
         code = if (action == EventAction.DELETE) {
@@ -60,7 +60,7 @@ data class GitTagHook(
             GIT_TAG_PUSH_EVENT_DESC
         },
         params = listOf(
-            "$createFrom", ref.linkUrl, ref.name, sender.name
+            "$createFrom", ref.linkUrl, ref.name, userName
         )
     )
 

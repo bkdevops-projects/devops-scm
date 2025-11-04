@@ -1,0 +1,38 @@
+{
+  "data": {
+    "name": "main",
+    "protected": false,
+    "default": false,
+    "description": "",
+    "commit": {
+      "id": "6675f7a78364181b1b1182b341c8db828fdc1d64",
+      "author": {
+        "name": "hejieehe",
+        "email": "hejieehe@tencent.com",
+        "authoredDate": "2025-11-04 09:59:53"
+      },
+      "committer": {
+        "name": "hejieehe",
+        "email": "hejieehe@tencent.com",
+        "committedDate": "2025-11-04 09:59:53"
+      },
+      "title": "feat: 支持bkCode代码源 #42",
+      "message": "feat: 支持bkCode代码源 #42\n",
+      "parents": [
+        "7eaa451cdfd155338f113f1bb2d57527f34fc657"
+      ]
+    },
+    "creator": {
+      "id": "1d515e15d83972adb785c3551a010bca",
+      "username": "hejieehe",
+      "displayName": "v_hejieehe",
+      "email": "v_hejieehe@tencent.com",
+      "tenantId": "default",
+      "admin": false,
+      "locale": "zh-cn",
+      "createTime": "2025-11-04 09:53:40"
+    },
+    "createTime": "2025-11-04 09:58:23",
+    "updateTime": "2025-11-04 10:06:24"
+  }
+}

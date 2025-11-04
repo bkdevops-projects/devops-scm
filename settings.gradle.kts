@@ -25,3 +25,5 @@ include(":devops-scm-provider:devops-scm-provider-git:devops-scm-provider-gitee"
 include(":devops-scm-sdk:devops-scm-sdk-gitee")
 include("devops-scm-provider:devops-scm-provider-git:devops-scm-provider-gitee-simple")
 include("devops-scm-provider:devops-scm-provider-common")
+include("devops-scm-sdk:devops-scm-sdk-bkcode")
+include("devops-scm-provider:devops-scm-provider-git:devops-scm-provider-bkcode")

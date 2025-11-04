@@ -1,0 +1,66 @@
+{
+  "headers": {
+    "x-bkcode-signature-256": "sha256=242e7d72c07d3ea1a8d8bfb70bd428ac2440bf7c8596cf346cd7755153539702",
+    "x-bkcode-event": "push"
+  },
+  "body": {
+    "ref": "refs/heads/feat_0",
+    "before": "feacf96f64cd01b4b0cd959be3f4245ecefd5569",
+    "after": "e98fb11ac3d6215c6d7385327a5b4763f7a89ea6",
+    "forced": false,
+    "commits": [],
+    "headCommit": null,
+    "pusher": {
+      "id": "01e37622ab90437b99f4892df65deb18",
+      "username": "admin",
+      "displayName": "admin",
+      "email": "admin@bkcode.com",
+      "avatarUrl": null
+    },
+    "compare": null,
+    "created": false,
+    "deleted": false,
+    "event": "PUSH_EVENT",
+    "action": "push",
+    "createdAt": "2025-11-10T17:25:39.698236889",
+    "sender": {
+      "id": "01e37622ab90437b99f4892df65deb18",
+      "username": "admin",
+      "displayName": "admin",
+      "email": "admin@bkcode.com",
+      "avatarUrl": null
+    },
+    "repository": {
+      "id": 11,
+      "name": "devops_trigger",
+      "displayName": "devops_trigger",
+      "fullName": "hejieehe/devops_trigger",
+      "private": true,
+      "description": "",
+      "path": "https://bkcode.template.com/hejieehe/devops_trigger",
+      "repoType": "PRIVATE",
+      "defaultBranch": null,
+      "homepage": "https://bkcode.template.com/hejieehe/devops_trigger",
+      "httpUrl": "https://bkcode.template.com/hejieehe/devops_trigger.git",
+      "sshUrl": "git@bkcode.template.com:hejieehe/devops_trigger.git",
+      "fork": false,
+      "group": {
+        "id": 9,
+        "name": "zhansgan",
+        "displayName": "zhansgan",
+        "description": null,
+        "path": "/9",
+        "groupType": "INTERNAL"
+      }
+    },
+    "group": {
+      "id": 9,
+      "name": "zhansgan",
+      "displayName": "zhansgan",
+      "description": null,
+      "path": "/9",
+      "groupType": "INTERNAL"
+    }
+  },
+  "queryParams": null
+}

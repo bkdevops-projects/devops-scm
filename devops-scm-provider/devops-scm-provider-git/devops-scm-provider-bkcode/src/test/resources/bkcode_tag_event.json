@@ -1,0 +1,57 @@
+{
+  "ref": "refs/tags/v1.0.1",
+  "before": "0000000000000000000000000000000000000000",
+  "after": "7eaa451cdfd155338f113f1bb2d57527f34fc657",
+  "tagName": "v1.0.1",
+  "tag": null,
+  "pusher": {
+    "id": "1d515e15d83972adb785c3551a010bca",
+    "username": "hejieehe",
+    "displayName": "v_hejieehe",
+    "email": "v_hejieehe@tencent.com",
+    "avatarUrl": null
+  },
+  "created": true,
+  "deleted": false,
+  "event": "TAG_PUSH_EVENT",
+  "action": "push",
+  "createdAt": "2025-11-07T18:32:17.341514630",
+  "sender": {
+    "id": "1d515e15d83972adb785c3551a010bca",
+    "username": "hejieehe",
+    "displayName": "v_hejieehe",
+    "email": "v_hejieehe@tencent.com",
+    "avatarUrl": null
+  },
+  "repository": {
+    "id": 11,
+    "name": "devops_trigger",
+    "displayName": "devops_trigger",
+    "fullName": "hejieehe/devops_trigger",
+    "private": true,
+    "description": "",
+    "path": "https://bkcode.template.com/hejieehe/devops_trigger",
+    "repoType": "PRIVATE",
+    "defaultBranch": null,
+    "homepage": "https://bkcode.template.com/hejieehe/devops_trigger",
+    "httpUrl": "https://bkcode.template.com/hejieehe/devops_trigger.git",
+    "sshUrl": "git@bkcode.template.com:hejieehe/devops_trigger.git",
+    "fork": false,
+    "group": {
+      "id": 9,
+      "name": "hejieehe",
+      "displayName": "hejieehe",
+      "description": null,
+      "path": "/9",
+      "groupType": "INTERNAL"
+    }
+  },
+  "group": {
+    "id": 9,
+    "name": "hejieehe",
+    "displayName": "hejieehe",
+    "description": null,
+    "path": "/9",
+    "groupType": "INTERNAL"
+  }
+}

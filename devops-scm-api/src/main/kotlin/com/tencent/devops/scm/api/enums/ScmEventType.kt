@@ -11,5 +11,12 @@ enum class ScmEventType(val value: String) {
     PUSH("push"),
     TAG("tag"),
     PULL_REQUEST_REVIEW("pull_request_review"),
-    POST_COMMIT("post_commit");
+    POST_COMMIT("post_commit"),
+    NOTE("comment"); // 评论事件
+
+    companion object {
+        fun parse(value: String): ScmEventType? {
+            return values().firstOrNull { it.value == value }
+        }
+    }
 }

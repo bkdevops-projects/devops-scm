@@ -1,6 +1,7 @@
 package com.tencent.devops.scm.sdk.common;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.tencent.devops.scm.sdk.common.connector.ScmConnectorResponse;
 import com.tencent.devops.scm.sdk.common.util.ScmSdkJsonFactory;
@@ -67,6 +68,43 @@ public class ScmResponse<T> {
         String data = getBodyAsString(connectorResponse);
         try {
             return jsonFactory.fromJson(data, clazz);
+        } catch (JsonMappingException | JsonParseException e) {
+            logger.error("Failed to deserialize: {}", data);
+            throw e;
+        }
+    }
+
+    public static <T> T parseBody(String data, Class<T> clazz, ScmSdkJsonFactory jsonFactory)
+            throws IOException {
+        try {
+            return jsonFactory.fromJson(data, clazz);
+        } catch (JsonMappingException | JsonParseException e) {
+            logger.error("Failed to deserialize: {}", data);
+            throw e;
+        }
+    }
+
+    public static <T> T parseBody(
+            ScmConnectorResponse connectorResponse,
+            TypeReference<T> typeReference,
+            ScmSdkJsonFactory jsonFactory
+    ) throws IOException {
+        String data = getBodyAsString(connectorResponse);
+        try {
+            return jsonFactory.fromJson(data, typeReference);
+        } catch (JsonMappingException | JsonParseException e) {
+            logger.error("Failed to deserialize: {}", data);
+            throw e;
+        }
+    }
+
+    public static <T> T parseBody(
+            String data,
+            TypeReference<T> typeReference,
+            ScmSdkJsonFactory jsonFactory
+    ) throws IOException {
+        try {
+            return jsonFactory.fromJson(data, typeReference);
         } catch (JsonMappingException | JsonParseException e) {
             logger.error("Failed to deserialize: {}", data);
             throw e;

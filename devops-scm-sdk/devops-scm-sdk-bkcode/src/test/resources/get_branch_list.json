@@ -1,0 +1,82 @@
+{
+  "data": {
+    "count": 2,
+    "page": 1,
+    "pageSize": 10,
+    "totalPages": 1,
+    "records": [
+      {
+        "name": "main",
+        "protected": false,
+        "default": true,
+        "description": null,
+        "commit": {
+          "id": "7eaa451cdfd155338f113f1bb2d57527f34fc657",
+          "author": {
+            "name": "zhangsan",
+            "email": "zhangsan@qq.com",
+            "authoredDate": "2025-09-25 16:30:23"
+          },
+          "committer": {
+            "name": "zhangsan",
+            "email": "zhangsan@qq.com",
+            "committedDate": ""
+          },
+          "title": "init repo",
+          "message": "init repo\n",
+          "parents": [
+            "82709e7a3073b5b1e9b5b523fd3bc319a1c4d8c2"
+          ]
+        },
+        "creator": {
+          "id": "1d515e15d83972adb785c3551a010bca",
+          "username": "zhangsan",
+          "displayName": "zhangsan",
+          "email": "zhangsan@tencent.com",
+          "tenantId": "default",
+          "admin": false,
+          "locale": "zh-cn",
+          "createTime": "2025-11-04 09:53:40"
+        },
+        "createTime": "2025-11-04 09:54:58",
+        "updateTime": "2025-11-04 09:56:32"
+      },
+      {
+        "name": "feat_0",
+        "protected": false,
+        "default": false,
+        "description": "",
+        "commit": {
+          "id": "6675f7a78364181b1b1182b341c8db828fdc1d64",
+          "author": {
+            "name": "zhangsan",
+            "email": "zhangsan@qq.com",
+            "authoredDate": "2025-11-04 09:59:53"
+          },
+          "committer": {
+            "name": "zhangsan",
+            "email": "zhangsan@qq.com",
+            "committedDate": ""
+          },
+          "title": "feat: 支持bkCode代码源 #42",
+          "message": "feat: 支持bkCode代码源 #42\n",
+          "parents": [
+            "7eaa451cdfd155338f113f1bb2d57527f34fc657"
+          ]
+        },
+        "creator": {
+          "id": "1d515e15d83972adb785c3551a010bca",
+          "username": "zhangsan",
+          "displayName": "zhangsan",
+          "email": "zhangsan@tencent.com",
+          "tenantId": "default",
+          "admin": false,
+          "locale": "zh-cn",
+          "createTime": "2025-11-04 09:53:40"
+        },
+        "createTime": "2025-11-04 09:58:23",
+        "updateTime": "2025-11-04 10:06:24"
+      }
+    ]
+  }
+}

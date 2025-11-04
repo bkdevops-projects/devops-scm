@@ -51,14 +51,14 @@ data class IssueHook(
 
     override fun repository(): GitScmServerRepository = repo
 
-    override val userName = sender.name
+    override val userName = sender.username
 
     override val eventDesc = ScmI18Variable(
         code = getI18Code(),
         params = listOf(
             issue.link,
             issue.number.toString(),
-            sender.name
+            userName
         )
     )
 
@@ -94,7 +94,7 @@ data class IssueHook(
     }
 
     private fun getI18Code(): String = when (action) {
-        EventAction.OPEN -> GIT_ISSUE_OPENED_EVENT_DESC
+        EventAction.CREATE -> GIT_ISSUE_OPENED_EVENT_DESC
         EventAction.CLOSE -> GIT_ISSUE_CLOSED_EVENT_DESC
         EventAction.UPDATE -> GIT_ISSUE_UPDATED_EVENT_DESC
         EventAction.REOPEN -> GIT_ISSUE_REOPENED_EVENT_DESC

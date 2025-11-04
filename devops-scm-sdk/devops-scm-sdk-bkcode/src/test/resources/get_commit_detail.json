@@ -1,0 +1,29 @@
+{
+  "data": {
+    "commitInfo": {
+      "id": "7eaa451cdfd155338f113f1bb2d57527f34fc657",
+      "author": {
+        "name": "zhangsan",
+        "email": "zhangsan@tencent.com",
+        "authoredDate": "2025-09-25 16:30:23"
+      },
+      "committer": {
+        "name": "zhangsan",
+        "email": "zhangsan@tencent.com",
+        "committedDate": "2025-09-25 16:30:23"
+      },
+      "title": "init repo",
+      "message": "init repo\n",
+      "parents": [
+        "82709e7a3073b5b1e9b5b523fd3bc319a1c4d8c2"
+      ]
+    },
+    "branches": [
+      "feat_0",
+      "main"
+    ],
+    "tags": [
+      "v1.0.0"
+    ]
+  }
+}

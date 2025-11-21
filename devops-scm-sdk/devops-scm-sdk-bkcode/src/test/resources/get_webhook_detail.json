@@ -1,0 +1,45 @@
+{
+  "data": {
+    "id": 4,
+    "name": "Devops trigger hook",
+    "url": "https://devops.example.com/process/api/external/scm/codeBkCode/commit",
+    "token": null,
+    "sslVerificationEnabled": false,
+    "ownerType": "REPO",
+    "events": [
+      "PUSH_EVENT",
+      "TAG_PUSH_EVENT",
+      "COMMENT_EVENT",
+      "MERGE_REQUEST_EVENT",
+      "ISSUE_EVENT"
+    ],
+    "enabled": true,
+    "branchPattern": "",
+    "lastTriggeredAt": "2025-11-07 10:47:50",
+    "lastTriggeredStatus": "SUCCESS",
+    "description": "",
+    "ownerId": "11",
+    "creator": {
+      "id": "1d515e15d83972adb785c3551a010bca",
+      "username": "hejieehe",
+      "displayName": "v_hejieehe",
+      "email": "v_hejieehe@tencent.com",
+      "tenantId": "default",
+      "admin": false,
+      "locale": "zh-cn",
+      "createTime": "2025-11-04 09:53:40"
+    },
+    "createTime": "2025-11-04 10:06:09",
+    "updater": {
+      "id": "1d515e15d83972adb785c3551a010bca",
+      "username": "hejieehe",
+      "displayName": "v_hejieehe",
+      "email": "v_hejieehe@tencent.com",
+      "tenantId": "default",
+      "admin": false,
+      "locale": "zh-cn",
+      "createTime": "2025-11-04 09:53:40"
+    },
+    "updateTime": "2025-11-04 10:06:09"
+  }
+}

@@ -1,5 +1,9 @@
 package com.tencent.devops.scm.sdk.common;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.tencent.devops.scm.sdk.common.connector.ScmConnectorResponse;
+import com.tencent.devops.scm.sdk.common.util.ScmJsonUtil;
+import java.io.IOException;
 import lombok.Setter;
 
 import java.util.Iterator;
@@ -8,9 +12,11 @@ import java.util.Iterator;
  * 构造客户端请求
  */
 public class Requester extends ScmRequest.Builder<Requester> {
+
     protected final ScmApiClient client;
     @Setter
     private PagedIteratorFactory iteratorFactory;
+    private Class<? extends ResponseResult> responseResultCls;
 
     public Requester(ScmApiClient client) {
         this.client = client;
@@ -23,9 +29,41 @@ public class Requester extends ScmRequest.Builder<Requester> {
 
     public <T> T fetch(Class<T> clazz) {
         return client.sendRequest(this,
-                (connectorResponse) ->
-                        ScmResponse.parseBody(connectorResponse, clazz, client.getJsonFactory())
+                (connectorResponse) -> {
+                    String resultData = fetchResultData(connectorResponse);
+                    return ScmResponse.parseBody(resultData, clazz, client.getJsonFactory());
+                }
         ).body();
+    }
+
+    public <T> T fetch(TypeReference<T> typeReference) {
+        return client.sendRequest(this,
+                (connectorResponse) -> {
+                    String resultData = fetchResultData(connectorResponse);
+                    return ScmResponse.parseBody(resultData, typeReference, client.getJsonFactory());
+                }
+        ).body();
+    }
+
+    public <T extends ResponseResult> void withResult(Class<T> responseResultCls) {
+        this.responseResultCls = responseResultCls;
+    }
+
+    private String fetchResultData(ScmConnectorResponse connectorResponse) throws IOException {
+        String data = null;
+        // 提取响应结果
+        if (responseResultCls != null) {
+            data = ScmJsonUtil.getJsonFactory().toJson(
+                    ScmResponse.parseBody(
+                            connectorResponse,
+                            responseResultCls,
+                            client.getJsonFactory()
+                    ).getData()
+            );
+        } else {
+            data = ScmResponse.getBodyAsString(connectorResponse);
+        }
+        return data;
     }
 
     public <T> PagedIterable<T> toIterable(Class<T[]> type) {

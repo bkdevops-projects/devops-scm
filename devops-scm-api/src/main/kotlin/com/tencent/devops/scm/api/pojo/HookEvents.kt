@@ -14,17 +14,25 @@ data class HookEvents(
     var svnPreCommitEvents: Boolean? = null,
     var svnPostCommitEvents: Boolean? = null,
     var svnPreLockEvents: Boolean? = null,
-    var svnPostLockEvents: Boolean? = null
+    var svnPostLockEvents: Boolean? = null,
+    var comment: Boolean? = null // 通用评论事件
 ) {
     constructor(enabledEvents: List<String>) : this() {
         if (enabledEvents.contains(ScmEventType.ISSUE.value)) issue = true
-        if (enabledEvents.contains(ScmEventType.ISSUE_COMMENT.value)) issueComment = true
+        if (enabledEvents.contains(ScmEventType.ISSUE_COMMENT.value)) {
+            issueComment = true
+            comment = true
+        }
         if (enabledEvents.contains(ScmEventType.PULL_REQUEST.value)) pullRequest = true
-        if (enabledEvents.contains(ScmEventType.PULL_REQUEST_COMMENT.value)) pullRequestComment = true
+        if (enabledEvents.contains(ScmEventType.PULL_REQUEST_COMMENT.value)) {
+            pullRequestComment = true
+            comment = true
+        }
         if (enabledEvents.contains(ScmEventType.PUSH.value)) push = true
         if (enabledEvents.contains(ScmEventType.TAG.value)) tag = true
         if (enabledEvents.contains(ScmEventType.PULL_REQUEST_REVIEW.value)) pullRequestReview = true
         if (enabledEvents.contains(ScmEventType.POST_COMMIT.value)) svnPostCommitEvents = true
+        if (enabledEvents.contains(ScmEventType.NOTE.value)) comment = true
     }
 
     constructor(eventType: ScmEventType) : this(listOf(eventType.value))
@@ -42,5 +50,6 @@ data class HookEvents(
         if (tag == true) add(ScmEventType.TAG.value)
         if (pullRequestReview == true) add(ScmEventType.PULL_REQUEST_REVIEW.value)
         if (svnPostCommitEvents == true) add(ScmEventType.POST_COMMIT.value)
+        if (comment == true) add(ScmEventType.NOTE.value)
     }
 }

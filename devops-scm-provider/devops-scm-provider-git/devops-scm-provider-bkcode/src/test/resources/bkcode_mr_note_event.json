@@ -1,0 +1,158 @@
+{
+  "comment": {
+    "id": 25,
+    "body": "<p>zhansgan</p>",
+    "author": {
+      "id": "1d515e15d83972adb785c3551a010bca",
+      "username": "zhansgan",
+      "displayName": "zhansgan",
+      "email": "zhansgan@tencent.com",
+      "avatarUrl": null
+    },
+    "createdAt": "2025-11-10T14:47:23.154274323",
+    "updatedAt": "2025-11-10T14:47:23.154276748",
+    "url": "https://bkcode.template.com/hejieehe/devops_trigger/-/mergeRequest/detail/2"
+  },
+  "issue": null,
+  "mergeRequest": {
+    "id": 5,
+    "number": 2,
+    "title": "feat: 支持bkCode代码源 #42",
+    "description": "<p><span style=\"color: rgb(8, 30, 64); background-color: rgb(245, 247, 249); font-size: 14px;\">feat: 支持bkCode代码源 #42</span></p>",
+    "state": "OPEN",
+    "mergeStatus": "cannot_be_merged",
+    "targetBranch": "main",
+    "sourceBranch": "feat_0",
+    "sourceRepository": {
+      "id": 11,
+      "name": "devops_trigger",
+      "displayName": "devops_trigger",
+      "fullName": "hejieehe/devops_trigger",
+      "private": true,
+      "description": "",
+      "path": "https://bkcode.template.com/hejieehe/devops_trigger",
+      "repoType": "PRIVATE",
+      "defaultBranch": null,
+      "homepage": "https://bkcode.template.com/hejieehe/devops_trigger",
+      "httpUrl": "https://bkcode.template.com/hejieehe/devops_trigger.git",
+      "sshUrl": "git@bkcode.template.com:hejieehe/devops_trigger.git",
+      "fork": false,
+      "group": {
+        "id": 9,
+        "name": "zhansgan",
+        "displayName": "zhansgan",
+        "description": null,
+        "path": "/9",
+        "groupType": "INTERNAL"
+      }
+    },
+    "targetRepository": {
+      "id": 11,
+      "name": "devops_trigger",
+      "displayName": "devops_trigger",
+      "fullName": "hejieehe/devops_trigger",
+      "private": true,
+      "description": "",
+      "path": "https://bkcode.template.com/hejieehe/devops_trigger",
+      "repoType": "PRIVATE",
+      "defaultBranch": null,
+      "homepage": "https://bkcode.template.com/hejieehe/devops_trigger",
+      "httpUrl": "https://bkcode.template.com/hejieehe/devops_trigger.git",
+      "sshUrl": "git@bkcode.template.com:hejieehe/devops_trigger.git",
+      "fork": false,
+      "group": {
+        "id": 9,
+        "name": "zhansgan",
+        "displayName": "zhansgan",
+        "description": null,
+        "path": "/9",
+        "groupType": "INTERNAL"
+      }
+    },
+    "author": {
+      "id": "1d515e15d83972adb785c3551a010bca",
+      "username": "1d515e15d83972adb785c3551a010bca",
+      "displayName": "zhansgan",
+      "email": "zhansgan@tencent.com",
+      "avatarUrl": null
+    },
+    "assignee": {
+      "id": "1d515e15d83972adb785c3551a010bca",
+      "username": "1d515e15d83972adb785c3551a010bca",
+      "displayName": "zhansgan",
+      "email": "zhansgan@tencent.com",
+      "avatarUrl": null
+    },
+    "reviewers": [
+      {
+        "id": "01e37622ab90437b99f4892df65deb18",
+        "username": "01e37622ab90437b99f4892df65deb18",
+        "displayName": "admin",
+        "email": "admin@bkcode.com",
+        "avatarUrl": null
+      }
+    ],
+    "labels": [
+      {
+        "id": 1,
+        "name": "devops_1",
+        "color": "#979771",
+        "default": null
+      },
+      {
+        "id": 2,
+        "name": "devops_2",
+        "color": "#484C7F",
+        "default": null
+      }
+    ],
+    "mergedBy": null,
+    "mergedAt": "null",
+    "closedBy": null,
+    "closedAt": "null",
+    "createdAt": "2025-11-07T19:53:38",
+    "updatedAt": "2025-11-07T19:53:38",
+    "url": "https://bkcode.template.com/hejieehe/devops_trigger/-/mergeRequest/detail/2"
+  },
+  "event": "COMMENT_EVENT",
+  "action": "created",
+  "createdAt": "2025-11-10T14:47:23.483382819",
+  "sender": {
+    "id": "1d515e15d83972adb785c3551a010bca",
+    "username": "zhansgan",
+    "displayName": "zhansgan",
+    "email": "zhansgan@tencent.com",
+    "avatarUrl": null
+  },
+  "repository": {
+    "id": 11,
+    "name": "devops_trigger",
+    "displayName": "devops_trigger",
+    "fullName": "hejieehe/devops_trigger",
+    "private": true,
+    "description": "",
+    "path": "https://bkcode.template.com/hejieehe/devops_trigger",
+    "repoType": "PRIVATE",
+    "defaultBranch": null,
+    "homepage": "https://bkcode.template.com/hejieehe/devops_trigger",
+    "httpUrl": "https://bkcode.template.com/hejieehe/devops_trigger.git",
+    "sshUrl": "git@bkcode.template.com:hejieehe/devops_trigger.git",
+    "fork": false,
+    "group": {
+      "id": 9,
+      "name": "zhansgan",
+      "displayName": "zhansgan",
+      "description": null,
+      "path": "/9",
+      "groupType": "INTERNAL"
+    }
+  },
+  "group": {
+    "id": 9,
+    "name": "zhansgan",
+    "displayName": "zhansgan",
+    "description": null,
+    "path": "/9",
+    "groupType": "INTERNAL"
+  }
+}

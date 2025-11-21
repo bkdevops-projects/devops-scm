@@ -49,12 +49,12 @@ abstract class AbstractCommentHook(
             params = listOf(
                 comment.link,
                 comment.id.toString(),
-                sender.name
+                userName
             )
         )
 
     override val userName: String
-        get() = sender.name
+        get() = sender.username
 
     override fun outputs(): Map<String, Any> {
         val outputParams = mutableMapOf<String, Any>()

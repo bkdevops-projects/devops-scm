@@ -27,6 +27,7 @@ data class GitRepositoryUrl(val url: String) {
     val group: String
     val name: String
     val fullName: String
+    val homePage: String
 
     // 解析过程中的url
     private var processingUrl = url
@@ -45,6 +46,7 @@ data class GitRepositoryUrl(val url: String) {
         fullName = nameInfo.first
         group = nameInfo.second
         name = nameInfo.third
+        homePage = "$protocol://$host/$fullName"
     }
 
     private fun parseProtocol(): String {

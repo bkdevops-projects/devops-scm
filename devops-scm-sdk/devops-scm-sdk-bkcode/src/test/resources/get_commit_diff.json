@@ -1,0 +1,294 @@
+{
+  "data": {
+    "addLines": 6,
+    "deleteLines": 1,
+    "totalFileCount": 5,
+    "diffFiles": [
+      {
+        "fileName": ".gitignore",
+        "binary": false,
+        "tooLarge": false,
+        "changeType": "ADD",
+        "addLines": 1,
+        "deleteLines": 0,
+        "srcPath": "/dev/null",
+        "dstPath": ".gitignore",
+        "srcFileMode": "0",
+        "dstFileMode": "100644",
+        "srcObjectId": "0000000000000000000000000000000000000000",
+        "dstObjectId": "85e7c1dfcb7fbb33f932c81024018cd8c10519da",
+        "srcFileSize": 0,
+        "dstFileSize": 0,
+        "diffLines": [
+          {
+            "change": false,
+            "type": "HUNK",
+            "srcLineNum": 0,
+            "dstLineNum": 0,
+            "textRaw": "@@ -0,0 +1 @@\n",
+            "textHtml": "@@ -0,0 +1 @@\n",
+            "noNewLineAtEnd": false
+          },
+          {
+            "change": true,
+            "type": "ADD",
+            "srcLineNum": 1,
+            "dstLineNum": 1,
+            "textRaw": "/.idea/",
+            "textHtml": "/.idea/",
+            "noNewLineAtEnd": false
+          }
+        ],
+        "conflicted": false,
+        "srcLfs": false,
+        "srcLfsPointer": {
+          "oid": "",
+          "size": 0
+        },
+        "dstLfs": false,
+        "dstLfsPointer": {
+          "oid": "",
+          "size": 0
+        },
+        "srcFileLineCount": 0,
+        "dstFileLineCount": 1
+      },
+      {
+        "fileName": "a_1.txt",
+        "binary": false,
+        "tooLarge": false,
+        "changeType": "MODIFY",
+        "addLines": 1,
+        "deleteLines": 0,
+        "srcPath": "a/a_1/a_1.txt",
+        "dstPath": "a/a_1/a_1.txt",
+        "srcFileMode": "100644",
+        "dstFileMode": "100644",
+        "srcObjectId": "aa812b500cee7e1cd60ea2e863387e4b3cdd673a",
+        "dstObjectId": "cdea21741d397037f35c26c3d2b5fe6178e34bbc",
+        "srcFileSize": 0,
+        "dstFileSize": 0,
+        "diffLines": [
+          {
+            "change": false,
+            "type": "HUNK",
+            "srcLineNum": 0,
+            "dstLineNum": 0,
+            "textRaw": "@@ -10,3 +10,4 @@\n",
+            "textHtml": "@@ -10,3 +10,4 @@\n",
+            "noNewLineAtEnd": false
+          },
+          {
+            "change": false,
+            "type": "CONTEXT",
+            "srcLineNum": 10,
+            "dstLineNum": 10,
+            "textRaw": "123",
+            "textHtml": "123",
+            "noNewLineAtEnd": false
+          },
+          {
+            "change": false,
+            "type": "CONTEXT",
+            "srcLineNum": 11,
+            "dstLineNum": 11,
+            "textRaw": "123",
+            "textHtml": "123",
+            "noNewLineAtEnd": false
+          },
+          {
+            "change": false,
+            "type": "CONTEXT",
+            "srcLineNum": 12,
+            "dstLineNum": 12,
+            "textRaw": "123",
+            "textHtml": "123",
+            "noNewLineAtEnd": false
+          },
+          {
+            "change": true,
+            "type": "ADD",
+            "srcLineNum": 13,
+            "dstLineNum": 13,
+            "textRaw": "123",
+            "textHtml": "123",
+            "noNewLineAtEnd": false
+          }
+        ],
+        "conflicted": false,
+        "srcLfs": false,
+        "srcLfsPointer": {
+          "oid": "",
+          "size": 0
+        },
+        "dstLfs": false,
+        "dstLfsPointer": {
+          "oid": "",
+          "size": 0
+        },
+        "srcFileLineCount": 12,
+        "dstFileLineCount": 13
+      },
+      {
+        "fileName": "a_2_1.txt",
+        "binary": false,
+        "tooLarge": false,
+        "changeType": "ADD",
+        "addLines": 4,
+        "deleteLines": 0,
+        "srcPath": "/dev/null",
+        "dstPath": "a/a_2/a_2_1.txt",
+        "srcFileMode": "0",
+        "dstFileMode": "100644",
+        "srcObjectId": "0000000000000000000000000000000000000000",
+        "dstObjectId": "dc06f41284035de057a19430261fea6f8e9d7ef1",
+        "srcFileSize": 0,
+        "dstFileSize": 0,
+        "diffLines": [
+          {
+            "change": false,
+            "type": "HUNK",
+            "srcLineNum": 0,
+            "dstLineNum": 0,
+            "textRaw": "@@ -0,0 +1,4 @@\n",
+            "textHtml": "@@ -0,0 +1,4 @@\n",
+            "noNewLineAtEnd": false
+          },
+          {
+            "change": true,
+            "type": "ADD",
+            "srcLineNum": 1,
+            "dstLineNum": 1,
+            "textRaw": "123 ",
+            "textHtml": "123 ",
+            "noNewLineAtEnd": false
+          },
+          {
+            "change": true,
+            "type": "ADD",
+            "srcLineNum": 1,
+            "dstLineNum": 2,
+            "textRaw": "123",
+            "textHtml": "123",
+            "noNewLineAtEnd": false
+          },
+          {
+            "change": true,
+            "type": "ADD",
+            "srcLineNum": 1,
+            "dstLineNum": 3,
+            "textRaw": "123",
+            "textHtml": "123",
+            "noNewLineAtEnd": false
+          },
+          {
+            "change": true,
+            "type": "ADD",
+            "srcLineNum": 1,
+            "dstLineNum": 4,
+            "textRaw": "123",
+            "textHtml": "123",
+            "noNewLineAtEnd": false
+          }
+        ],
+        "conflicted": false,
+        "srcLfs": false,
+        "srcLfsPointer": {
+          "oid": "",
+          "size": 0
+        },
+        "dstLfs": false,
+        "dstLfsPointer": {
+          "oid": "",
+          "size": 0
+        },
+        "srcFileLineCount": 0,
+        "dstFileLineCount": 4
+      },
+      {
+        "fileName": "a_3_1.txt",
+        "binary": false,
+        "tooLarge": false,
+        "changeType": "DELETE",
+        "addLines": 0,
+        "deleteLines": 1,
+        "srcPath": "a/a_3/a_3_1.txt",
+        "dstPath": "/dev/null",
+        "srcFileMode": "100644",
+        "dstFileMode": "0",
+        "srcObjectId": "fb0a03d992212388b6835ab96fe4affa483a100b",
+        "dstObjectId": "0000000000000000000000000000000000000000",
+        "srcFileSize": 0,
+        "dstFileSize": 0,
+        "diffLines": [
+          {
+            "change": false,
+            "type": "HUNK",
+            "srcLineNum": 0,
+            "dstLineNum": 0,
+            "textRaw": "@@ -1 +0,0 @@\n",
+            "textHtml": "@@ -1 +0,0 @@\n",
+            "noNewLineAtEnd": false
+          },
+          {
+            "change": true,
+            "type": "REMOVE",
+            "srcLineNum": 1,
+            "dstLineNum": 1,
+            "textRaw": "123 ",
+            "textHtml": "123 ",
+            "noNewLineAtEnd": false
+          }
+        ],
+        "conflicted": false,
+        "srcLfs": false,
+        "srcLfsPointer": {
+          "oid": "",
+          "size": 0
+        },
+        "dstLfs": false,
+        "dstLfsPointer": {
+          "oid": "",
+          "size": 0
+        },
+        "srcFileLineCount": 1,
+        "dstFileLineCount": 0
+      },
+      {
+        "fileName": "a_3.txt",
+        "binary": false,
+        "tooLarge": false,
+        "changeType": "RENAME",
+        "addLines": 0,
+        "deleteLines": 0,
+        "srcPath": "a/a_2/a_2_1.txt",
+        "dstPath": "a/a_3/a_3.txt",
+        "srcFileMode": "100644",
+        "dstFileMode": "100644",
+        "srcObjectId": "dc06f41284035de057a19430261fea6f8e9d7ef1",
+        "dstObjectId": "dc06f41284035de057a19430261fea6f8e9d7ef1",
+        "srcFileSize": 0,
+        "dstFileSize": 0,
+        "diffLines": [],
+        "conflicted": false,
+        "srcLfs": false,
+        "srcLfsPointer": {
+          "oid": "",
+          "size": 0
+        },
+        "dstLfs": false,
+        "dstLfsPointer": {
+          "oid": "",
+          "size": 0
+        },
+        "srcFileLineCount": 4,
+        "dstFileLineCount": 4
+      }
+    ],
+    "diffFileCount": 5,
+    "baseCommitId": "6675f7a78364181b1b1182b341c8db828fdc1d64",
+    "srcCommitId": "6675f7a78364181b1b1182b341c8db828fdc1d64",
+    "targetCommitId": "82e5702749b4a36beef3d5e2ec32accefe53b8bd",
+    "ignoreWhitespace": false
+  }
+}

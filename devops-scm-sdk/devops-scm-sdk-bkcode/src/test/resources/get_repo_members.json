@@ -1,0 +1,77 @@
+{
+  "data": [
+    {
+      "user": {
+        "id": "1d515e15d83972adb785c3551a010bca",
+        "username": "zhangsan",
+        "displayName": "zhangsan",
+        "email": "zhangsan@tencent.com",
+        "tenantId": "default",
+        "admin": false,
+        "locale": "zh-cn",
+        "createTime": "2025-11-04 09:53:40"
+      },
+      "currentUser": true,
+      "inheritedRoles": [
+        {
+          "id": 1,
+          "name": "Owner",
+          "tenantId": "SYSTEM",
+          "type": "SYSTEM",
+          "creator": {
+            "id": "system",
+            "username": "ghost",
+            "displayName": "ghost",
+            "email": null,
+            "tenantId": "",
+            "admin": false,
+            "locale": "",
+            "createTime": ""
+          },
+          "createTime": "2025-10-31T17:17:35",
+          "updater": {
+            "id": "system",
+            "username": "ghost",
+            "displayName": "ghost",
+            "email": null,
+            "tenantId": "",
+            "admin": false,
+            "locale": "",
+            "createTime": ""
+          },
+          "updateTime": "2025-10-31T17:17:35"
+        }
+      ],
+      "role": {
+        "id": 1,
+        "name": "Owner",
+        "tenantId": "SYSTEM",
+        "type": "SYSTEM",
+        "creator": {
+          "id": "system",
+          "username": "ghost",
+          "displayName": "ghost",
+          "email": null,
+          "tenantId": "",
+          "admin": false,
+          "locale": "",
+          "createTime": ""
+        },
+        "createTime": "2025-10-31T17:17:35",
+        "updater": {
+          "id": "system",
+          "username": "ghost",
+          "displayName": "ghost",
+          "email": null,
+          "tenantId": "",
+          "admin": false,
+          "locale": "",
+          "createTime": ""
+        },
+        "updateTime": "2025-10-31T17:17:35"
+      },
+      "earliestJoinTime": "2025-11-04T09:54:55",
+      "latestJoinTime": "2025-11-04T09:54:55"
+    }
+  ]
+}

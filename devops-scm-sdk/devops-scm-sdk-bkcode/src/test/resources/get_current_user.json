@@ -1,0 +1,12 @@
+{
+  "data": {
+    "id": "1d515e15d83972adb785c3551a010bca",
+    "username": "zhangsan",
+    "displayName": "zhangsan",
+    "email": "zhangsan@tencent.com",
+    "tenantId": "default",
+    "admin": false,
+    "locale": "zh-cn",
+    "createTime": "2025-11-04 09:53:40"
+  }
+}

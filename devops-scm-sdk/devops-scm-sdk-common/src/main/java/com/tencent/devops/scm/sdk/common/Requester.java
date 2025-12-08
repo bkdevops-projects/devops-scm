@@ -45,6 +45,10 @@ public class Requester extends ScmRequest.Builder<Requester> {
         ).body();
     }
 
+    public String fetch() {
+        return client.sendRequest(this, this::fetchResultData).body();
+    }
+
     public <T extends ResponseResult> void withResult(Class<T> responseResultCls) {
         this.responseResultCls = responseResultCls;
     }

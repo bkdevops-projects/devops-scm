@@ -55,7 +55,7 @@ class GiteeScmProvider : GitScmProvider {
     }
 
     override fun files(): FileService {
-        throw UnsupportedOperationException("gitee not support file service")
+        return GiteeFileService(apiFactory)
     }
 
     override fun webhookParser(): WebhookParser {

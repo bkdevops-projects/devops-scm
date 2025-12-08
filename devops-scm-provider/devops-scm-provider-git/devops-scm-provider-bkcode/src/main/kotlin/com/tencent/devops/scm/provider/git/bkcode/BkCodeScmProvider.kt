@@ -71,7 +71,7 @@ class BkCodeScmProvider : GitScmProvider {
     }
 
     override fun files(): FileService {
-        throw UnsupportedOperationException("BkCode does not support files service")
+        return BkCodeFileService(apiFactory)
     }
 
     override fun webhookParser(): WebhookParser {

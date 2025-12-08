@@ -18,7 +18,7 @@ import org.mockito.Mockito;
  */
 public class AbstractBkCodeTest {
 
-    protected static final String TEST_PROJECT_NAME = "11";
+    protected static final String TEST_PROJECT_NAME = "devops/trigger_repo";
     protected static final String TEST_DEFAULT_BRANCH = "master";
     protected static final String TEST_BK_CODE_API_URL = "TEST_BK_CODE_API_URL";
     protected static final String TEST_BK_CODE_PRIVATE_TOKEN = "TEST_BK_CODE_PRIVATE_TOKEN";

@@ -3,7 +3,6 @@ package com.tencent.devops.scm.provider.git.bkcode
 import com.fasterxml.jackson.core.type.TypeReference
 import com.tencent.devops.scm.api.pojo.auth.PersonalAccessTokenScmAuth
 import com.tencent.devops.scm.api.pojo.repository.git.GitScmProviderRepository
-import com.tencent.devops.scm.provider.git.bkcode.auth.BkCodeTokenAuthProviderAdapter
 import com.tencent.devops.scm.sdk.bkcode.BkCodeApi
 import com.tencent.devops.scm.sdk.bkcode.BkCodeApiFactory
 import com.tencent.devops.scm.sdk.common.connector.okhttp3.OkHttpScmConnector
@@ -16,7 +15,7 @@ import java.nio.charset.StandardCharsets
 
 abstract class AbstractBkCodeServiceTest {
     companion object {
-        const val TEST_PROJECT_NAME = "11"
+        const val TEST_PROJECT_NAME = "devops/trigger_repo"
         const val TEST_BK_CODE_API_URL = "TEST_BK_CODE_API_URL"
         const val TEST_BK_CODE_PRIVATE_TOKEN = "TEST_BK_CODE_PRIVATE_TOKEN"
     }

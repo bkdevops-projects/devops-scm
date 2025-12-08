@@ -5,6 +5,7 @@ import com.tencent.devops.scm.api.enums.Visibility
 import com.tencent.devops.scm.api.pojo.Change
 import com.tencent.devops.scm.api.pojo.Comment
 import com.tencent.devops.scm.api.pojo.Commit
+import com.tencent.devops.scm.api.pojo.Content
 import com.tencent.devops.scm.api.pojo.Hook
 import com.tencent.devops.scm.api.pojo.HookEvents
 import com.tencent.devops.scm.api.pojo.HookInput
@@ -26,6 +27,7 @@ import com.tencent.devops.scm.sdk.bkcode.pojo.BkCodeCommit
 import com.tencent.devops.scm.sdk.bkcode.pojo.BkCodeCommitDetail
 import com.tencent.devops.scm.sdk.bkcode.pojo.BkCodeCommitter
 import com.tencent.devops.scm.sdk.bkcode.pojo.BkCodeDiffFile
+import com.tencent.devops.scm.sdk.bkcode.pojo.BkCodeFileContent
 import com.tencent.devops.scm.sdk.bkcode.pojo.BkCodeMergeRequest
 import com.tencent.devops.scm.sdk.bkcode.pojo.BkCodeProjectHookInput
 import com.tencent.devops.scm.sdk.bkcode.pojo.BkCodeRepositoryDetail
@@ -421,4 +423,12 @@ object BkCodeObjectConverter {
         ScmEventType.PULL_REQUEST_REVIEW -> BkCodeEventType.MERGE_REQUEST
         else -> BkCodeEventType.UNKNOWN
     }
+
+    /*========================================file content====================================================*/
+    fun convertContent(from: BkCodeFileContent) = Content(
+        path = from.path,
+        content = from.content,
+        sha = "",
+        blobId = ""
+    )
 }

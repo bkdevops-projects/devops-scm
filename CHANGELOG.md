@@ -57,3 +57,8 @@
 ## 2025-11-21
 ### 新增
 - feat: 支持bkCode代码源 #42  [链接](https://github.com/bkdevops-projects/devops-scm/issues/42)
+
+# v1.1.7
+## 2025-12-09
+### 新增
+- feat: Bkcode和Gitee代码源支持获取文件内容 #44  [链接](https://github.com/bkdevops-projects/devops-scm/issues/44)

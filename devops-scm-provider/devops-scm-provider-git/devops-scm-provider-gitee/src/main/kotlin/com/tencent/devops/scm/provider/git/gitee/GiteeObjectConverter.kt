@@ -8,6 +8,7 @@ import com.tencent.devops.scm.api.pojo.Change
 import com.tencent.devops.scm.api.pojo.CheckRun
 import com.tencent.devops.scm.api.pojo.CheckRunInput
 import com.tencent.devops.scm.api.pojo.Commit
+import com.tencent.devops.scm.api.pojo.Content
 import com.tencent.devops.scm.api.pojo.Hook
 import com.tencent.devops.scm.api.pojo.HookEvents
 import com.tencent.devops.scm.api.pojo.Milestone
@@ -351,5 +352,15 @@ object GiteeObjectConverter {
             GiteeCheckRunConclusion.ACTION_REQUIRED -> CheckRunConclusion.ACTION_REQUIRED
             else -> CheckRunConclusion.UNKNOWN
         }
+    }
+
+    /*========================================file content====================================================*/
+    fun convertFileContent(path: String, form: String) = with(form) {
+        Content(
+            path = path,
+            content = form,
+            sha = "",
+            blobId = ""
+        )
     }
 }

@@ -41,8 +41,8 @@ public class BkCodeApiClient extends ScmApiClient {
 
     @Override
     public void afterRequest(ScmConnectorResponse connectorResponse, ScmRequest request) {
-        String traceId = connectorResponse.header("X-Request-Id");
-        logger.info("BkCode API response|X-Request-Id {}", traceId);
+        String traceId = connectorResponse.header("X-Bkcode-Trace-Id");
+        logger.info("BkCode API response|X-Bkcode-Trace-Id {}", traceId);
         ScmConnectorResponseErrorHandler errorHandler = new BkCodeConnectorResponseErrorHandler();
         if (errorHandler.isError(connectorResponse)) {
             errorHandler.onError(connectorResponse);

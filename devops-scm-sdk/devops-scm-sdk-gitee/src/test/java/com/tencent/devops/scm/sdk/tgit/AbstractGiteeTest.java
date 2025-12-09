@@ -46,8 +46,7 @@ public class AbstractGiteeTest {
 
     protected static <T> T read(String fileName, Class<T> clazz) {
         try {
-            String filePath = AbstractGiteeTest.class.getClassLoader().getResource(fileName).getFile();
-            String jsonString = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
+            String jsonString = readFileContent(fileName);
             return ScmJsonUtil.fromJson(jsonString, clazz);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -56,12 +55,17 @@ public class AbstractGiteeTest {
 
     protected static <T> T read(String fileName, TypeReference<T> typeReference) {
         try {
-            String filePath = AbstractGiteeTest.class.getClassLoader().getResource(fileName).getFile();
-            String jsonString = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
+            String jsonString = readFileContent(fileName);
             return ScmJsonUtil.fromJson(jsonString, typeReference);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    static String readFileContent(String fileName) throws IOException {
+        String filePath = AbstractGiteeTest.class.getClassLoader().getResource(fileName).getFile();
+        String jsonString = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
+        return jsonString;
     }
 
     protected static String getProperty(String key) {

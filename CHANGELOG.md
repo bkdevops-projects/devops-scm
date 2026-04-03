@@ -67,3 +67,8 @@
 ## 2026-01-20
 ### 新增
 - feat: Bkcode支持Commit Check #46  [链接](https://github.com/bkdevops-projects/devops-scm/issues/46)
+
+# v1.1.9
+## 2026-04-03
+### 新增
+- feat: TGit 解析Mr事件时补充label信息 #50  [链接](https://github.com/bkdevops-projects/devops-scm/issues/50)

@@ -2,7 +2,6 @@ package com.tencent.devops.scm.sdk.common;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.tencent.devops.scm.sdk.common.connector.ScmConnectorResponse;
-import com.tencent.devops.scm.sdk.common.util.ScmJsonUtil;
 import java.io.IOException;
 import lombok.Setter;
 
@@ -57,7 +56,7 @@ public class Requester extends ScmRequest.Builder<Requester> {
         String data = null;
         // 提取响应结果
         if (responseResultCls != null) {
-            data = ScmJsonUtil.getJsonFactory().toJson(
+            data = client.getJsonFactory().toJson(
                     ScmResponse.parseBody(
                             connectorResponse,
                             responseResultCls,

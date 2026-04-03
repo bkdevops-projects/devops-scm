@@ -188,7 +188,8 @@ object TGitObjectConverter {
             author = author,
             created = DateUtils.convertDateToLocalDateTime(eventMergeRequest.createdAt),
             updated = DateUtils.convertDateToLocalDateTime(eventMergeRequest.updatedAt),
-            description = description
+            description = description,
+            labels = eventMergeRequest.labels?.map { it.title }
         )
     }
 

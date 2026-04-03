@@ -2,6 +2,7 @@ package com.tencent.devops.scm.sdk.tgit.pojo.webhook;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
+import java.util.List;
 import lombok.Data;
 
 @Data
@@ -48,5 +49,5 @@ public class TGitEventMergeRequest {
     private String action;
     @JsonProperty("extension_action")
     private String extensionAction;
-    // TODO 补充labels字段
+    private List<TGitEventLabel> labels;
 }

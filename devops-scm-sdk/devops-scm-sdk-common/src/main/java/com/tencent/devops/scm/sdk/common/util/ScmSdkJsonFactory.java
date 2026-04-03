@@ -31,17 +31,26 @@ import org.slf4j.LoggerFactory;
 public class ScmSdkJsonFactory {
 
     private final ObjectMapper objectMapper;
+    private final ZoneId zoneId;
     private static final Logger logger = LoggerFactory.getLogger(ScmSdkJsonFactory.class);
 
     public ScmSdkJsonFactory() {
-        this.objectMapper = new ObjectMapper();
+        this(ZoneId.systemDefault());
+    }
 
+    public ScmSdkJsonFactory(ZoneId zoneId) {
+        this.objectMapper = new ObjectMapper();
+        this.zoneId = zoneId;
+        initObjectMapper();
+    }
+
+    private void initObjectMapper() {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         // 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         // 创建自定义日期反序列化器
         SimpleModule module = new SimpleModule();
-        module.addDeserializer(Date.class, new CustomDateDeserializer());
+        module.addDeserializer(Date.class, new CustomDateDeserializer(zoneId));
         objectMapper.registerModule(module);
     }
 
@@ -60,7 +69,11 @@ public class ScmSdkJsonFactory {
         };
 
         private static final String TIME_PATTERN = "HH:mm:ss";
+        private final ZoneId zoneId;
 
+        CustomDateDeserializer(ZoneId zoneId) {
+            this.zoneId = zoneId;
+        }
 
         static {
             Arrays.stream(DATE_FORMATS_PATTERNS).forEach(pattern -> {
@@ -86,15 +99,15 @@ public class ScmSdkJsonFactory {
                         // 1. 解析字符串为 LocalDateTime（无时区信息）
                         LocalDateTime localDateTime = LocalDateTime.parse(dateStr, formatter);
 
-                        // 2. 绑定中国时区（Asia/Shanghai，UTC+8）
-                        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
+                        // 2. 绑定指定时区
+                        ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
 
                         // 3. 转换为 Date 对象（Date 基于 UTC 时间戳，通过 Instant 转换）
                         return Date.from(zonedDateTime.toInstant());
                     } else {
                         // 只有日期的格式，使用 LocalDate
                         java.time.LocalDate localDate = java.time.LocalDate.parse(dateStr, formatter);
-                        ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.systemDefault());
+                        ZonedDateTime zonedDateTime = localDate.atStartOfDay(zoneId);
                         return Date.from(zonedDateTime.toInstant());
                     }
                 } catch (Exception e) {
@@ -107,7 +120,7 @@ public class ScmSdkJsonFactory {
                     String.format(
                             "Date string [%s] does not match any supported formats[%s]",
                             dateStr,
-                            DATE_FORMATS_PATTERNS
+                            String.join(",", DATE_FORMATS_PATTERNS)
                     )
             );
         }

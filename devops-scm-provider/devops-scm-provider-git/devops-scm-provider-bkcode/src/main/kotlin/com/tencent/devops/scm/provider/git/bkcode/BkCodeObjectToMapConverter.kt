@@ -141,7 +141,7 @@ object BkCodeObjectToMapConverter {
             params[BK_REPO_GIT_WEBHOOK_MR_SOURCE_COMMIT] = mr.headCommitId ?: ""
             // MR 链接
             if (scmServerRepository.webUrl.isNotBlank() && mr.code != null) {
-                params[PIPELINE_GIT_MR_URL] = "${scmServerRepository.webUrl}/merge_requests/${mr.code}"
+                getMergeRequestUrl(scmServerRepository.webUrl, mr.code)
             }
         }
         return params
@@ -243,5 +243,5 @@ object BkCodeObjectToMapConverter {
         }
     }
 
-    private fun getMergeRequestUrl(homeUrl: String, iid: Int) = "$homeUrl/merge_requests/$iid"
+    private fun getMergeRequestUrl(homeUrl: String, iid: Int) = "$homeUrl/-/merge_requests/$iid"
 }

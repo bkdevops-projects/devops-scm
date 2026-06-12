@@ -325,7 +325,7 @@ class BkCodeWebhookParser : WebhookParser {
         extras[PIPELINE_GIT_ACTION] = action.value
         val ref = GitUtils.trimRef(src.ref)
         val link = when (action) {
-            EventAction.NEW_BRANCH -> "${repository.webUrl}/tree/$ref"
+            EventAction.NEW_BRANCH -> "${repository.webUrl}/-/tree/$ref"
             EventAction.DELETE -> repository.webUrl
             else -> getCommitLink(commit?.sha ?: src.after, repository)
         }
@@ -363,7 +363,7 @@ class BkCodeWebhookParser : WebhookParser {
     }
 
     private fun getCommitLink(commitSha: String, repository: GitScmServerRepository) =
-        "${repository.webUrl}/-/commit/$commitSha"
+        "${repository.webUrl}/-/commits/$commitSha"
 
     companion object {
         private val logger = LoggerFactory.getLogger(BkCodeWebhookParser::class.java)

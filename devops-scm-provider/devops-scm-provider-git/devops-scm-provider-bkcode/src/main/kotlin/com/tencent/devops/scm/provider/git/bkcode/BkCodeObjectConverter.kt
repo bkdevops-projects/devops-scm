@@ -272,7 +272,7 @@ object BkCodeObjectConverter {
             added = listOf(),
             modified = listOf(),
             removed = listOf(),
-            link = ""
+            link = url ?: ""
         )
     }
 

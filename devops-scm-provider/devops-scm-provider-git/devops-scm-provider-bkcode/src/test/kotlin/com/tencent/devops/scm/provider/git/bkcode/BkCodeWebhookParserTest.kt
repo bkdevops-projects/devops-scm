@@ -68,7 +68,7 @@ class BkCodeWebhookParserTest : AbstractBkCodeWebhookParserTest() {
         )
         Assertions.assertEquals(
             "https://bkcode.template.com/hejieehe/devops_trigger" +
-                    "/-/commit/7eaa451cdfd155338f113f1bb2d57527f34fc657",
+                    "/-/commits/7eaa451cdfd155338f113f1bb2d57527f34fc657",
             outputs[PIPELINE_GIT_EVENT_URL]
         )
         Assertions.assertEquals(

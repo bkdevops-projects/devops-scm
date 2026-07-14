@@ -34,7 +34,7 @@ object BkCodeTokenAuthProviderAdapter {
      */
     fun get(auth: IScmAuth): BkCodeTokenAuthProvider {
         return when (auth) {
-            is AccessTokenScmAuth -> BkCodeTokenAuthProvider.fromOauthToken(auth.accessToken)
+            is AccessTokenScmAuth -> BkCodeTokenAuthProvider.fromPersonalAccessToken(auth.accessToken)
             is PersonalAccessTokenScmAuth -> BkCodeTokenAuthProvider.fromPersonalAccessToken(auth.personalAccessToken)
             is TokenUserPassScmAuth -> BkCodeTokenAuthProvider.fromPersonalAccessToken(auth.token)
             is TokenSshPrivateKeyScmAuth -> BkCodeTokenAuthProvider.fromPersonalAccessToken(auth.token)

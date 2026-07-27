@@ -148,7 +148,7 @@ object BkCodeObjectConverter {
             number = eventMergeRequest.number.toInt(),
             title = eventMergeRequest.title,
             body = description,
-            link = "${target.webUrl}/-/mergeRequest/detail/${eventMergeRequest.number}",
+            link = "${target.webUrl}/-/merge-requests/${eventMergeRequest.number}",
             sha = lastCommitSha,
             targetRepo = target,
             sourceRepo = source,
@@ -222,7 +222,7 @@ object BkCodeObjectConverter {
             number = from.code,
             title = from.title,
             body = description,
-            link = "${targetRepositoryUrl.homePage}/merge_requests/${from.code}",
+            link = "${targetRepositoryUrl.homePage}/-/merge_requests/${from.code}",
             targetRef = base,
             sourceRef = head,
             sourceRepo = source,
@@ -272,7 +272,7 @@ object BkCodeObjectConverter {
             added = listOf(),
             modified = listOf(),
             removed = listOf(),
-            link = ""
+            link = url ?: ""
         )
     }
 

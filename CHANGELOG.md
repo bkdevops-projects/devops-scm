@@ -72,3 +72,9 @@
 ## 2026-04-03
 ### 新增
 - feat: TGit 解析Mr事件时补充label信息 #50  [链接](https://github.com/bkdevops-projects/devops-scm/issues/50)
+
+# v1.1.10
+## 2026-07-27
+### 修复
+- bug: BkCode access token类型鉴权错误 [链接](https://github.com/bkdevops-projects/devops-scm/issues/54)
+- feat: BkCode 修改MR链接地址 [链接](https://github.com/bkdevops-projects/devops-scm/issues/52)

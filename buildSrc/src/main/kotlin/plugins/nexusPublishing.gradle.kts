@@ -8,6 +8,7 @@ nexusPublishing {
     repositories {
 
         sonatype {
+            stagingProfileId.set("com.tencent.bk")
             nexusUrl.set(uri(MavenUtil.getUrl(project)))
             snapshotRepositoryUrl.set(uri(MavenUtil.getUrl(project)))
 

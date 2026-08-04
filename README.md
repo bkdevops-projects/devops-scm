@@ -1,7 +1,7 @@
 ## Overview
 devops-scm提供了一套统一的源代码接口，使得开发者能够方便地调用各大源代码管理平台的接口和接收源码管理平台的webhook事件。这样开发者就无需熟悉每个平台的API文档和webhook事件请求体,只需通过devops-scm提供的标准接口即可实现对源代码平台的管理。
 
-目前支持的提供商有-工蜂。后续会陆续对接github、gitlab、gitee、apache svn
+目前支持工蜂、GitLab、Gitee、BKCode 和 SVN 等源码管理平台。
 
 ## 代码目录说明
 - devops-scm-api: api接口定义

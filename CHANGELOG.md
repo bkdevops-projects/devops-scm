@@ -78,3 +78,8 @@
 ### 修复
 - bug: BkCode access token类型鉴权错误 [链接](https://github.com/bkdevops-projects/devops-scm/issues/54)
 - feat: BkCode 修改MR链接地址 [链接](https://github.com/bkdevops-projects/devops-scm/issues/52)
+
+# v1.2.0
+## 2026-08-25
+### 修复
+- feat: 支持gitlab代码源 [链接](https://github.com/bkdevops-projects/devops-scm/issues/57)

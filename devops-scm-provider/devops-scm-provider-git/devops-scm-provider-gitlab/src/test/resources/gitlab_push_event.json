@@ -1,0 +1,29 @@
+{
+  "object_kind": "push",
+  "before": "1111111111111111111111111111111111111111",
+  "after": "2222222222222222222222222222222222222222",
+  "ref": "refs/heads/main",
+  "checkout_sha": "2222222222222222222222222222222222222222",
+  "user_id": 7,
+  "user_name": "Dev User",
+  "user_username": "dev",
+  "user_email": "dev@example.com",
+  "project": {
+    "id": 42,
+    "name": "demo",
+    "path_with_namespace": "group/demo",
+    "default_branch": "main",
+    "web_url": "https://gitlab.example.com/group/demo",
+    "git_http_url": "https://gitlab.example.com/group/demo.git",
+    "git_ssh_url": "git@gitlab.example.com:group/demo.git"
+  },
+  "commits": [{
+    "id": "2222222222222222222222222222222222222222",
+    "message": "Update pipeline",
+    "timestamp": "2026-07-13T08:10:00Z",
+    "url": "https://gitlab.example.com/group/demo/-/commit/22222222",
+    "author": {"name": "Dev User", "email": "dev@example.com"},
+    "added": ["new.txt"], "modified": ["README.md"], "removed": []
+  }],
+  "total_commits_count": 1
+}

@@ -1,0 +1,6 @@
+{
+  "object_kind": "merge_request",
+  "user": {"id": 8, "name": "Maintainer", "username": "maintainer"},
+  "project": {"id": 42, "name": "demo", "path_with_namespace": "group/demo", "web_url": "https://gitlab.example.com/group/demo", "git_http_url": "https://gitlab.example.com/group/demo.git", "git_ssh_url": "git@gitlab.example.com:group/demo.git"},
+  "object_attributes": {"id": 9001, "iid": 17, "action": "merge", "state": "merged", "title": "Add GitLab provider", "description": "Merged", "source_branch": "feature/gitlab", "target_branch": "main", "source_project_id": 42, "target_project_id": 42, "merge_commit_sha": "7777777777777777777777777777777777777777", "updated_at": "2026-07-13T10:10:00Z", "url": "https://gitlab.example.com/group/demo/-/merge_requests/17", "last_commit": {"id": "6666666666666666666666666666666666666666", "message": "Update tests", "author": {"name": "Dev User"}}}
+}

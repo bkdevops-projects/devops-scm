@@ -2,6 +2,7 @@ package com.tencent.devops.scm.spring.config
 
 import com.tencent.devops.scm.spring.manager.BkCodeScmProviderFactory
 import com.tencent.devops.scm.spring.manager.GiteeScmProviderFactory
+import com.tencent.devops.scm.spring.manager.GitlabScmProviderFactory
 import com.tencent.devops.scm.spring.manager.ScmConnectorFactory
 import com.tencent.devops.scm.spring.manager.ScmProviderFactory
 import com.tencent.devops.scm.spring.manager.ScmProviderManager
@@ -29,6 +30,10 @@ class ScmProviderConfiguration {
     @Bean
     @ConditionalOnMissingBean(GiteeScmProviderFactory::class)
     fun giteeScmProviderFactory(connectorFactory: ScmConnectorFactory) = GiteeScmProviderFactory(connectorFactory)
+
+    @Bean
+    @ConditionalOnMissingBean(GitlabScmProviderFactory::class)
+    fun gitlabScmProviderFactory(connectorFactory: ScmConnectorFactory) = GitlabScmProviderFactory(connectorFactory)
 
     @Bean
     @ConditionalOnMissingBean(BkCodeScmProviderFactory::class)

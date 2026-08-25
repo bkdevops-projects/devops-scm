@@ -1,0 +1,6 @@
+{
+  "object_kind": "issue",
+  "user": {"id": 7, "name": "Dev User", "username": "dev"},
+  "project": {"id": 42, "name": "demo", "path_with_namespace": "group/demo", "web_url": "https://gitlab.example.com/group/demo", "git_http_url": "https://gitlab.example.com/group/demo.git", "git_ssh_url": "git@gitlab.example.com:group/demo.git"},
+  "object_attributes": {"id": 1001, "iid": 23, "action": "open", "state": "opened", "title": "Webhook issue", "description": "Issue body", "created_at": "2026-07-13T08:10:00Z", "updated_at": "2026-07-13T08:10:00Z", "url": "https://gitlab.example.com/group/demo/-/issues/23", "labels": [{"title": "bug"}]}
+}

@@ -1,0 +1,10 @@
+{
+  "object_kind": "push",
+  "before": "0000000000000000000000000000000000000000",
+  "after": "3333333333333333333333333333333333333333",
+  "ref": "refs/heads/feature/new",
+  "checkout_sha": "3333333333333333333333333333333333333333",
+  "user_id": 7, "user_name": "Dev User", "user_username": "dev",
+  "project": {"id": 42, "name": "demo", "path_with_namespace": "group/demo", "web_url": "https://gitlab.example.com/group/demo", "git_http_url": "https://gitlab.example.com/group/demo.git", "git_ssh_url": "git@gitlab.example.com:group/demo.git"},
+  "commits": [], "total_commits_count": 0
+}
